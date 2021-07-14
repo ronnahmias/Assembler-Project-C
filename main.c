@@ -13,7 +13,8 @@ int main(int argc, char** argv) {
 
     for (i = 1; i < argc; i++) {
         if((file = fopen(argv[i], "r")) != NULL){
-            first_Run(file);
+            first_run(file);
+            fclose(file); /* close current file */
         }
     }
 

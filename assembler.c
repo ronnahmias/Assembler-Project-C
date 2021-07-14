@@ -1,6 +1,7 @@
 #include "assembler.h"
 
-void first_Run(FILE *file)
+
+void first_run(FILE *file)
 {
-    printf("%s",file);
+    read_by_line(file,FIRST_ITER);
 }
