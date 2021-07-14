@@ -1,9 +1,13 @@
 #ifndef MAMAN14_DATA_FUNCTIONS_H
 #define MAMAN14_DATA_FUNCTIONS_H
 #include "stdio.h"
+#include "stdlib.h"
 #include "ctype.h"
 #include "constants.h"
 #include "string.h"
+#include "shared_data.h"
+
+extern dataNode * DataNodes;
 
 enum data_t
 {
@@ -15,19 +19,6 @@ enum data_t
     EXTERN
 };
 
-struct dataNode {
-    int address;
-    struct dataNode *next;
-    union {
-        char db;
-        struct {
-            long dw:32;
-        };
-        struct {
-            int dh:16;
-        };
-    };
-};
 
 int search_data_type(char * input);
 
