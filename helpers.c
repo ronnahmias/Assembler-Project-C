@@ -58,9 +58,23 @@ int has_label(char * data){
 void process_data(char * data, int iteration){
     if(iteration == FIRST_ITER){ /* process data -> first iteration*/
         switch ((*row_data_type)) {
-            case EXTERN:
-                break;
+
             case DB:
+            case DH:
+            case DW:
+                convert_data_to_array(data);
+                insert_data_row(data);
+                // TODO remove after check binary
+                unsigned i;
+                dataNode * cur = DataNodes;
+                while(cur != NULL) {
+//                    for (i = 1 << 31; i > 0; i = i / 2)
+//                        (DataNodes->db & i) ? printf("1") : printf("0");
+                    printf("%d", cur->db);
+                    cur = cur->next;
+                    putchar('\n');
+                }
+                // TODO end removing
                 break;
 
             case ASCIZ:
@@ -74,9 +88,7 @@ void process_data(char * data, int iteration){
                 }
                 free_asciz_row();
                 break;
-            case DH:
-                break;
-            case DW:
+            case EXTERN:
                 break;
             /* entry will be process in the second iteration */
             case ENTRY:
@@ -84,15 +96,54 @@ void process_data(char * data, int iteration){
         }
     }
 }
+/* // TODO remove
+ * convert data array of chars to long number
+ */
+//long array_char_to_long(){
+//    long res
+//}
+
+/*
+ * convert data row numbers (db,dw,dh) to long array before insert to linked list
+ */
+void convert_data_to_array(char * data){
+    int i=0;
+    char * ptr;
+    init_data_row();
+    while (data[i] != '\t' && data[i] != '\n' && data[i] != '\0' && data[i] != 13)
+    {
+        /* backspace skip it*/
+        if(data[i] == ' '){
+            i++;
+            continue;
+        }
+        /* end of number -> insert to long array */
+        if(data[i] == ','){
+            /* convert to long number before insert */
+            DataRow->array[DataRow->size-1] = strtol(DataRow->input_num,&ptr,10);
+            realloc_data_row();
+            zero_input_num();
+        }else{ /* insert number to array */
+            DataRow->input_num[DataRow->input_num_size] = data[i];
+            DataRow->input_num_size ++;
+        }
+        i++;
+    }
+    /* more number to insert to array */
+    if(DataRow->input_num[0] != '\0'){
+        DataRow->array[DataRow->size-1] = strtol(DataRow->input_num,&ptr,10); // TODO problem strtol
+    }
+    /* free input num  char array helper */
+    //free(DataRow->input_num);
+}
 
 char * extract_asciz_string(char * data){
     data = data + 1; /* skip first bracket */
     init_asciz_string();
     strncpy(AscizRow->string,data,AscizRow->size);
-    //*(AscizRow->string + (AscizRow->size-1)) = '\0';
 }
 
-char * asciz_input_check(char * data){
+int asciz_input_check(char * data){
     int i=1;/* start after the first bracket */
     if(*data != '\"'){
         // TODO Error string

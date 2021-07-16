@@ -39,6 +39,59 @@ void insert_asciz_row(){
     }
 }
 
+/*
+ * insert from long array of numbers to data nodes
+ * after -> connect to linked data list
+ */
+void insert_data_row(){
+    int i;
+    dataNode *newNode;
+    for (i = 0; i < DataRow->array[i]; i++) {
+        newNode = init_data_node(DataRow->array[i]);
+        add_data_node(newNode);
+    }
+    /* free data row */
+    free(DataRow->array);
+    free(DataRow);
+}
+
+/*
+ * init data row struct for data input row
+*/
+void init_data_row(){
+    DataRow = (data_row *)calloc(sizeof(data_row),1);
+    if(DataRow == NULL){
+        // TODO error allocation
+    }
+    DataRow->array = (long *)calloc(sizeof(long),1);
+    if(DataRow->array == NULL){
+        // TODO error allocation
+    }
+    DataRow->size = 1;
+}
+
+ /*
+  * realloc array long of the row input data
+ */
+void realloc_data_row(){
+    DataRow->array = (long *)realloc(DataRow->array,(DataRow->size +1));
+    if(DataRow->array == NULL){
+        // TODO error allocation
+    }
+    DataRow->size ++;
+}
+
+/*
+ * zero all input num for the next number in the input
+ */
+void zero_input_num(){
+    int i;
+    for(i=0;i<INPUT_NUM;i++){
+        DataRow->input_num[i] = '\0';
+    }
+    DataRow->input_num_size = 0;
+}
+
 void search_data_type(char * input)
 {
     int i, j=0;
@@ -58,7 +111,7 @@ void search_data_type(char * input)
     *row_data_type= NO_DATA_TYPE;
 }
 
-dataNode * init_data_node(int data)
+dataNode * init_data_node(long data)
 {
     dataNode * pt;
     pt = (dataNode *)calloc(sizeof(dataNode),1);
@@ -68,12 +121,12 @@ dataNode * init_data_node(int data)
     switch (*row_data_type) {
         /* byte size */
         case DB:
-        case ASCIZ:
-            pt->db = data;
+        case ASCIZ: // TODO check asciz again
+            pt->db = (char)data;
             break;
         /* half word */
         case DH:
-            pt->dh = data;
+            pt->dh = (int)data;
             break;
         /* whole word */
         case DW:

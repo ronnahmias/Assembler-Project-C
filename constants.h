@@ -15,6 +15,7 @@
 #define DATA_TYPE_NUMBER 6
 
 #define NO_DATA_TYPE -1
+#define INPUT_NUM 10
 
 
 #endif //MAMAN14_CONSTANTS_H
