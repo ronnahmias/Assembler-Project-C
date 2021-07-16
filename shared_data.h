@@ -1,7 +1,7 @@
 #ifndef MAMAN14_SHARED_DATA_H
 #define MAMAN14_SHARED_DATA_H
 
-typedef struct dataNode {
+typedef struct {
     int address;
     struct dataNode *next;
     union {
@@ -14,5 +14,11 @@ typedef struct dataNode {
         };
     };
 }dataNode;
+
+typedef struct {
+    int size;
+    char * string;
+
+}asciz_row;
 
 #endif //MAMAN14_SHARED_DATA_H

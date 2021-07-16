@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include "helpers.h"
+#include "data_functions.h"
 
 void first_run(FILE *file);
 

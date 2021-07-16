@@ -8,8 +8,10 @@
 #include "shared_data.h"
 
 extern dataNode * DataNodes;
+extern int * row_data_type;
+extern asciz_row * AscizRow;
 
-enum data_t
+enum data_enum
 {
     DB = 0,
     DH,
@@ -19,7 +21,14 @@ enum data_t
     EXTERN
 };
 
+void init_data();
+void search_data_type(char * input);
+dataNode * init_data_node(int data);
+dataNode * add_data_node(dataNode *newNode);
+void init_asciz_row();
+void free_asciz_row();
+void init_asciz_string();
+void insert_asciz_row();
 
-int search_data_type(char * input);
 
 #endif //MAMAN14_DATA_FUNCTIONS_H
