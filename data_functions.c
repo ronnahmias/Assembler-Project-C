@@ -46,7 +46,7 @@ void insert_asciz_row(){
 void insert_data_row(){
     int i;
     dataNode *newNode;
-    for (i = 0; i < DataRow->array[i]; i++) {
+    for (i = 0; DataRow->array[i] ; i++) {
         newNode = init_data_node(DataRow->array[i]);
         add_data_node(newNode);
     }

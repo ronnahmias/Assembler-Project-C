@@ -11,10 +11,9 @@ void read_by_line(FILE *cur_file, int iteration){
 }
 
 void process_input(char *input_row, int iteration){
-    int label_size;
     printf("%s", input_row); // TODO remove
     input_row = delete_spaces(input_row); /* delete white spaces if have */
-    if(label_size = has_label(input_row)){ /* check if it has label first */
+    if(has_label(input_row)){ /* check if it has label first */
         //TODO save label
         input_row = skip_label(input_row); /* skip the label from the row */
         input_row = delete_spaces(input_row); /* delete white spaces if have */
@@ -131,9 +130,10 @@ void convert_data_to_array(char * data){
     }
     /* more number to insert to array */
     if(DataRow->input_num[0] != '\0'){
-        DataRow->array[DataRow->size-1] = strtol(DataRow->input_num,&ptr,10); // TODO problem strtol
+        DataRow->array[DataRow->size-1] = strtol(DataRow->input_num,&ptr,10);
+
     }
-    /* free input num  char array helper */
+    /* free input num  char array helper */ // TODO
     //free(DataRow->input_num);
 }
 
