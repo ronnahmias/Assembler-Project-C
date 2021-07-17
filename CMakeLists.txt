@@ -3,4 +3,4 @@ project(maman14 C)
 
 set(CMAKE_C_STANDARD 90)
 
-add_executable(maman14 main.c assembler.c assembler.h parser.c parser.h constants.h data_functions.c data_functions.h shared_data.c shared_data.h parser_data_image.c parser_data_image.h)
+add_executable(maman14 main.c assembler.c assembler.h parser.c parser.h constants.h data_functions.c data_functions.h shared_data.c shared_data.h parser_data_image.c parser_data_image.h error_handler.c error_handler.h)
