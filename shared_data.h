@@ -1,6 +1,8 @@
 #ifndef MAMAN14_SHARED_DATA_H
 #define MAMAN14_SHARED_DATA_H
 
+#include "constants.h"
+
 typedef struct dataNode{
     int address;
     struct dataNode *next;
@@ -24,7 +26,7 @@ typedef struct {
     int size;
     long * array;
     int input_num_size;
-    char input_num[10];
+    char input_num[INPUT_NUM];
 }data_row;
 
 

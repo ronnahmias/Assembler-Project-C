@@ -1,6 +1,9 @@
 #include "data_functions.h"
 char * data_type[6] = { "db", "dh", "dw", "asciz", "entry", "extern" };
 
+/*
+ * init required variables
+ */
 void init_data(){
     row_data_type = (int *)calloc(1,sizeof(int)); /* data type for each row */ // TODO replace 1 with define
     if(row_data_type == NULL) {
@@ -9,6 +12,9 @@ void init_data(){
     }
 }
 
+/*
+ * init struct helper for string input row
+ */
 void init_asciz_row(){
     AscizRow = (asciz_row *)calloc(sizeof(asciz_row),1);
     if(AscizRow == NULL){
@@ -17,10 +23,16 @@ void init_asciz_row(){
     AscizRow->size = 0;
 }
 
+/*
+ * free struct helper for string input
+ */
 void free_asciz_row(){
     free(AscizRow);
 }
 
+/*
+ * init char array in struct of string input row
+ */
 void init_asciz_string(){
     AscizRow->string = (char*) calloc(sizeof(char),AscizRow->size);
     if(AscizRow->string == NULL){
@@ -28,7 +40,9 @@ void init_asciz_string(){
     }
 }
 
-/* add asciz array of chars to linked list data nodes */
+/*
+ * add asciz array of chars to linked list data nodes
+ */
 void insert_asciz_row(){
     int i;
     dataNode * pt;
@@ -92,6 +106,9 @@ void zero_input_num(){
     DataRow->input_num_size = 0;
 }
 
+/*
+ * find the data type of the input row from array
+ */
 void search_data_type(char * input)
 {
     int i, j=0;
@@ -111,6 +128,47 @@ void search_data_type(char * input)
     *row_data_type= NO_DATA_TYPE;
 }
 
+/*
+ * convert data row numbers (db,dw,dh) to long array before insert to linked list
+ */
+void convert_data_to_array(char * data){
+    int i=0;
+    char * ptr;
+    init_data_row();
+    while (data[i] != '\t' && data[i] != '\n' && data[i] != '\0' && data[i] != 13)
+    {
+        /* backspace skip it*/
+        if(data[i] == ' '){
+            i++;
+            continue;
+        }
+        /* end of number -> insert to long array */
+        if(data[i] == ','){
+            /* convert to long number before insert */
+            DataRow->array[DataRow->size-1] = strtol(DataRow->input_num,&ptr,10);
+            realloc_data_row();
+            zero_input_num();
+        }else{ /* insert number to array */
+            DataRow->input_num[DataRow->input_num_size] = data[i];
+            DataRow->input_num_size ++;
+            /* the number is bigger than 2^32 */
+            if(DataRow->input_num_size > INPUT_NUM){
+                // TODO error over size
+            }
+        }
+        i++;
+    }
+    /* more number to insert to array */
+    if(DataRow->input_num[0] != '\0'){
+        DataRow->array[DataRow->size-1] = strtol(DataRow->input_num,&ptr,10);
+    }
+    /* free input num  char array helper */ // TODO
+    //free(DataRow->input_num);
+}
+
+/*
+ * init data node for linked list for data input
+ */
 dataNode * init_data_node(long data)
 {
     dataNode * pt;
@@ -138,6 +196,9 @@ dataNode * init_data_node(long data)
     return pt;
 }
 
+/*
+ * adds the new node to linked list at the end
+ */
 dataNode * add_data_node(dataNode *newNode)
 {
     dataNode * cur_node;
