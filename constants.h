@@ -5,6 +5,9 @@
 #ifndef MAMAN14_CONSTANTS_H
 #define MAMAN14_CONSTANTS_H
 
+/* max extension len */
+#define EXT_LEN 4
+
 #define TRUE 1
 #define FALSE 0
 
@@ -23,6 +26,7 @@
 #define DATA_TYPE_NUMBER 6
 
 #define NO_DATA_TYPE -1
+#define NO_LINE_NUMBER -1
 
 #define INPUT_NUM 10
 

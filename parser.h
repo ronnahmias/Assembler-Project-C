@@ -9,6 +9,8 @@
 #include "shared_data.h"
 #include "parser_data_image.h"
 
+extern int * RowNumber;
+extern char * FileName;
 
 /* parser functions */
 

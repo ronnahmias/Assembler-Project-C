@@ -1,6 +1,11 @@
 #include "data_functions.h"
 char * data_type[6] = { "db", "dh", "dw", "asciz", "entry", "extern" };
 
+/* data_image variables */
+dataNode * DataNodes;
+asciz_row * AscizRow;
+data_row * DataRow;
+
 /*
  * init required variables
  */
@@ -167,6 +172,20 @@ void convert_data_to_array(char * data){
 }
 
 /*
+ * copy the input data of string to AscizRow structure
+ */
+void copy_asciz_string(char * data){
+    strncpy(AscizRow->string,data,AscizRow->size);
+}
+
+/*
+ * update string input size to struct
+ */
+void update_asciz_row_size(int size){
+    AscizRow->size = size;
+}
+
+/*
  * init data node for linked list for data input
  */
 dataNode * init_data_node(long data)
@@ -210,6 +229,19 @@ dataNode * add_data_node(dataNode *newNode)
             cur_node = cur_node->next;
         }
         cur_node->next = newNode;
+    }
+}
+
+// TODO only test remove end
+void test_binary_dec(){
+    unsigned i;
+    dataNode * cur = DataNodes;
+    while(cur != NULL) {
+//                    for (i = 1 << 31; i > 0; i = i / 2)
+//                        (DataNodes->db & i) ? printf("1") : printf("0");
+        printf("%d", cur->db);
+        cur = cur->next;
+        putchar('\n');
     }
 }
 

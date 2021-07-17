@@ -42,7 +42,7 @@ void process_data(char * data, int iteration){
 char * extract_asciz_string(char * data){
     data = data + 1; /* skip first bracket */
     init_asciz_string();
-    strncpy(AscizRow->string,data,AscizRow->size);
+    copy_asciz_string(data);
 }
 
 /*
@@ -63,6 +63,6 @@ int asciz_input_check(char * data){
         // TODO error string return
         return FALSE;
     }
-    AscizRow->size = i-1; /* without end bracket */
+    update_asciz_row_size(i-1); /* without end bracket */
     return TRUE;
 }

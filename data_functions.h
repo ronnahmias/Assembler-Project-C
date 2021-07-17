@@ -7,10 +7,7 @@
 #include "string.h"
 #include "shared_data.h"
 
-extern dataNode * DataNodes;
-extern int * row_data_type;
-extern asciz_row * AscizRow;
-extern data_row * DataRow;
+extern int *row_data_type;
 
 enum data_enum
 {
@@ -63,6 +60,16 @@ void init_asciz_string();
  * add asciz array of chars to linked list data nodes
  */
 void insert_asciz_row();
+
+/*
+ * copy the input data of string to AscizRow structure
+ */
+void copy_asciz_string(char * data);
+
+/*
+ * update string input size to struct
+ */
+void update_asciz_row_size(int size);
 
 /*
  * insert from long array of numbers to data nodes

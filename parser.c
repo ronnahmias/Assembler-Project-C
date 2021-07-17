@@ -5,10 +5,10 @@
  */
 void read_by_line(FILE *cur_file, int iteration){
     char data[ROW_LINE];
-    //fscanf(cur_file, "%c", &data);
     while(fgets(data, sizeof(data),cur_file)) /* read from file line by line */
     {
         *row_data_type = NO_DATA_TYPE;
+        RowNumber ++;
         process_input(data,iteration);
     }
 }
@@ -28,7 +28,8 @@ void process_input(char *input_row, int iteration){
         input_row = input_row + 1; /* skip the dot */
         search_data_type(input_row);
         if(*row_data_type == NO_DATA_TYPE){
-            // TODO ERROR NO DATA TYPE FOUND
+            add_error(ERROR_NO_DATA_TYPE,RowNumber);
+            return; /* continue to next line because error */
         }
         input_row = skip_word(input_row);/* skip the word in the line to have data */
         input_row = delete_spaces(input_row);
@@ -95,17 +96,4 @@ char * delete_spaces(char* input){
         i++;
     }
     return input + i;
-}
-
-// TODO only test remove end
-void test_binary_dec(){
-    unsigned i;
-    dataNode * cur = DataNodes;
-    while(cur != NULL) {
-//                    for (i = 1 << 31; i > 0; i = i / 2)
-//                        (DataNodes->db & i) ? printf("1") : printf("0");
-        printf("%d", cur->db);
-        cur = cur->next;
-        putchar('\n');
-    }
 }

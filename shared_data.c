@@ -1,7 +1,10 @@
 #include "shared_data.h"
 
-/* data_image variables */
-dataNode * DataNodes;
+/* current file name */
+char * FileName; // TODO add file name on start
+
+/* data type definition */
 int * row_data_type;
-asciz_row * AscizRow;
-data_row * DataRow;
+
+/* row number */
+int * RowNumber;

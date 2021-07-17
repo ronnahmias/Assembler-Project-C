@@ -7,18 +7,23 @@ int main(int argc, char** argv) {
     FILE *file;
     /* error not enough files */
     if(argc<2){
-        // TODO ERROR
-        fprintf(stderr, "missing files");
+        program_error(ERROR_MISSING_FILES);
         return 1;
     }
 
     for (i = 1; i < argc; i++) {
+        update_current_file_name(argv[i]);
         /* checks if the file was open correctrly */
         if((file = fopen(argv[i], "r")) != NULL){
             first_run(file);
-            //second_run(file);
-            // TODO check file ok
-            //export_files();
+            if(get_errors_count() == FALSE){
+                //second_run(file);
+                // TODO check file ok
+                //export_files();
+            }else{
+
+            }
+
             fclose(file); /* close current file */
         }
     }

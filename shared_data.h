@@ -2,6 +2,7 @@
 #define MAMAN14_SHARED_DATA_H
 
 #include "constants.h"
+#include "error_handler.h"
 
 typedef struct dataNode{
     int address;
