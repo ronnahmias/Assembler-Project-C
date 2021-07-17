@@ -27,27 +27,66 @@ enum data_enum
  */
 void init_data();
 
-
+/*
+ * find the data type of the input row from array
+ */
 void search_data_type(char * input);
+
+/*
+ * init data node for linked list for data input
+ */
 dataNode * init_data_node(long data);
+
+/*
+ * adds the new node to linked list at the end
+ */
 dataNode * add_data_node(dataNode *newNode);
 
 /* asciz data functions */
+
 /*
  * init struct helper for string input row
  */
 void init_asciz_row();
+
+/*
+ * free struct helper for string input
+ */
 void free_asciz_row();
+
+/*
+ * init char array in struct of string input row
+ */
 void init_asciz_string();
+
+/*
+ * add asciz array of chars to linked list data nodes
+ */
 void insert_asciz_row();
 
+/*
+ * insert from long array of numbers to data nodes
+ * after -> connect to linked data list
+ */
 void insert_data_row();
+
+/*
+ * realloc array long of the row input data
+*/
 void realloc_data_row();
+
+/*
+ * init data row struct for data input row
+*/
 void init_data_row();
+
+/*
+ * zero all input num for the next number in the input
+ */
 void zero_input_num();
 
 /*
- * parser (db,dh,dw) function
+ * convert data row numbers (db,dw,dh) to long array before insert to linked list
  */
 void convert_data_to_array(char * data);
 
