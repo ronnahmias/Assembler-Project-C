@@ -63,17 +63,6 @@ void process_data(char * data, int iteration){
             case DW:
                 convert_data_to_array(data);
                 insert_data_row(data);
-                // TODO remove after check binary
-                unsigned i;
-                dataNode * cur = DataNodes;
-                while(cur != NULL) {
-//                    for (i = 1 << 31; i > 0; i = i / 2)
-//                        (DataNodes->db & i) ? printf("1") : printf("0");
-                    printf("%d", cur->db);
-                    cur = cur->next;
-                    putchar('\n');
-                }
-                // TODO end removing
                 break;
 
             case ASCIZ:
@@ -95,12 +84,19 @@ void process_data(char * data, int iteration){
         }
     }
 }
-/* // TODO remove
- * convert data array of chars to long number
- */
-//long array_char_to_long(){
-//    long res
-//}
+
+// TODO only test remove end
+void test_binary_dec(){
+    unsigned i;
+    dataNode * cur = DataNodes;
+    while(cur != NULL) {
+//                    for (i = 1 << 31; i > 0; i = i / 2)
+//                        (DataNodes->db & i) ? printf("1") : printf("0");
+        printf("%d", cur->db);
+        cur = cur->next;
+        putchar('\n');
+    }
+}
 
 /*
  * convert data row numbers (db,dw,dh) to long array before insert to linked list
