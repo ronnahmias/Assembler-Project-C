@@ -33,7 +33,7 @@ void add_error(char * error_message, int line_number){
         errors_count ++;
         return;
     }
-    // TODO add error
+    /* TODO add error*/
 }
 
 /*
@@ -44,7 +44,7 @@ errorNode * init_error_node(char * error_message, int line_number)
     errorNode * node;
     node = (errorNode *)calloc(sizeof(errorNode), 1);
     if(node == NULL){
-        // TODO error allocation
+        /* TODO error allocation*/
     }
     node->next = NULL;
     node->error_message = error_message;
@@ -73,5 +73,5 @@ errorNode * add_error_node(errorNode *newNode)
  * program error -> prints immediately
  */
 void program_error(char * message){
-    fprintf(stderr,message);
+    fprintf(stderr,"%s\n",message);
 }

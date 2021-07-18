@@ -21,7 +21,7 @@ void process_data(char * data, int iteration){
                     extract_asciz_string(data);
                     insert_asciz_row();
                 }else{
-                    // TODO error asciz string
+                    /* TODO error asciz string*/
                 }
                 free_asciz_row();
                 break;
@@ -51,7 +51,7 @@ char * extract_asciz_string(char * data){
 int asciz_input_check(char * data){
     int i=1;/* start after the first bracket */
     if(*data != '\"'){
-        // TODO Error string
+        /* TODO Error string*/
         return FALSE;
     }
     /* start after the first bracket -> counts the length of the string */
@@ -60,7 +60,7 @@ int asciz_input_check(char * data){
         i++;
     }
     if(data[i] != '\"'){ /* no end bracket on the string */
-        // TODO error string return
+        /* TODO error string return*/
         return FALSE;
     }
     update_asciz_row_size(i-1); /* without end bracket */

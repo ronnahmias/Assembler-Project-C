@@ -17,10 +17,10 @@ void read_by_line(FILE *cur_file, int iteration){
  * process the input and check different options of the input
  */
 void process_input(char *input_row, int iteration){
-    printf("%s", input_row); // TODO remove
+    printf("%s", input_row); /* TODO remove*/
     input_row = delete_spaces(input_row); /* delete white spaces if have */
     if(has_label(input_row)){ /* check if it has label first */
-        //TODO save label
+        /*TODO save label*/
         input_row = skip_label(input_row); /* skip the label from the row */
         input_row = delete_spaces(input_row); /* delete white spaces if have */
     }

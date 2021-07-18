@@ -10,10 +10,10 @@ data_row * DataRow;
  * init required variables
  */
 void init_data(){
-    row_data_type = (int *)calloc(1,sizeof(int)); /* data type for each row */ // TODO replace 1 with define
+    row_data_type = (int *)calloc(1,sizeof(int)); /* data type for each row */ /*TODO replace 1 with define*/
     if(row_data_type == NULL) {
         printf("null");
-        // TODO error alocation
+        /*TODO error alocation*/
     }
 }
 
@@ -23,7 +23,7 @@ void init_data(){
 void init_asciz_row(){
     AscizRow = (asciz_row *)calloc(sizeof(asciz_row),1);
     if(AscizRow == NULL){
-        // TODO error allocation
+        /* TODO error allocation*/
     }
     AscizRow->size = 0;
 }
@@ -41,7 +41,7 @@ void free_asciz_row(){
 void init_asciz_string(){
     AscizRow->string = (char*) calloc(sizeof(char),AscizRow->size);
     if(AscizRow->string == NULL){
-        // tODO Error allocating
+        /* tODO Error allocating*/
     }
 }
 
@@ -53,7 +53,7 @@ void insert_asciz_row(){
     dataNode * pt;
     for(i=0;AscizRow->string[i];i++){
         pt = init_data_node(AscizRow->string[i]);
-        // TODO check pointer
+        /* TODO check pointer*/
         add_data_node(pt);
     }
 }
@@ -80,11 +80,11 @@ void insert_data_row(){
 void init_data_row(){
     DataRow = (data_row *)calloc(sizeof(data_row),1);
     if(DataRow == NULL){
-        // TODO error allocation
+        /* TODO error allocation*/
     }
     DataRow->array = (long *)calloc(sizeof(long),1);
     if(DataRow->array == NULL){
-        // TODO error allocation
+        /* TODO error allocation*/
     }
     DataRow->size = 1;
 }
@@ -95,7 +95,7 @@ void init_data_row(){
 void realloc_data_row(){
     DataRow->array = (long *)realloc(DataRow->array,(DataRow->size +1));
     if(DataRow->array == NULL){
-        // TODO error allocation
+        /* TODO error allocation*/
     }
     DataRow->size ++;
 }
@@ -158,7 +158,7 @@ void convert_data_to_array(char * data){
             DataRow->input_num_size ++;
             /* the number is bigger than 2^32 */
             if(DataRow->input_num_size > INPUT_NUM){
-                // TODO error over size
+                /* TODO error over size*/
             }
         }
         i++;
@@ -167,7 +167,7 @@ void convert_data_to_array(char * data){
     if(DataRow->input_num[0] != '\0'){
         DataRow->array[DataRow->size-1] = strtol(DataRow->input_num,&ptr,10);
     }
-    /* free input num  char array helper */ // TODO
+    /* free input num  char array helper  TODO*/
     //free(DataRow->input_num);
 }
 
@@ -193,25 +193,25 @@ dataNode * init_data_node(long data)
     dataNode * pt;
     pt = (dataNode *)calloc(sizeof(dataNode),1);
     if(pt == NULL){
-        // TODO error allocation
+        /* TODO error allocation*/
     }
     switch (*row_data_type) {
         /* byte size */
         case DB:
-        case ASCIZ: // TODO check asciz again
-            pt->db = (char)data;
+        case ASCIZ: /* TODO check asciz again*/
+            pt->data_u.db = (char)data;
             break;
         /* half word */
         case DH:
-            pt->dh = (int)data;
+            pt->data_u.data_dh.dh = (int)data;
             break;
         /* whole word */
         case DW:
-            pt->dw = data;
+            pt->data_u.data_dw.dw = data;
             break;
 
     }
-    pt->address = 0; // TODO address counter
+    pt->address = 0; /* TODO address counter*/
     return pt;
 }
 
@@ -232,14 +232,14 @@ dataNode * add_data_node(dataNode *newNode)
     }
 }
 
-// TODO only test remove end
+/* TODO only test remove end*/
 void test_binary_dec(){
     unsigned i;
     dataNode * cur = DataNodes;
     while(cur != NULL) {
 //                    for (i = 1 << 31; i > 0; i = i / 2)
 //                        (DataNodes->db & i) ? printf("1") : printf("0");
-        printf("%d", cur->db);
+        printf("%d", cur->data_u.db);
         cur = cur->next;
         putchar('\n');
     }

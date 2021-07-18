@@ -98,4 +98,4 @@ void zero_input_num();
 void convert_data_to_array(char * data);
 
 
-#endif //MAMAN14_DATA_FUNCTIONS_H
+#endif

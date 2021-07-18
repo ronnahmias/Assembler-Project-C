@@ -18,7 +18,7 @@ int main(int argc, char** argv) {
             first_run(file);
             if(get_errors_count() == FALSE){
                 //second_run(file);
-                // TODO check file ok
+                /* TODO check file ok*/
                 //export_files();
             }else{
 

@@ -49,4 +49,4 @@ int has_label(char * data);
  */
 char * skip_label(char* input);
 
-#endif //MAMAN14_PARSER_H
+#endif

@@ -12,6 +12,6 @@ void init(){
 /*
  *  update file name for the current file open
  */
-update_current_file_name(char * name){
+void update_current_file_name(char * name){
     FileName = malloc(strlen(name) + EXT_LEN + 1);
 }

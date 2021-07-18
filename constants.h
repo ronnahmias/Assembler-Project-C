@@ -1,7 +1,3 @@
-//
-// Created by RON on 14/07/2021.
-//
-
 #ifndef MAMAN14_CONSTANTS_H
 #define MAMAN14_CONSTANTS_H
 
@@ -31,4 +27,4 @@
 #define INPUT_NUM 10
 
 
-#endif //MAMAN14_CONSTANTS_H
+#endif

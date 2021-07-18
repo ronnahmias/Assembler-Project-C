@@ -18,4 +18,4 @@ int asciz_input_check(char * data);
  */
 char * extract_asciz_string(char * data);
 
-#endif //MAMAN14_PARSER_DATA_IMAGE_H
+#endif

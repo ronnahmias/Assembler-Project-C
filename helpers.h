@@ -11,6 +11,6 @@ void init();
 /*
  *  update file name for the current file open
  */
-update_current_file_name(char * name)
+void update_current_file_name(char * name);
 
-#endif //MAMAN14_HELPERS_H
+#endif

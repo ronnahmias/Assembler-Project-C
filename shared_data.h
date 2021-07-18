@@ -11,11 +11,11 @@ typedef struct dataNode{
         char db;
         struct {
             long dw:32;
-        };
+        }data_dw;
         struct {
             int dh:16;
-        };
-    };
+        }data_dh;
+    }data_u;
 }dataNode;
 
 typedef struct {
@@ -31,4 +31,4 @@ typedef struct {
 }data_row;
 
 
-#endif //MAMAN14_SHARED_DATA_H
+#endif

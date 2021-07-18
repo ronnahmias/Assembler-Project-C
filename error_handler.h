@@ -48,4 +48,4 @@ void program_error(char * message);
 #define ERROR_NO_DATA_TYPE "Error data type not found"
 #define ERROR_MISSING_FILES "Error missing files"
 
-#endif //MAMAN14_ERROR_HANDLER_H
+#endif

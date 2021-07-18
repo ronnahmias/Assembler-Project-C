@@ -13,4 +13,4 @@
  */
 void first_run(FILE *file);
 
-#endif //MAMAN14_ASSEMBLER_H
+#endif
