@@ -28,7 +28,7 @@ void process_input(char *input_row, int iteration){
         input_row = input_row + 1; /* skip the dot */
         search_data_type(input_row);
         if(*row_data_type == NO_DATA_TYPE){
-            add_error(ERROR_NO_DATA_TYPE,RowNumber);
+            add_error(ERROR_NO_DATA_TYPE, *RowNumber);
             return; /* continue to next line because error */
         }
         input_row = skip_word(input_row);/* skip the word in the line to have data */

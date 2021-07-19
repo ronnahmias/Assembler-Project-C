@@ -6,11 +6,11 @@
 #include "shared_data.h"
 #include "constants.h"
 
-typedef struct {
+typedef struct errorNode{
     int line_number;
     char * error_message;
     char * file_name;
-    struct Error *next;
+    struct errorNode *next;
 }errorNode;
 
 /*

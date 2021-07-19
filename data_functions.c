@@ -168,7 +168,7 @@ void convert_data_to_array(char * data){
         DataRow->array[DataRow->size-1] = strtol(DataRow->input_num,&ptr,10);
     }
     /* free input num  char array helper  TODO*/
-    //free(DataRow->input_num);
+    /*free(DataRow->input_num);*/
 }
 
 /*
@@ -237,8 +237,8 @@ void test_binary_dec(){
     unsigned i;
     dataNode * cur = DataNodes;
     while(cur != NULL) {
-//                    for (i = 1 << 31; i > 0; i = i / 2)
-//                        (DataNodes->db & i) ? printf("1") : printf("0");
+/*                    for (i = 1 << 31; i > 0; i = i / 2)
+                        (DataNodes->db & i) ? printf("1") : printf("0");*/
         printf("%d", cur->data_u.db);
         cur = cur->next;
         putchar('\n');

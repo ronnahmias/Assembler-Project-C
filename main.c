@@ -17,9 +17,9 @@ int main(int argc, char** argv) {
         if((file = fopen(argv[i], "r")) != NULL){
             first_run(file);
             if(get_errors_count() == FALSE){
-                //second_run(file);
+                /*second_run(file);*/
                 /* TODO check file ok*/
-                //export_files();
+                /*export_files();*/
             }else{
 
             }
