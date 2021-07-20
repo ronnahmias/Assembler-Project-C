@@ -13,4 +13,9 @@ void init();
  */
 void update_current_file_name(char * name);
 
+/*
+ * checks input file extension .as
+ */
+int check_file_extension();
+
 #endif

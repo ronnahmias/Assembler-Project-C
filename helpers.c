@@ -14,4 +14,18 @@ void init(){
  */
 void update_current_file_name(char * name){
     FileName = malloc(strlen(name) + EXT_LEN + 1);
+    FileName = name;
+}
+
+/*
+ * checks input file extension .as
+ */
+int check_file_extension(){
+    char *ext;
+    ext = strstr(FileName,DOT);
+    /* good file ext */
+    if(ext == NULL || strcmp(ext,EXT_INPUT_FILES) != 0){
+        return 0;
+    }
+    return 1;
 }

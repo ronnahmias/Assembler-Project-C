@@ -13,14 +13,19 @@ int main(int argc, char** argv) {
 
     for (i = 1; i < argc; i++) {
         update_current_file_name(argv[i]);
-        /* checks if the file was open correctrly */
+        if(!check_file_extension()){
+            program_error(ERROR_EXT_ERROR);
+            continue; /* continue to next index to check more files */
+        }
+        /* checks if the file was open correctly */
         if((file = fopen(argv[i], "r")) != NULL){
             first_run(file);
             if(get_errors_count() == FALSE){
                 /*second_run(file);*/
                 /* TODO check file ok*/
                 /*export_files();*/
-            }else{
+            }
+            else{
 
             }
 

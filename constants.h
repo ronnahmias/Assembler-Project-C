@@ -3,6 +3,7 @@
 
 /* max extension len */
 #define EXT_LEN 4
+#define EXT_INPUT_FILES ".as"
 
 #define TRUE 1
 #define FALSE 0
@@ -26,5 +27,6 @@
 
 #define INPUT_NUM 10
 
+#define DOT "."
 
 #endif

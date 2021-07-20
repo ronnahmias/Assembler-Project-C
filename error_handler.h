@@ -47,5 +47,6 @@ void program_error(char * message);
 #define ERROR_ALLOCATING_MEMORY "Error allocating memory"
 #define ERROR_NO_DATA_TYPE "Error data type not found"
 #define ERROR_MISSING_FILES "Error missing files"
+#define ERROR_EXT_ERROR "Error input file extension not compatible"
 
 #endif
