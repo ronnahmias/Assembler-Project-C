@@ -29,4 +29,6 @@
 
 #define DOT "."
 
+ #define LABEL_MAX_SIZE 31
+
 #endif

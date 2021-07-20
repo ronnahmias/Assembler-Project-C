@@ -14,6 +14,21 @@ typedef struct errorNode{
 }errorNode;
 
 /*
+ * reset row has error after end the current row
+ */
+void reset_row_has_error();
+
+/*
+ * init row has error int number
+ */
+void init_row_has_error();
+
+/*
+ * determines if the current row has error
+ */
+int row_has_error();
+
+/*
  * init error counter to zero
  */
 void init_errors_data();
@@ -48,5 +63,6 @@ void program_error(char * message);
 #define ERROR_NO_DATA_TYPE "Error data type not found"
 #define ERROR_MISSING_FILES "Error missing files"
 #define ERROR_EXT_ERROR "Error input file extension not compatible"
+#define ERROR_LABEL_OVERSIZE "Error label more than 31 characters"
 
 #endif

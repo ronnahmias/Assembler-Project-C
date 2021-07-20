@@ -2,10 +2,36 @@
 
 /* errors variables */
 errorNode * ErrorNodes;
+/* flag for error in the current row */
+int * RowHasError; /* TODO Init and zero each row*/
 extern char * FileName;
 
 /* private error handler variables */
 int errors_count;
+
+/*
+ * determines if the current row has error
+ */
+int row_has_error(){
+    return *RowHasError;
+}
+
+/*
+ * init row has error int number
+ */
+void init_row_has_error(){
+    RowHasError = (int *)calloc(sizeof(int), 1);
+    if (RowHasError == NULL){
+        add_error(ERROR_ALLOCATING_MEMORY,NO_LINE_NUMBER);
+    }
+}
+
+/*
+ * reset row has error after end the current row
+ */
+void reset_row_has_error(){
+    *RowHasError = 0;
+}
 
 /*
  * init error counter to zero

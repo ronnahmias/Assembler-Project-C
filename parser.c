@@ -10,6 +10,7 @@ void read_by_line(FILE *cur_file, int iteration){
         *row_data_type = NO_DATA_TYPE;
         RowNumber ++;
         process_input(data,iteration);
+        reset_row_has_error();
     }
 }
 
@@ -47,6 +48,7 @@ char * skip_label(char* input){
         i++;
     }
     i++; /* skip also : sign */
+    save_label(input, i);
     return input + i;
 }
 

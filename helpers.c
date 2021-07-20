@@ -7,6 +7,7 @@ void init(){
     if(RowNumber == NULL){
         add_error(ERROR_ALLOCATING_MEMORY,NO_LINE_NUMBER);
     }
+    init_row_has_error();
 }
 
 /*
