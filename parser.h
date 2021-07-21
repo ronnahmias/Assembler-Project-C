@@ -8,6 +8,7 @@
 #include "data_functions.h"
 #include "shared_data.h"
 #include "parser_data_image.h"
+#include "symbol_functions.h"
 
 extern int * RowNumber;
 extern char * FileName;

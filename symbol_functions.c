@@ -3,18 +3,22 @@
  /* symbol variables */
 symbolNode * SymbolNodes;
 
+/*
+ * save label to struct labels
+ */
 void save_label(char *data, int size){
     char * symbol;
-    if(size > LABEL_MAX_SIZE){
-        add_error(ERROR_LABEL_OVERSIZE,*RowNumber);
-    }
+    symbolNode * symbol_pt;
     symbol = init_symbol_string(size);
     if(row_has_error()){ /* we have error don't continue */
         return;
     }
-
+    strncpy(symbol,data,size);
+    symbol_pt = init_symbol_node(symbol);
+    add_symbol_node(symbol_pt);
     /* TODO continue */
 }
+
  /*
   * init char string to symbol
   */
@@ -30,15 +34,16 @@ char * init_symbol_string(int size){
 /*
  * init data node for linked list for symbol
  */
-symbolNode * init_symbol_node(long data)
+symbolNode * init_symbol_node(char* label)
 {
     symbolNode * pt;
     pt = (symbolNode *)calloc(sizeof(symbolNode),1);
     if(pt == NULL){
-        /* TODO error allocation*/
+        program_error(ERROR_ALLOCATING_MEMORY);
+        return NULL;
     }
-
-    pt->address = 0; /* TODO address counter*/
+    pt->symbol = label;
+    pt->address = *DC++; /* TODO address counter*/
     return pt;
 }
 

@@ -2,12 +2,16 @@
 /*
  * init variables
  */
-void init(){
+int init(){
     RowNumber = (int*) calloc(sizeof (int),1);
-    if(RowNumber == NULL){
-        add_error(ERROR_ALLOCATING_MEMORY,NO_LINE_NUMBER);
+    if(RowNumber != NULL && init_row_has_error() && init_dc()){
+        return OK;
     }
-    init_row_has_error();
+    /* we have found error in init functions */
+    program_error(ERROR_ALLOCATING_MEMORY);
+    return FALSE;
+    /*init_ic(); TODO*/
+
 }
 
 /*
@@ -30,3 +34,5 @@ int check_file_extension(){
     }
     return 1;
 }
+
+/* TODO free vars */

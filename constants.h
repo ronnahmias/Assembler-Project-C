@@ -7,6 +7,7 @@
 
 #define TRUE 1
 #define FALSE 0
+#define OK 1
 
 /* max row input row */
 #define ROW_LINE 81

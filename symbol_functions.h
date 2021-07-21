@@ -2,10 +2,12 @@
 #define MAMAN14_SYMBOL_FUNCTIONS_H
 #include "stdio.h"
 #include "stdlib.h"
+#include "string.h"
 #include "constants.h"
 #include "error_handler.h"
 
 extern int * RowNumber;
+extern int * DC;
 
 enum symbol_type_enum
 {
@@ -28,5 +30,25 @@ typedef struct symbolNode{
     struct symbolNode *next;
 
 }symbolNode;
+
+/*
+ * init char string to symbol
+ */
+char * init_symbol_string(int size);
+
+/*
+ * save label to struct labels
+ */
+void save_label(char *data, int size);
+
+/*
+ * init data node for linked list for symbol
+ */
+symbolNode * init_symbol_node(char* label);
+
+/*
+ * adds the new node to linked list at the end
+ */
+symbolNode * add_symbol_node(symbolNode *newNode);
 
 #endif

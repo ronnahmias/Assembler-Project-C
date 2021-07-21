@@ -8,6 +8,7 @@
 #include "shared_data.h"
 
 extern int *row_data_type;
+extern int *DC;
 
 enum data_enum
 {
@@ -18,6 +19,11 @@ enum data_enum
     ENTRY,
     EXTERN
 };
+
+/*
+ * init data counter
+ */
+int init_dc();
 
 /*
  * init required variables

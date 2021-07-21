@@ -7,6 +7,20 @@ asciz_row * AscizRow;
 data_row * DataRow;
 
 /*
+ * init data counter
+ */
+int init_dc(){
+    int * pt;
+    pt = (int *) calloc(sizeof(int),1);
+    if(pt == NULL){
+        program_error(ERROR_ALLOCATING_MEMORY);
+        return NULL;
+    }
+    DC = pt;
+    return TRUE;
+}
+
+/*
  * init required variables
  */
 void init_data(){

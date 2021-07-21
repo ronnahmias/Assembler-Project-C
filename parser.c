@@ -18,10 +18,20 @@ void read_by_line(FILE *cur_file, int iteration){
  * process the input and check different options of the input
  */
 void process_input(char *input_row, int iteration){
+    int label_size;
     printf("%s", input_row); /* TODO remove*/
     input_row = delete_spaces(input_row); /* delete white spaces if have */
-    if(has_label(input_row)){ /* check if it has label first */
+    label_size = has_label(input_row); /* check if it has label first */
+    if(row_has_error()){ /* fount error in syntax of label */
+        return;
+    }
+    if(label_size != FALSE){ /* we have found label */
+        if(label_size > LABEL_MAX_SIZE){
+            add_error(ERROR_LABEL_OVERSIZE,*RowNumber);
+            return;
+        }
         /*TODO save label*/
+        save_label(input_row, label_size);
         input_row = skip_label(input_row); /* skip the label from the row */
         input_row = delete_spaces(input_row); /* delete white spaces if have */
     }
@@ -64,7 +74,11 @@ int has_label(char * data){
     if(data[i] != ':'){ /* not label found in the row */
         return FALSE;
     }
-    return i; /* return size of label */
+    if(data[i] == ':' && data[i-1] != ' '){ /* there is label */
+        return i;
+    }
+    add_error(ERROR_LABEL_SYNTAX, *RowNumber);
+    return FALSE; /* return size of label */
 
 }
 

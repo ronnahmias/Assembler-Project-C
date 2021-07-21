@@ -8,3 +8,7 @@ int * row_data_type;
 
 /* row number */
 int * RowNumber;
+
+/* instruction, data counters */
+int * IC;
+int * DC;

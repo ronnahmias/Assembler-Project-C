@@ -6,7 +6,7 @@
 /*
  * init variables
  */
-void init();
+int init();
 
 /*
  *  update file name for the current file open

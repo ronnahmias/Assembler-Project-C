@@ -21,7 +21,7 @@ void reset_row_has_error();
 /*
  * init row has error int number
  */
-void init_row_has_error();
+int init_row_has_error();
 
 /*
  * determines if the current row has error
@@ -64,5 +64,5 @@ void program_error(char * message);
 #define ERROR_MISSING_FILES "Error missing files"
 #define ERROR_EXT_ERROR "Error input file extension not compatible"
 #define ERROR_LABEL_OVERSIZE "Error label more than 31 characters"
-
+#define ERROR_LABEL_SYNTAX "Error label syntax not correct"
 #endif
