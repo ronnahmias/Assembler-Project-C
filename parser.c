@@ -49,7 +49,26 @@ void process_input(char *input_row, int iteration){
         input_row = skip_word(input_row);/* skip the word in the line to have data */
         input_row = delete_spaces(input_row);
         process_data(input_row,iteration);
+    }else{
+        /* TODO INstruction */
+        count_instruction_long
     }
+}
+
+/*
+ * count the long of the instruction
+ */
+int count_instruction_long(char *data){
+    int i = 0;
+    while (data[i] != ' ') /* until space */
+    {
+        i++;
+    }
+    if(i> INSTRUCTION_MAX_SIZE){
+        add_error(ERROR_INSTRUCTION_NOT_FOUND, *RowNumber);
+        return FALSE;
+    }
+    return i;
 }
 
 /*

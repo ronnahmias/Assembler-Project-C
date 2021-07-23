@@ -31,5 +31,6 @@
 #define DOT "."
 
  #define LABEL_MAX_SIZE 31
+#define INSTRUCTION_MAX_SIZE 4 /* the longest instruction word */
 
 #endif
