@@ -39,7 +39,7 @@ char * init_symbol_string(int size);
 /*
  * save label to struct labels
  */
-void save_label(char *data, int size);
+int save_label(char *data, int size);
 
 /*
  * init data node for linked list for symbol

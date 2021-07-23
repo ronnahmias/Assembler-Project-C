@@ -6,17 +6,20 @@ symbolNode * SymbolNodes;
 /*
  * save label to struct labels
  */
-void save_label(char *data, int size){
+int save_label(char *data, int size){
     char * symbol;
     symbolNode * symbol_pt;
     symbol = init_symbol_string(size);
     if(row_has_error()){ /* we have error don't continue */
-        return;
+        return FALSE;
     }
-    strncpy(symbol,data,size);
+    strncpy(symbol,data,size); /* copy the symbol to symbol variable with the size that has found early */
     symbol_pt = init_symbol_node(symbol);
+    if(symbol_pt == NULL){ /* error allocating dont continue */
+        return FALSE;
+    }
     add_symbol_node(symbol_pt);
-    /* TODO continue */
+    return OK;
 }
 
  /*

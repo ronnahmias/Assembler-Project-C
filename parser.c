@@ -18,7 +18,7 @@ void read_by_line(FILE *cur_file, int iteration){
  * process the input and check different options of the input
  */
 void process_input(char *input_row, int iteration){
-    int label_size;
+    int label_size, status;
     printf("%s", input_row); /* TODO remove*/
     input_row = delete_spaces(input_row); /* delete white spaces if have */
     label_size = has_label(input_row); /* check if it has label first */
@@ -28,10 +28,14 @@ void process_input(char *input_row, int iteration){
     if(label_size != FALSE){ /* we have found label */
         if(label_size > LABEL_MAX_SIZE){
             add_error(ERROR_LABEL_OVERSIZE,*RowNumber);
-            return;
+            return; /* TODO return error */
         }
         /*TODO save label*/
-        save_label(input_row, label_size);
+        status = save_label(input_row, label_size);
+        if(status == FALSE){ /* error return */
+            return;
+            /* TODO return error */
+        }
         input_row = skip_label(input_row); /* skip the label from the row */
         input_row = delete_spaces(input_row); /* delete white spaces if have */
     }
