@@ -22,7 +22,11 @@
 
  /* number of data types option (db,dw,dw,asciz,entry,extern)*/
 #define DATA_TYPE_NUMBER 6
+#define INST_R_NUMBER 6
+#define INST_J_NUMBER 4
+#define INST_I_NUMBER 15
 
+#define NO_INSTRUCTION_FOUND -1
 #define NO_DATA_TYPE -1
 #define NO_LINE_NUMBER -1
 
@@ -30,7 +34,7 @@
 
 #define DOT "."
 
- #define LABEL_MAX_SIZE 31
+#define LABEL_MAX_SIZE 31
 #define INSTRUCTION_MAX_SIZE 4 /* the longest instruction word */
 
 #endif

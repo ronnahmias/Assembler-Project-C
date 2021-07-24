@@ -9,6 +9,7 @@
 #include "shared_data.h"
 #include "parser_data_image.h"
 #include "symbol_functions.h"
+#include "Instructions_functions.h"
 
 extern int * RowNumber;
 extern char * FileName;
@@ -49,5 +50,11 @@ int has_label(char * data);
  * skip the label -> cut the label from the input
  */
 char * skip_label(char* input);
+
+/* instructions parser functions */
+/*
+ * count the long of the instruction
+ */
+int count_instruction_long(char *data);
 
 #endif

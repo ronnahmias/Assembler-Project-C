@@ -1,9 +1,11 @@
 #ifndef MAMAN14_INSTRUCTIONS_FUNCTIONS_H
 #define MAMAN14_INSTRUCTIONS_FUNCTIONS_H
-
-#include "stdio.h"
-#include "stdlib.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "error_handler.h"
+#include "shared_data.h"
+
 
 typedef struct instructionNode{
     int address;
@@ -21,6 +23,12 @@ typedef struct instructionNode{
     }InstCode;
 }instructionNode;
 
+enum inst_type_enum{
+    R = 0,
+    J,
+    I
+};
+
 enum instruction_r_enum
 {
     ADD = 0,
@@ -32,6 +40,16 @@ enum instruction_r_enum
     MVHI,
     MVLO
 };
+
+/*
+ * init instruction variables
+ */
+init_instruction_vars();
+
+/*
+ * find instruction from 3 type and update type and action
+ */
+int find_instruction(char *data, int size);
 
 /*
  * init instruction node for linked list

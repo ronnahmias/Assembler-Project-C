@@ -18,7 +18,7 @@ void read_by_line(FILE *cur_file, int iteration){
  * process the input and check different options of the input
  */
 void process_input(char *input_row, int iteration){
-    int label_size, status;
+    int label_size, status, instruction_size, has_error = 0;
     printf("%s", input_row); /* TODO remove*/
     input_row = delete_spaces(input_row); /* delete white spaces if have */
     label_size = has_label(input_row); /* check if it has label first */
@@ -30,7 +30,6 @@ void process_input(char *input_row, int iteration){
             add_error(ERROR_LABEL_OVERSIZE,*RowNumber);
             return; /* TODO return error */
         }
-        /*TODO save label*/
         status = save_label(input_row, label_size);
         if(status == FALSE){ /* error return */
             return;
@@ -50,8 +49,21 @@ void process_input(char *input_row, int iteration){
         input_row = delete_spaces(input_row);
         process_data(input_row,iteration);
     }else{
-        /* TODO INstruction */
-        count_instruction_long
+        /* check the long of instruction */
+        if(instruction_size = count_instruction_long(input_row)){
+            /* find the instruction from 3 arrays */
+            has_error = find_instruction(input_row, instruction_size);
+            if(has_error == NO_INSTRUCTION_FOUND){
+                add_error(ERROR_INSTRUCTION_NOT_FOUND, *RowNumber);
+                return;
+            }
+            input_row = skip_word(input_row);
+            input_row = delete_spaces(input_row);
+            /*TODO process_instruction(input_row,iteration);*/
+        }else{
+            return;
+            /* TODO error*/
+        }
     }
 }
 
@@ -114,7 +126,7 @@ int is_dot(char ch){
 }
 
 /*
- * skip the word from input row
+ * skip the word from input row until the space
  */
 char * skip_word(char* input){
     int i = 0;
