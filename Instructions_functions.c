@@ -7,6 +7,7 @@ char * inst_i[15] = { "addi", "subi", "andi", "ori", "nori", "beq","bne","blt","
 extern int * Inst_Type;
 extern int * Inst_Action;
 extern int * IC;
+extern char * help_argument_array;
 
 /*
  * init instruction variables
@@ -87,6 +88,19 @@ instructionNode * init_instruction_node()
 int init_ic(){
     IC = (int *) calloc(sizeof(int),1);
     if(IC == NULL){
+        program_error(ERROR_ALLOCATING_MEMORY);
+        return NULL;
+    }
+    *IC = 100; /* init ic to address 100*/
+    return TRUE;
+}
+
+/*
+ * init help arguments array before insert to nodes
+ */
+int init_help_array(int size){
+    help_argument_array = (char *) calloc(sizeof(char),size);
+    if(help_argument_array == NULL){
         program_error(ERROR_ALLOCATING_MEMORY);
         return NULL;
     }

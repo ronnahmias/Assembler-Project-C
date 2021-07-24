@@ -6,7 +6,6 @@
 #include "error_handler.h"
 #include "shared_data.h"
 
-
 typedef struct instructionNode{
     int address;
     struct instructionNode *next;
@@ -41,6 +40,33 @@ enum instruction_r_enum
     MVLO
 };
 
+enum instruction_j_enum
+{
+    JMP = 0,
+    LA,
+    CALL,
+    STOP
+};
+
+enum instruction_i_enum
+{
+    ADDI = 0,
+    SUBI,
+    ANDI,
+    ORI,
+    NORI,
+    BEQ,
+    BNE,
+    BLT,
+    BGT,
+    LB,
+    SB,
+    LW,
+    SW,
+    LH,
+    SH
+};
+
 /*
  * init instruction variables
  */
@@ -60,5 +86,10 @@ instructionNode * init_instruction_node();
  * init instruction counter
  */
 int init_ic();
+
+/*
+ * init help arguments array before insert to nodes
+ */
+int init_help_array(int size);
 
 #endif

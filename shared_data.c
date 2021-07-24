@@ -12,6 +12,7 @@ int * RowNumber;
 /* instruction variables */
 int * Inst_Type;
 int * Inst_Action;
+char * help_argument_array;
 
 /* instruction, data counters */
 int * IC;
