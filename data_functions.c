@@ -10,13 +10,11 @@ data_row * DataRow;
  * init data counter
  */
 int init_dc(){
-    int * pt;
-    pt = (int *) calloc(sizeof(int),1);
-    if(pt == NULL){
+    DC = (int *) calloc(sizeof(int),1);
+    if(DC == NULL){
         program_error(ERROR_ALLOCATING_MEMORY);
         return NULL;
     }
-    DC = pt;
     return TRUE;
 }
 
