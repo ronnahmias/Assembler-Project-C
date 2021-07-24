@@ -56,4 +56,9 @@ int find_instruction(char *data, int size);
  */
 instructionNode * init_instruction_node();
 
+/*
+ * init instruction counter
+ */
+int init_ic();
+
 #endif

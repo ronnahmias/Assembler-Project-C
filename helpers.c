@@ -4,14 +4,13 @@
  */
 int init(){
     RowNumber = (int*) calloc(sizeof (int),1);
-    if(RowNumber != NULL && init_row_has_error() && init_dc() && init_instruction_vars()){
+    if(RowNumber != NULL && init_row_has_error() && init_dc()
+    && init_instruction_vars() && init_ic()){
         return OK;
     }
     /* we have found error in init functions */
     program_error(ERROR_ALLOCATING_MEMORY);
     return FALSE;
-    /*init_ic(); TODO*/
-
 }
 
 /*

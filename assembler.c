@@ -6,6 +6,7 @@
  */
 void first_run(FILE *file)
 {
+    /* TODO remove*/
     instructionNode *pt;
     pt = init_instruction_node();
     pt->InstCode.InstructionsTypeR.opcode = 1;

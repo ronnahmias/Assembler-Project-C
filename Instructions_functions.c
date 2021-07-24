@@ -6,6 +6,7 @@ char * inst_i[15] = { "addi", "subi", "andi", "ori", "nori", "beq","bne","blt","
 
 extern int * Inst_Type;
 extern int * Inst_Action;
+extern int * IC;
 
 /*
  * init instruction variables
@@ -78,4 +79,16 @@ instructionNode * init_instruction_node()
     }
     pt->address = 0; /* TODO address counter*/
     return pt;
+}
+
+/*
+ * init instruction counter
+ */
+int init_ic(){
+    IC = (int *) calloc(sizeof(int),1);
+    if(IC == NULL){
+        program_error(ERROR_ALLOCATING_MEMORY);
+        return NULL;
+    }
+    return TRUE;
 }
