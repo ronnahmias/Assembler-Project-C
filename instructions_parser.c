@@ -71,12 +71,14 @@ int process_instruction(char * data,int iteration){
                 case NOR:
                     /* we expect 3 arguments with $ */
                     extract_numbers_dollars(data, THREE_ARGS);
+                    /* TODO continue */
                     break;
                 case MOVE:
                 case MVHI:
                 case MVLO:
                     /* we expect 2 arguments */
                     extract_numbers_dollars(data, TWO_ARGS);
+                    /* TODO continue */
                     break;
             }
             break;
