@@ -2,28 +2,58 @@
 
 extern int * Inst_Type;
 extern int * Inst_Action;
+extern char * help_argument_array;
+extern int *RowNumber;
 
-extern enum inst_type_enum;
-extern enum instruction_r_enum;
-extern enum instruction_j_enum;
-extern enum instruction_i_enum;
+extern inst_type_enum instruction_type;
+extern instruction_r_enum instruction_r;
+extern instruction_j_enum instruction_j;
+extern instruction_i_enum instruction_i;
 
 /*
  * extract from string numbers that near the dollar sign
  * according to number of argument expected
 */
 int extract_numbers_dollars(char * data, int num_args){
-    int i=0;
-    char *help_arr;
-    help_arr = init_help_array(num_args);
-    /* TODO continue */
-    while(data[i] != '\n' || data[i] != '\t'){
+    int i=0,dollar_flag =0, help_index=0, num_flag =0;
+    if(init_help_array(num_args) == NULL_SIGN){
+        /* error allocate*/
+        return ERROR;
+    }
+    while(data[i] != '\t' && data[i] != '\n' && data[i] != '\0' && data[i] != 13 && data[i] != '\r'){
         if(data[i] == ' '){
             i++;
             continue;
         }
-        i++;
+        if(!dollar_flag && data[i] == '$'){
+            /* next index need to be number */
+            dollar_flag =1;
+            i++;
+            continue;
+        }
+        if(num_flag && data[i] == ','){
+            num_flag = 0;
+            i++;
+            continue;
+        }
+        if(dollar_flag && isdigit(data[i])){
+            /* need to be number -> save to help array */
+            dollar_flag =0;
+            num_flag = 1;
+            help_argument_array[help_index++] = data[i++];
+            continue;
+        }
+        /* there is chars that doesn't need to be or in wrong order */
+        add_error(ERROR_ARGUMENTS_ERROR,*RowNumber);
+        return FALSE;
     }
+    if(help_argument_array[FIRST_INDEX] == NULL_SIGN){
+        /* no argument -> error */
+        add_error(ERROR_ARGUMENTS_ERROR,*RowNumber);
+        return ERROR;
+    }
+    /* we have run over all the arguments */
+    return OK;
 }
 
 /*
@@ -40,11 +70,13 @@ int process_instruction(char * data,int iteration){
                 case OR:
                 case NOR:
                     /* we expect 3 arguments with $ */
+                    extract_numbers_dollars(data, THREE_ARGS);
                     break;
                 case MOVE:
                 case MVHI:
                 case MVLO:
                     /* we expect 2 arguments */
+                    extract_numbers_dollars(data, TWO_ARGS);
                     break;
             }
             break;

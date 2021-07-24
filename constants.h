@@ -27,6 +27,7 @@
 #define INST_I_NUMBER 15
 
 #define NO_INSTRUCTION_FOUND -1
+#define ERROR -1
 #define NO_DATA_TYPE -1
 #define NO_LINE_NUMBER -1
 
@@ -36,5 +37,9 @@
 
 #define LABEL_MAX_SIZE 31
 #define INSTRUCTION_MAX_SIZE 4 /* the longest instruction word */
+#define FIRST_INDEX 0
+#define THREE_ARGS 3
+#define TWO_ARGS 2
+#define NULL_SIGN '\0'
 
 #endif

@@ -10,6 +10,7 @@
 #include "parser_data_image.h"
 #include "symbol_functions.h"
 #include "Instructions_functions.h"
+#include "instructions_parser.h"
 
 extern int * RowNumber;
 extern char * FileName;
@@ -24,7 +25,7 @@ void read_by_line(FILE *cur_file, int iteration);
 /*
  * process the input and check different options of the input
  */
-void process_input(char *input_row, int iteration);
+int process_input(char *input_row, int iteration);
 
 /*
  * delete spaces from input

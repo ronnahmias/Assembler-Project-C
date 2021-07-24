@@ -13,7 +13,7 @@ int init_dc(){
     DC = (int *) calloc(sizeof(int),1);
     if(DC == NULL){
         program_error(ERROR_ALLOCATING_MEMORY);
-        return NULL;
+        return ERROR;
     }
     return TRUE;
 }
@@ -152,7 +152,7 @@ void convert_data_to_array(char * data){
     int i=0;
     char * ptr;
     init_data_row();
-    while (data[i] != '\t' && data[i] != '\n' && data[i] != '\0' && data[i] != 13)
+    while (data[i] != '\t' && data[i] != '\n' && data[i] != '\0' && data[i] != 13 && data[i] != '\r')
     {
         /* backspace skip it*/
         if(data[i] == ' '){

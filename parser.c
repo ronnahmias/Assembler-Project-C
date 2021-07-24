@@ -17,23 +17,21 @@ void read_by_line(FILE *cur_file, int iteration){
 /*
  * process the input and check different options of the input
  */
-void process_input(char *input_row, int iteration){
+int process_input(char *input_row, int iteration){
     int label_size, status, instruction_size, has_error = 0;
-    printf("%s", input_row); /* TODO remove*/
     input_row = delete_spaces(input_row); /* delete white spaces if have */
     label_size = has_label(input_row); /* check if it has label first */
     if(row_has_error()){ /* fount error in syntax of label */
-        return;
+        return ERROR;
     }
     if(label_size != FALSE){ /* we have found label */
         if(label_size > LABEL_MAX_SIZE){
             add_error(ERROR_LABEL_OVERSIZE,*RowNumber);
-            return; /* TODO return error */
+            return ERROR;
         }
         status = save_label(input_row, label_size);
         if(status == FALSE){ /* error return */
-            return;
-            /* TODO return error */
+            return ERROR;
         }
         input_row = skip_label(input_row); /* skip the label from the row */
         input_row = delete_spaces(input_row); /* delete white spaces if have */
@@ -43,7 +41,7 @@ void process_input(char *input_row, int iteration){
         search_data_type(input_row);
         if(*row_data_type == NO_DATA_TYPE){
             add_error(ERROR_NO_DATA_TYPE, *RowNumber);
-            return; /* continue to next line because error */
+            return ERROR; /* continue to next line because error */
         }
         input_row = skip_word(input_row);/* skip the word in the line to have data */
         input_row = delete_spaces(input_row);
@@ -55,14 +53,14 @@ void process_input(char *input_row, int iteration){
             has_error = find_instruction(input_row, instruction_size);
             if(has_error == NO_INSTRUCTION_FOUND){
                 add_error(ERROR_INSTRUCTION_NOT_FOUND, *RowNumber);
-                return;
+                return ERROR;
             }
             input_row = skip_word(input_row);
             input_row = delete_spaces(input_row);
-            /*TODO process_instruction(input_row,iteration);*/
+            process_instruction(input_row,iteration);
         }else{
-            return;
-            /* TODO error*/
+            add_error(ERROR_INSTRUCTION_NOT_FOUND, *RowNumber);
+            return ERROR;
         }
     }
 }

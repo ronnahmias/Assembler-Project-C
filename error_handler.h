@@ -67,4 +67,5 @@ void program_error(char * message);
 #define ERROR_LABEL_SYNTAX "Error label syntax not correct"
 
 #define ERROR_INSTRUCTION_NOT_FOUND "Error Instruction Not found"
+#define ERROR_ARGUMENTS_ERROR "Error parsing argument in line"
 #endif

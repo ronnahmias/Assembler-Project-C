@@ -22,14 +22,13 @@ typedef struct instructionNode{
     }InstCode;
 }instructionNode;
 
-enum inst_type_enum{
+typedef enum{
     R = 0,
     J,
     I
-};
+}inst_type_enum;
 
-enum instruction_r_enum
-{
+typedef enum{
     ADD = 0,
     SUB,
     AND,
@@ -38,18 +37,16 @@ enum instruction_r_enum
     MOVE,
     MVHI,
     MVLO
-};
+} instruction_r_enum;
 
-enum instruction_j_enum
-{
+typedef enum{
     JMP = 0,
     LA,
     CALL,
     STOP
-};
+}instruction_j_enum;
 
-enum instruction_i_enum
-{
+typedef enum{
     ADDI = 0,
     SUBI,
     ANDI,
@@ -65,12 +62,12 @@ enum instruction_i_enum
     SW,
     LH,
     SH
-};
+}instruction_i_enum;
 
 /*
  * init instruction variables
  */
-init_instruction_vars();
+int init_instruction_vars();
 
 /*
  * find instruction from 3 type and update type and action

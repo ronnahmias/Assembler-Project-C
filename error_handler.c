@@ -23,7 +23,7 @@ int init_row_has_error(){
     RowHasError = (int *)calloc(sizeof(int), 1);
     if (RowHasError == NULL){
         add_error(ERROR_ALLOCATING_MEMORY,NO_LINE_NUMBER);
-        return NULL;
+        return ERROR;
     }
     return OK;
 }

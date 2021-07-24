@@ -1,6 +1,6 @@
 #include "Instructions_functions.h"
 
-char * inst_r[6] = { "add", "sub", "and", "or", "nor", "move","mvhi","mvlo" };
+char * inst_r[8] = { "add", "sub", "and", "or", "nor", "move","mvhi","mvlo" };
 char * inst_j[4] = { "jmp", "la", "call", "stop" };
 char * inst_i[15] = { "addi", "subi", "andi", "ori", "nori", "beq","bne","blt","bgt","lb","sb","lw","sw","lh","sh" };
 
@@ -12,12 +12,12 @@ extern char * help_argument_array;
 /*
  * init instruction variables
  */
-init_instruction_vars(){
+int init_instruction_vars(){
     Inst_Type = (int*) calloc(sizeof (int),1);
     Inst_Action = (int*) calloc(sizeof (int),1);
     if(Inst_Type == NULL || Inst_Action == NULL){
         program_error(ERROR_ALLOCATING_MEMORY);
-        return NULL;
+        return ERROR;
     }
     return TRUE;
 }
@@ -89,7 +89,7 @@ int init_ic(){
     IC = (int *) calloc(sizeof(int),1);
     if(IC == NULL){
         program_error(ERROR_ALLOCATING_MEMORY);
-        return NULL;
+        return NULL_SIGN;
     }
     *IC = 100; /* init ic to address 100*/
     return TRUE;
@@ -99,10 +99,11 @@ int init_ic(){
  * init help arguments array before insert to nodes
  */
 int init_help_array(int size){
+    int i=0;
     help_argument_array = (char *) calloc(sizeof(char),size);
     if(help_argument_array == NULL){
         program_error(ERROR_ALLOCATING_MEMORY);
-        return NULL;
+        return ERROR;
     }
     return TRUE;
 }
