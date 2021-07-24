@@ -138,7 +138,7 @@ void search_data_type(char * input)
 
     for (i = 0; i < DATA_TYPE_NUMBER; i++)
     {
-        if (!strncmp(data_type[i], input,j) && strlen(data_type[i]) == j) /* compare the set for the list of commands */
+        if (!strncmp(data_type[i], input,j) && strlen(data_type[i]) == j)
         {
             *row_data_type = i;
             return;
