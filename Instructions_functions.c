@@ -3,11 +3,18 @@
 char * inst_r[8] = { "add", "sub", "and", "or", "nor", "move","mvhi","mvlo" };
 char * inst_j[4] = { "jmp", "la", "call", "stop" };
 char * inst_i[15] = { "addi", "subi", "andi", "ori", "nori", "beq","bne","blt","bgt","lb","sb","lw","sw","lh","sh" };
+int op_code_r[8] = { 0,0,0,0,0,1,1,1 };
+int op_code_j[4] = { 30,31,32,63 };
+int op_code_i[15] = { 10,11,12,13,14,15,16,17,18,19,20,21,22,23,24 };
+int funct_r[8] = { 1,2,3,4,5,1,2,3 };
+
+/* instruction variables */
+instructionNode * InstructionNodes;
 
 extern int * Inst_Type;
 extern int * Inst_Action;
 extern int * IC;
-extern char * help_argument_array;
+extern unsigned int * help_argument_array;
 
 /*
  * init instruction variables
@@ -68,6 +75,91 @@ int find_instruction(char *data, int size){
 }
 
 /*
+ * adds the new node to linked list at the end
+ */
+void add_inst_node(instructionNode *newNode){
+    instructionNode * cur_node;
+    if(InstructionNodes == NULL){ /* this is the first node in the int nodes */
+        InstructionNodes = newNode;
+    }else{
+        cur_node = InstructionNodes;
+        while(cur_node->next != NULL){ /* insert to tail of the linked list of inst nodes */
+            cur_node = cur_node->next;
+        }
+        cur_node->next = newNode;
+    }
+}
+
+/*
+ * insert data to instruction node of r type instruction
+ */
+int Insert_R_Args(){
+    instructionNode * newNode;
+    unsigned int rd,rs,rt;
+    int i=0;
+    newNode = init_instruction_node();
+    if(newNode == NULL){
+        return ERROR;
+    }
+    switch (*Inst_Action) {
+        case ADD:
+        case SUB:
+        case AND:
+        case OR:
+        case NOR:
+            rs = help_argument_array[i++];
+            rt = help_argument_array[i++];
+            rd = help_argument_array[i++];
+            break;
+        case MOVE:
+        case MVHI:
+        case MVLO:
+            rd = help_argument_array[i++];
+            rs = help_argument_array[i++];
+            rt = UNUSED;
+            break;
+    }
+    newNode->InstCode.InstructionsTypeR.unused = UNUSED;
+    newNode->InstCode.InstructionsTypeR.funct = funct_r[*Inst_Action];
+    newNode->InstCode.InstructionsTypeR.rd = rd;
+    newNode->InstCode.InstructionsTypeR.rt = rt;
+    newNode->InstCode.InstructionsTypeR.rs = rs;
+    newNode->InstCode.InstructionsTypeR.opcode = op_code_r[*Inst_Action];
+    add_inst_node(newNode);
+    return OK;
+}
+
+/*
+ * insert data to instruction node of j type instruction
+ */
+int Insert_J_Args(int reg){
+    instructionNode * newNode;
+    unsigned int address;
+    int i=0;
+    newNode = init_instruction_node();
+    if(newNode == NULL){
+        return ERROR;
+    }
+    switch(*Inst_Action){
+        case JMP:
+            address = help_argument_array[i++];
+            break;
+        case LA:
+        case CALL:
+            /* label as argument expect */
+            break;
+        case STOP:
+            /* no arguments expected */
+            break;
+    }
+    newNode->InstCode.InstructionsTypeJ.address = address;
+    newNode->InstCode.InstructionsTypeJ.reg = reg;
+    newNode->InstCode.InstructionsTypeJ.opcode = op_code_j[*Inst_Action];
+    add_inst_node(newNode);
+    return OK;
+}
+
+/*
  * init instruction node for linked list
  */
 instructionNode * init_instruction_node()
@@ -78,7 +170,8 @@ instructionNode * init_instruction_node()
         program_error(ERROR_ALLOCATING_MEMORY);
         return NULL;
     }
-    pt->address = 0; /* TODO address counter*/
+    pt->address = *IC;
+    *IC = *IC + 4; /* increment ic counter in 4 */
     return pt;
 }
 
@@ -100,7 +193,7 @@ int init_ic(){
  */
 int init_help_array(int size){
     int i=0;
-    help_argument_array = (char *) calloc(sizeof(char),size);
+    help_argument_array = (unsigned int *) calloc(sizeof(unsigned int),size);
     if(help_argument_array == NULL){
         program_error(ERROR_ALLOCATING_MEMORY);
         return ERROR;

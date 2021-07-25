@@ -47,7 +47,7 @@ int process_input(char *input_row, int iteration){
         input_row = delete_spaces(input_row);
         process_data(input_row,iteration);
     }else{
-        /* check the long of instruction */
+        /* check the size of instruction */
         if(instruction_size = count_instruction_long(input_row)){
             /* find the instruction from 3 arrays */
             has_error = find_instruction(input_row, instruction_size);

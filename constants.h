@@ -41,5 +41,9 @@
 #define THREE_ARGS 3
 #define TWO_ARGS 2
 #define NULL_SIGN '\0'
+#define UNUSED 0
+
+#define MAX_REGISTER 31
+#define MIN_REGISTER 0
 
 #endif

@@ -19,6 +19,11 @@ typedef struct instructionNode{
             unsigned int rs:5;
             unsigned int opcode:6;
         }InstructionsTypeR;
+        struct{
+            unsigned int address:25;
+            unsigned int reg:1;
+            unsigned int opcode:6;
+        }InstructionsTypeJ;
     }InstCode;
 }instructionNode;
 
@@ -73,6 +78,21 @@ int init_instruction_vars();
  * find instruction from 3 type and update type and action
  */
 int find_instruction(char *data, int size);
+
+/*
+ * insert data to instruction node of r type instruction
+ */
+int Insert_R_Args();
+
+/*
+ * insert data to instruction node of j type instruction
+ */
+int Insert_J_Args(int reg);
+
+/*
+ * adds the new node to linked list at the end
+ */
+void add_inst_node(instructionNode *newNode);
 
 /*
  * init instruction node for linked list
