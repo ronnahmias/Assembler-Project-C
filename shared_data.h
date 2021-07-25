@@ -3,6 +3,21 @@
 
 #include "constants.h"
 #include "error_handler.h"
+#include <limits.h>
+
+/* for long variable */
+#define TARGET_MAX 2147483647L
+#if   SCHAR_MAX >= TARGET_MAX
+typedef signed char int32;
+#elif SHORT_MAX >= TARGET_MAX
+typedef short int32;
+#elif INT_MAX   >= TARGET_MAX
+typedef int int32;
+#else
+typedef long int32;
+#endif
+
+#undef TARGET_MAX
 
 typedef struct dataNode{
     int address;
@@ -10,7 +25,7 @@ typedef struct dataNode{
     union {
         char db;
         struct {
-            long dw:32;
+            int32 dw:32;
         }data_dw;
         struct {
             int dh:16;
