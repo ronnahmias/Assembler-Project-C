@@ -71,6 +71,8 @@ void program_error(char * message);
 #define ERROR_STOP_ARGUMENT "Error stop command have arguments"
 #define ERROR_PARSING_NUMBER "Error parsing number"
 #define ERROR_REGISTER_RANGE "Error register not in range"
+#define ERROR_IMMED_RANGE "Error immed not in range"
+
 
 
 #endif

@@ -109,9 +109,4 @@ int init_ic();
  */
 int init_help_array(int size);
 
-/*
- * init help argument of immed number
- */
-int init_immed();
-
 #endif

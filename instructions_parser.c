@@ -3,7 +3,6 @@
 extern int * Inst_Type;
 extern int * Inst_Action;
 extern unsigned int * help_argument_array;
-extern signed int * immed;
 extern int *RowNumber;
 
 extern inst_type_enum instruction_type;
@@ -249,50 +248,170 @@ int extract_label(char *data){
  * checks that we don't have arguments in the line
  */
 int no_args(char *data){
-    int i=0;
-    data = delete_spaces(data);
-    while(data[i] != '\n'){
-        if(!isspace(data[i]) &&  data[i] != NEW_LINE){ /* there is more chars -> errors */
-            add_error(ERROR_STOP_ARGUMENT,*RowNumber);
-            return ERROR;
-        }
-        i++;
+    int data_index = 0;
+    /* skip white chars */
+    data_index += skip_white_spaces(data,data_index);
+    /* no end for line -> error */
+    if(data[data_index] == NEW_LINE || data[data_index] == '\r'|| data[data_index] == NULL_SIGN){
+        /* line correct parsing */
+        return OK;
+    }else{
+        add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
+        return ERROR;
     }
-    return OK;
 }
 
 /*
- * extract from string numbers that near the dollar sign
- * according to number of argument expected
+ * extract 2 reg args and immed number 16 bits signed
 */
-int extract_immed_dollar(char * data, int num_args){
-    int i=0,dollar_flag =0,char_num_index = 0;
-    char temp_char_num[3];
-    if(init_help_array(TWO_ARGS) == NULL_SIGN || init_immed() == NULL_SIGN){
+int extract_immed_row(char * data, signed int *immed){
+    /* help variables */
+    char temp_data[IMMED_DIGITS];
+    int data_index = 0;
+    int temp_index = 0;
+    int help_index = 0;
+    unsigned int temp_num;
+    signed int temp_immed;
+
+    if(init_help_array(TWO_ARGS) == NULL_SIGN){
         /* error allocate*/
         return ERROR;
     }
-    while(data[i] != '\n') {
-        if(dollar_flag){
-            if(isspace(data[i])){ /* after dollar we need number */
-                add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
-                return ERROR;
-            }
-            temp_char_num[char_num_index++] = data[i]; /* insert the number to temp array */
-
-        }
-        if(isspace(data[i]) &&  data[i] != NEW_LINE){ /* white chars */
-            i++;
-            continue;
-        }
-        if(data[i] == '$'){
-            dollar_flag = 1;
-            i++;
-            continue;
-        }
+    /* skip white chars */
+    data_index += skip_white_spaces(data,data_index);
+    /* expect now $ sign */
+    if (data[data_index] != '$'){
+        add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
+        return ERROR;
     }
-    /* we have run over all the arguments */
-    return OK;
+    data_index++; /* skip '$' */
+    /* take the first register */
+    while (data[data_index] >= '0' && data[data_index] <= '9')
+    {
+        temp_data[temp_index] = data[data_index]; /* insert number to temp array array */
+        data_index++;
+        temp_index++;
+    }
+    /* no number insert or over 2 digits -> error */
+    if (temp_index == 0 || temp_index > 2)
+    {
+        add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
+        return ERROR;
+    }
+    temp_num = strtol(temp_data,NULL,10); /* convert to num */
+    if(register_range(temp_num) == ERROR){
+        /* register not in range */
+        return ERROR;
+    }else{
+        /* insert number to array for future process */
+        help_argument_array[help_index] = temp_num;
+        help_index++;
+    }
+
+    /* next need to be immed */
+    memset(temp_data, 0, sizeof(temp_data)); /* init temp again */
+    temp_index = 0;
+
+    /* skip white chars */
+    data_index += skip_white_spaces(data,data_index);
+    /* check ',' sign */
+    if (data[data_index] != ','){
+        add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
+        return ERROR;
+    }
+    data_index++; /* skip ',' */
+    /* skip white chars */
+    data_index += skip_white_spaces(data,data_index);
+
+    /* maybe minus sign first */
+    if(data[data_index] == '-'){
+        temp_data[temp_index] = data[data_index]; /* insert minus */
+        data_index++;
+        temp_index++;
+    }
+
+    /* expect  number  sign */
+    while (data[data_index] >= '0' && data[data_index] <= '9')
+    {
+        temp_data[temp_index] = data[data_index]; /* insert number to temp array array */
+        data_index++;
+        temp_index++;
+    }
+
+    /* no number insert -> error */
+    if (temp_index == 0)
+    {
+        add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
+        return ERROR;
+    }
+    temp_immed = strtol(temp_data,NULL,10); /* convert to num */
+    if(immed_range(temp_immed) == ERROR){
+        /* immed not in range */
+        return ERROR;
+    }else{
+        /* insert insert to immed variable */
+        *immed = temp_immed;
+    }
+
+    /* now we have another reg number */
+
+    /* next need to be immed */
+    memset(temp_data, 0, sizeof(temp_data)); /* init temp again */
+    temp_index = 0;
+
+    /* skip white chars */
+    data_index += skip_white_spaces(data,data_index);
+    /* check ',' sign */
+    if (data[data_index] != ','){
+        add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
+        return ERROR;
+    }
+    data_index++; /* skip ',' */
+    /* skip white chars */
+    data_index += skip_white_spaces(data,data_index);
+
+    /* expect now $ sign */
+    if (data[data_index] != '$'){
+        add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
+        return ERROR;
+    }
+    data_index++; /* skip '$' */
+    /* take the first register */
+    while (data[data_index] >= '0' && data[data_index] <= '9')
+    {
+        temp_data[temp_index] = data[data_index]; /* insert number to temp array array */
+        data_index++;
+        temp_index++;
+    }
+    /* no number insert or over 2 digits -> error */
+    if (temp_index == 0 || temp_index > 2)
+    {
+        add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
+        return ERROR;
+    }
+    temp_num = strtol(temp_data,NULL,10); /* convert to num */
+    if(register_range(temp_num) == ERROR){
+        /* register not in range */
+        return ERROR;
+    }else{
+        /* insert number to array for future process */
+        help_argument_array[help_index] = temp_num;
+        help_index++;
+    }
+    if(help_index == TWO_ARGS){
+        /* no end for line -> error */
+        if(data[data_index] == NEW_LINE || data[data_index] == '\r'){
+            /* line correct parsing */
+            return OK;
+        }else{
+            add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
+            return ERROR;
+        }
+    }else{
+        /* something went wrong */
+        add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
+        return ERROR;
+    }
 }
 
 
@@ -303,6 +422,7 @@ int extract_immed_dollar(char * data, int num_args){
  */
 int process_instruction(char * data,int iteration){
     int error_flag, reg=0;
+    signed int immed;
     switch(*Inst_Type){
         case R:
             switch(*Inst_Action){
@@ -331,12 +451,12 @@ int process_instruction(char * data,int iteration){
             switch(*Inst_Action){
                 case JMP:
                     /* 1 label or number as argument expect */
-                    error_flag = extract_label_or_number(data, &reg);
+                    /* TODO switch */error_flag = extract_label_or_number(data, &reg);
                     break;
                 case LA:
                 case CALL:
                     /* label as argument expect */
-                    error_flag = extract_label(data);
+                    /* TODO switch */error_flag = extract_label(data);
                     break;
                 case STOP:
                     /* no arguments expected */
@@ -362,13 +482,14 @@ int process_instruction(char * data,int iteration){
                 case LH:
                 case SH:
                     /* expect 3 arguments 1 number in the center without $ */
-                    error_flag = extract_immed_dollar(data,TWO_ARGS);
+                    error_flag = extract_immed_row(data,&immed);
                     break;
                 case BEQ:
                 case BNE:
                 case BLT:
                 case BGT:
                     /* expect 2 argument with $ and label at end */
+
                     break;
             }
             break;

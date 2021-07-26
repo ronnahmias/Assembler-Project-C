@@ -49,5 +49,6 @@
 
 #define MAX_IMMED 32767
 #define MIN_IMMED -32768
+#define IMMED_DIGITS 6
 
 #endif

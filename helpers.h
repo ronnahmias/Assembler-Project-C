@@ -19,6 +19,11 @@ int label_start_char(char * data);
 int register_range(unsigned int num);
 
 /*
+ * checks range of immed number
+ */
+int immed_range(signed int num);
+
+/*
  * counts white spaces from index
  */
 int skip_white_spaces(char * data,int index);

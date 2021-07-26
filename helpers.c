@@ -38,6 +38,17 @@ int register_range(unsigned int num){
 }
 
 /*
+ * checks range of immed number
+ */
+int immed_range(signed int num){
+    if(num > MAX_IMMED || num < MIN_IMMED){
+        add_error(ERROR_IMMED_RANGE, *RowNumber);
+        return ERROR;
+    }
+    return OK;
+}
+
+/*
  * checks that label is start with char and not a number
  */
 int label_start_char(char * data){

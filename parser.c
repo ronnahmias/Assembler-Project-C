@@ -70,7 +70,7 @@ int process_input(char *input_row, int iteration){
  */
 int count_instruction_long(char *data){
     int i = 0;
-    while (data[i] != ' ') /* until space */
+    while (!isspace(data[i])) /* until space */
     {
         i++;
     }

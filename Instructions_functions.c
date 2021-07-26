@@ -15,7 +15,6 @@ extern int * Inst_Type;
 extern int * Inst_Action;
 extern int * IC;
 extern unsigned int * help_argument_array;
-extern signed int * immed;
 
 /*
  * init instruction variables
@@ -196,19 +195,6 @@ int init_help_array(int size){
     int i=0;
     help_argument_array = (unsigned int *) calloc(sizeof(unsigned int),size);
     if(help_argument_array == NULL){
-        program_error(ERROR_ALLOCATING_MEMORY);
-        return ERROR;
-    }
-    return TRUE;
-}
-
-/*
- * init help argument of immed number
- */
-int init_immed(){
-    int i=0;
-    immed = (signed int *) calloc(sizeof(signed int),1);
-    if(immed == NULL){
         program_error(ERROR_ALLOCATING_MEMORY);
         return ERROR;
     }
