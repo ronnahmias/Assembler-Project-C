@@ -6,6 +6,7 @@
 #include <ctype.h>
 #include "Instructions_functions.h"
 #include "shared_data.h"
+#include "helpers.h"
 
 /*
  * process the data of the instruction row and check how many arguments

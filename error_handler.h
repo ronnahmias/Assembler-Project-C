@@ -68,5 +68,9 @@ void program_error(char * message);
 
 #define ERROR_INSTRUCTION_NOT_FOUND "Error Instruction Not found"
 #define ERROR_ARGUMENTS_ERROR "Error parsing argument in line"
+#define ERROR_STOP_ARGUMENT "Error stop command have arguments"
 #define ERROR_PARSING_NUMBER "Error parsing number"
+#define ERROR_REGISTER_RANGE "Error register not in range"
+
+
 #endif

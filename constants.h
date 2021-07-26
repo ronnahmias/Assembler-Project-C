@@ -41,9 +41,13 @@
 #define THREE_ARGS 3
 #define TWO_ARGS 2
 #define NULL_SIGN '\0'
+#define NEW_LINE '\n'
 #define UNUSED 0
 
 #define MAX_REGISTER 31
 #define MIN_REGISTER 0
+
+#define MAX_IMMED 32767
+#define MIN_IMMED -32768
 
 #endif

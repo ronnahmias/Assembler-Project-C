@@ -13,6 +13,7 @@ int * RowNumber;
 int * Inst_Type;
 int * Inst_Action;
 unsigned int * help_argument_array;
+signed int * immed;
 
 /* instruction, data counters */
 int * IC;

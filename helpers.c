@@ -14,6 +14,40 @@ int init(){
 }
 
 /*
+ * counts white spaces
+ */
+int skip_white_spaces(char * data,int index){
+    int i=0;
+    while (data[index] == ' ' || data[index] == '\t')
+    {
+        index++;
+        i++;
+    }
+    return i;
+}
+
+/*
+ * checks range of register between 0-31
+ */
+int register_range(unsigned int num){
+    if(num > MAX_REGISTER || num < MIN_REGISTER){
+        add_error(ERROR_REGISTER_RANGE, *RowNumber);
+        return ERROR;
+    }
+    return OK;
+}
+
+/*
+ * checks that label is start with char and not a number
+ */
+int label_start_char(char * data){
+    if(isalpha(data[FIRST_INDEX])){
+        return TRUE;
+    }
+    return FALSE;
+}
+
+/*
  *  update file name for the current file open
  */
 void update_current_file_name(char * name){
