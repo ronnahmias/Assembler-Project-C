@@ -8,6 +8,7 @@
 
 extern int * RowNumber;
 extern int * DC;
+extern int * IC;
 
 enum symbol_type_enum
 {
@@ -32,23 +33,19 @@ typedef struct symbolNode{
 }symbolNode;
 
 /*
- * init char string to symbol
- */
-char * init_symbol_string(int size);
-
-/*
  * save label to struct labels
  */
-int save_label(char *data, int size);
-
-/*
- * init data node for linked list for symbol
- */
-symbolNode * init_symbol_node(char* label);
+int save_label(char * label, int label_type);
 
 /*
  * adds the new node to linked list at the end
  */
 symbolNode * add_symbol_node(symbolNode *newNode);
+
+/*
+ * finds the label in the list and return the address
+ */
+int find_label(char * label);
+
 
 #endif

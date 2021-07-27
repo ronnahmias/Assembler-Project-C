@@ -65,6 +65,7 @@ void program_error(char * message);
 #define ERROR_EXT_ERROR "Error input file extension not compatible"
 #define ERROR_LABEL_OVERSIZE "Error label more than 31 characters"
 #define ERROR_LABEL_SYNTAX "Error label syntax not correct"
+#define ERROR_LABEL_EXISTS "Error label already exists"
 
 #define ERROR_INSTRUCTION_NOT_FOUND "Error Instruction Not found"
 #define ERROR_ARGUMENTS_ERROR "Error parsing argument in line"

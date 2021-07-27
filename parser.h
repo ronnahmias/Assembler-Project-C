@@ -33,6 +33,11 @@ int process_input(char *input_row, int iteration);
 char * delete_spaces(char* input);
 
 /*
+ * extract label from input
+ */
+int extract_label(char *data,int label_size,char * dest_label);
+
+/*
  * skip the word from input row
  */
 char * skip_word(char* input);

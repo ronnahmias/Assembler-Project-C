@@ -176,72 +176,69 @@ int r_instruction_parse(char * data, int num_args){
 /*
  * parsing input label or number in the line
  */
-int extract_label_or_number(char *data, int * reg){
-    int i=0,dollar_flag =0, help_index=0, j=0, temp_num;
-    char temp[3];
+int extract_label_or_number(char *data, int * reg, char *label_dest){
+    /* help variables */
+    char temp_data[TRUE];
+    int data_index = 0;
+    int temp_index = 0;
+    int help_index = 0;
+    int temp_num;
+
     if(init_help_array(TRUE) == NULL_SIGN){
         /* error allocate*/
         return ERROR;
     }
-    while(data[i] != '\n'){
-        if(isspace(data[i]) &&  data[i] != NEW_LINE){ /* white chars */
-            i++;
-            continue;
-        }
-        if(dollar_flag){
-            temp[j++] = data[i++];
-            continue;
-        }
-        if(data[i] == '$'){
-            /* register */
-            dollar_flag =1;
-            i++;
-            continue;
-        }else{
-            /* need to be label */
-            i++;
-        }
-    }
-    if(dollar_flag){
-        temp_num = strtol(temp,NULL,10); /* convert to num */
-        if(temp_num < MIN_REGISTER || temp_num>MAX_REGISTER){ /* registers between 0-31 */
-            add_error(ERROR_PARSING_NUMBER,*RowNumber);
+    /* skip white chars */
+    data_index += skip_white_spaces(data,data_index);
+
+    /* expect now $ sign or alphbetical for label */
+    if (!isalpha(data[data_index])){
+        if(data[data_index] != '$'){
+            add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
             return ERROR;
         }
-        help_argument_array[help_index++] = temp_num;
-        *reg = 1;
-    }else{
-        /* TODO label save check if the label is in symbol nodes */
-        *reg = 0;
     }
-}
-
-/*
- * extract label from string data
- */
-int extract_label(char *data){
-    int i=0;
-    if(init_help_array(TRUE) == NULL_SIGN){
-        /* error allocate*/
-        return ERROR;
-    }
-    data = delete_spaces(data);
-    if(!label_start_char(data)){
-        add_error(ERROR_LABEL_SYNTAX, *RowNumber);
-        return ERROR;
-    }
-    while(data[i] != '\n'){
-        if(isspace(data[i]) &&  data[i] != NEW_LINE){ /* white chars */
-            if(i>FIRST_INDEX){/* there is white char in the label -> error */
-                add_error(ERROR_LABEL_SYNTAX, *RowNumber);
-                return ERROR;
-            }
-            i++;
-            continue;
+    /* register expect */
+    if(data[data_index] == '$'){
+        data_index++; /* skip '$' */
+        /* take the register */
+        while (data[data_index] >= '0' && data[data_index] <= '9')
+        {
+            temp_data[temp_index] = data[data_index]; /* insert number to temp array array */
+            data_index++;
+            temp_index++;
         }
-        i++; /* count label size */
+        /* no number insert or over 2 digits -> error */
+        if (temp_index == 0 || temp_index > 2)
+        {
+            add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
+            return ERROR;
+        }
+        temp_num = strtol(temp_data,NULL,10); /* convert to num */
+        if(register_range(temp_num) == ERROR){
+            /* register not in range */
+            return ERROR;
+        }else{
+            /* insert number to array for future process */
+            help_argument_array[help_index] = temp_num;
+            help_index++;
+            *reg = 1;   /* for jmp register */
+            return OK;
+        }
+        /* label expected */
+    } else{
+        /* counts label size */
+        while ((data[data_index] >= '0' && data[data_index] <= '9') || isalpha(data[data_index]))
+        {
+            data_index++;
+        }
+        if(data_index > LABEL_MAX_SIZE || data_index == FALSE){ /* label over size or no label */
+            add_error(ERROR_LABEL_OVERSIZE,*RowNumber);
+            return ERROR;
+        }
+        strncpy(label_dest,data,data_index); /* copies label to label destination */
+        return OK;
     }
-    /* TODO check if label declared in symbol node*/
 }
 
 /*
@@ -414,7 +411,170 @@ int extract_immed_row(char * data, signed int *immed){
     }
 }
 
+/*
+ * extract label from line input
+ */
+int get_label(char * data, char *label_dest){
+    /* help variables */
+    int data_index = 0;
 
+    if(init_help_array(TRUE) == NULL_SIGN){
+        /* error allocate*/
+        return ERROR;
+    }
+    /* skip white chars */
+    data_index += skip_white_spaces(data,data_index);
+
+    /* expect now alphbetical for label */
+    if (!isalpha(data[data_index])){
+            add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
+            return ERROR;
+    }
+    /* counts label size */
+    while ((data[data_index] >= '0' && data[data_index] <= '9') || isalpha(data[data_index]))
+    {
+        data_index++;
+    }
+    if(data_index > LABEL_MAX_SIZE || data_index == FALSE){ /* label over size or no label */
+        add_error(ERROR_LABEL_OVERSIZE,*RowNumber);
+        return ERROR;
+    }
+    strncpy(label_dest,data,data_index); /* copies label to label destination */
+    /* skip white chars */
+    data_index += skip_white_spaces(data,data_index);
+    if(data[data_index] == NULL_SIGN || data[data_index] == '\r'){ /* the line doesnt end */
+        return OK;
+    }
+    add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
+    return ERROR;
+}
+
+/*
+ * extract 2 registers numbers and one label at end
+ */
+int extract_numbers_label(char * data, char *label_dest){
+    /* help variables */
+    char temp_data[TWO_ARGS];
+    int data_index = 0;
+    int temp_index = 0;
+    int help_index = 0;
+    unsigned int temp_num;
+
+    if(init_help_array(TWO_ARGS) == NULL_SIGN){
+        /* error allocate*/
+        return ERROR;
+    }
+    /* skip white chars */
+    data_index += skip_white_spaces(data,data_index);
+    /* expect now $ sign */
+    if (data[data_index] != '$'){
+        add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
+        return ERROR;
+    }
+    data_index++; /* skip '$' */
+    /* take the first register */
+    while (data[data_index] >= '0' && data[data_index] <= '9')
+    {
+        temp_data[temp_index] = data[data_index]; /* insert number to temp array array */
+        data_index++;
+        temp_index++;
+    }
+    /* no number insert or over 2 digits -> error */
+    if (temp_index == 0 || temp_index > 2)
+    {
+        add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
+        return ERROR;
+    }
+    temp_num = strtol(temp_data,NULL,10); /* convert to num */
+    if(register_range(temp_num) == ERROR){
+        /* register not in range */
+        return ERROR;
+    }else{
+        /* insert number to array for future process */
+        help_argument_array[help_index] = temp_num;
+        help_index++;
+    }
+    /* skip white chars */
+    data_index += skip_white_spaces(data,data_index);
+    /* need to be , char */
+    if (data[data_index] != ','){
+        add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
+        return ERROR;
+    }
+    data_index++; /* skip ',' */
+
+    /* next number */
+    memset(temp_data, 0, sizeof(temp_data));
+    temp_index = 0;
+
+    /* skip white chars */
+    data_index += skip_white_spaces(data,data_index);
+    /* expect now $ sign */
+    if (data[data_index] != '$'){
+        add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
+        return ERROR;
+    }
+    data_index++; /* skip '$' */
+    /* take the second register */
+    while (data[data_index] >= '0' && data[data_index] <= '9')
+    {
+        temp_data[temp_index] = data[data_index]; /* insert number to temp array array */
+        data_index++;
+        temp_index++;
+    }
+    /* no number insert or over 2 digits -> error */
+    if (temp_index == 0 || temp_index > 2)
+    {
+        add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
+        return ERROR;
+    }
+    temp_num = strtol(temp_data,NULL,10); /* convert to num */
+    if(register_range(temp_num) == ERROR){
+        /* register not in range */
+        return ERROR;
+    }else{
+        /* insert number to array for future process */
+        help_argument_array[help_index] = temp_num;
+        help_index++;
+    }
+    /* skip white chars */
+    data_index += skip_white_spaces(data,data_index);
+    /* need to be , char */
+    if (data[data_index] != ','){
+        add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
+        return ERROR;
+    }
+    data_index++; /* skip ',' */
+
+    /* skip white chars */
+    data_index += skip_white_spaces(data,data_index);
+
+    /* expect now alphabetical for label */
+    if (!isalpha(data[data_index])){
+        add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
+        return ERROR;
+    }
+    data = data + data_index; /* skip numbers */
+    data_index = 0;
+    /* counts label size */
+    while ((data[data_index] >= '0' && data[data_index] <= '9') || isalpha(data[data_index]))
+    {
+        data_index++;
+    }
+    if(data_index > LABEL_MAX_SIZE || data_index == FALSE){ /* label over size or no label */
+        add_error(ERROR_LABEL_OVERSIZE,*RowNumber);
+        return ERROR;
+    }
+    strncpy(label_dest,data,data_index); /* copies label to label destination */
+
+    /* skip white chars */
+    data_index += skip_white_spaces(data,data_index);
+    if(data[data_index] == NULL_SIGN || data[data_index] == '\r'){ /* the line doesnt end */
+        return OK;
+    }
+    add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
+    return ERROR;
+}
 
 /*
  * process the data of the instruction row and check how many arguments
@@ -423,6 +583,7 @@ int extract_immed_row(char * data, signed int *immed){
 int process_instruction(char * data,int iteration){
     int error_flag, reg=0;
     signed int immed;
+    char label[LABEL_MAX_SIZE] = {NULL_SIGN};
     switch(*Inst_Type){
         case R:
             switch(*Inst_Action){
@@ -451,12 +612,14 @@ int process_instruction(char * data,int iteration){
             switch(*Inst_Action){
                 case JMP:
                     /* 1 label or number as argument expect */
-                    /* TODO switch */error_flag = extract_label_or_number(data, &reg);
+                    error_flag = extract_label_or_number(data, &reg, label);
+                    /* TODO find label exists + */
                     break;
                 case LA:
                 case CALL:
                     /* label as argument expect */
-                    /* TODO switch */error_flag = extract_label(data);
+                    /* TODO find label exists + */
+                    error_flag = get_label(data,label);
                     break;
                 case STOP:
                     /* no arguments expected */
@@ -466,7 +629,7 @@ int process_instruction(char * data,int iteration){
             if(error_flag == ERROR){
                 return ERROR;
             }
-            Insert_J_Args(reg);
+            Insert_J_Args(label,reg);
             break;
         case I:
             switch(*Inst_Action){
@@ -489,7 +652,7 @@ int process_instruction(char * data,int iteration){
                 case BLT:
                 case BGT:
                     /* expect 2 argument with $ and label at end */
-
+                    error_flag = extract_numbers_label(data,label);
                     break;
             }
             break;

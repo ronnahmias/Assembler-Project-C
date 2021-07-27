@@ -132,7 +132,7 @@ int Insert_R_Args(){
 /*
  * insert data to instruction node of j type instruction
  */
-int Insert_J_Args(int reg){
+int Insert_J_Args(char * label_address,int reg){
     instructionNode * newNode;
     unsigned int address;
     int i=0;
@@ -146,7 +146,7 @@ int Insert_J_Args(int reg){
             break;
         case LA:
         case CALL:
-            /* label as argument expect */
+            address = strtol(label_address,NULL,10); /* convert to num */
             break;
         case STOP:
             /* no arguments expected */

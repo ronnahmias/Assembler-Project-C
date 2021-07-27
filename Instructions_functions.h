@@ -87,7 +87,7 @@ int Insert_R_Args();
 /*
  * insert data to instruction node of j type instruction
  */
-int Insert_J_Args(int reg);
+int Insert_J_Args(char * label_address,int reg);
 
 /*
  * adds the new node to linked list at the end

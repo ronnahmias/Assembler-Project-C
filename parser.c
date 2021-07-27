@@ -8,7 +8,7 @@ void read_by_line(FILE *cur_file, int iteration){
     while(fgets(data, sizeof(data),cur_file)) /* read from file line by line */
     {
         *row_data_type = NO_DATA_TYPE;
-        RowNumber ++;
+        *RowNumber++;
         process_input(data,iteration);
         reset_row_has_error();
     }
@@ -19,17 +19,14 @@ void read_by_line(FILE *cur_file, int iteration){
  */
 int process_input(char *input_row, int iteration){
     int label_size, status, instruction_size, has_error = 0;
+    char temp_label[LABEL_MAX_SIZE] = {NULL_SIGN};
     input_row = delete_spaces(input_row); /* delete white spaces if have */
     label_size = has_label(input_row); /* check if it has label first */
-    if(row_has_error()){ /* fount error in syntax of label */
+    if(row_has_error() || label_size == ERROR){ /* found error in syntax of label */
         return ERROR;
     }
-    if(label_size != FALSE){ /* we have found label */
-        if(label_size > LABEL_MAX_SIZE){
-            add_error(ERROR_LABEL_OVERSIZE,*RowNumber);
-            return ERROR;
-        }
-        status = save_label(input_row, label_size);
+    if(label_size != FALSE){ /* we have found label -> extract and continue  */
+        status = extract_label(input_row, label_size,temp_label); /* copy label to temp variable for future use */
         if(status == FALSE){ /* error return */
             return ERROR;
         }
@@ -37,6 +34,12 @@ int process_input(char *input_row, int iteration){
         input_row = delete_spaces(input_row); /* delete white spaces if have */
     }
     if(is_dot(*input_row)){ /* check if it is data row */
+        if(label_size != FALSE){ /* we have label of type data -> save */
+            status = save_label(temp_label,DATA);
+            if(status == ERROR){
+                return ERROR;
+            }
+        }
         input_row = input_row + 1; /* skip the dot */
         search_data_type(input_row);
         if(*row_data_type == NO_DATA_TYPE){
@@ -47,6 +50,12 @@ int process_input(char *input_row, int iteration){
         input_row = delete_spaces(input_row);
         process_data(input_row,iteration);
     }else{
+        if(label_size != FALSE){ /* we have label of type code -> save */
+            status = save_label(temp_label,CODE);
+            if(status == ERROR){
+                return ERROR;
+            }
+        }
         /* check the size of instruction */
         if(instruction_size = count_instruction_long(input_row)){
             /* find the instruction from 3 arrays */
@@ -82,6 +91,14 @@ int count_instruction_long(char *data){
 }
 
 /*
+ * extract label from input
+ */
+int extract_label(char *data,int label_size,char * dest_label){
+    strncpy(dest_label,data,label_size);
+    return OK;
+}
+
+/*
  * skip the label -> cut the label from the input
  */
 char * skip_label(char* input){
@@ -108,10 +125,18 @@ int has_label(char * data){
         return FALSE;
     }
     if(data[i] == ':' && data[i-1] != ' '){ /* there is label */
-        return i;
+        if(!isalpha(data[FIRST_INDEX])){ /* label start only in char */
+            add_error(ERROR_LABEL_SYNTAX, *RowNumber);
+            return ERROR; /* return size of label */
+        }
+        if(i > LABEL_MAX_SIZE){ /* label over size -> error */
+            add_error(ERROR_LABEL_OVERSIZE,*RowNumber);
+            return ERROR;
+        }
+        return i;/* label ok return size of label */
     }
     add_error(ERROR_LABEL_SYNTAX, *RowNumber);
-    return FALSE; /* return size of label */
+    return ERROR;
 
 }
 
