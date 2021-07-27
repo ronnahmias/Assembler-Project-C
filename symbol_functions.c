@@ -15,7 +15,7 @@ int find_label(char * label){
         }
         curNode = curNode->next;
     }
-    return ERROR;
+    return FALSE;
 }
 
 /*
@@ -48,12 +48,14 @@ symbolNode * init_symbol_node(char* label,int label_type)
     pt->symbol = label;
     pt->symbol_type = label_type;
     /* address is base on type */
-    if(label_type == CODE){
-        pt->address = *IC;
-    }else{
-        if(label_type == DATA){
+    switch (label_type) {
+        case CODE:
+            pt->address = *IC;
+            break;
+        case DATA:
+        case EXTERNAL:
             pt->address = *DC;
-        }
+            break;
     }
     return pt;
 }

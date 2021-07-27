@@ -1,16 +1,40 @@
 #include "helpers.h"
 /*
- * init variables
+ * init variables for the whole file
  */
-int init(){
+int init_every_file(){
     RowNumber = (int*) calloc(sizeof (int),1);
+    init_errors_data();
     if(RowNumber != NULL && init_row_has_error() && init_dc()
     && init_instruction_vars() && init_ic()){
         return OK;
     }
     /* we have found error in init functions */
     program_error(ERROR_ALLOCATING_MEMORY);
-    return FALSE;
+    return ERROR;
+}
+
+/*
+ * free variables every file end
+ */
+void free_every_file(){
+    free(RowNumber);
+    free_dc();
+    free_row_has_error();
+    free_instruction_vars();
+    free_data();
+
+}
+
+/*
+ * init variables that we need every row
+ */
+void init_every_row(){
+    reset_instruction_vars();
+    reset_data();
+    reset_row_has_error();
+    *row_data_type = NO_DATA_TYPE;
+    *RowNumber++;
 }
 
 /*

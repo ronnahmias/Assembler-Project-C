@@ -3,23 +3,31 @@
 /*
  * function that reads from the current file line
  */
-void read_by_line(FILE *cur_file, int iteration){
+int read_by_line(FILE *cur_file){
     char data[ROW_LINE];
+    int status;
     while(fgets(data, sizeof(data),cur_file)) /* read from file line by line */
     {
-        *row_data_type = NO_DATA_TYPE;
-        *RowNumber++;
-        process_input(data,iteration);
-        reset_row_has_error();
+        init_every_row();
+        status = check_comment_line(data);
+        if(status == COMMENT_ROW){ /* comment line */
+            continue; /* skip the row */
+        }
+        process_input(data);
     }
 }
 
 /*
  * process the input and check different options of the input
  */
-int process_input(char *input_row, int iteration){
-    int label_size, status, instruction_size, has_error = 0;
+int process_input(char *input_row){
+    /* help variables */
+    int label_size;
+    int status;
+    int instruction_size;
+    int has_error = 0;
     char temp_label[LABEL_MAX_SIZE] = {NULL_SIGN};
+
     input_row = delete_spaces(input_row); /* delete white spaces if have */
     label_size = has_label(input_row); /* check if it has label first */
     if(row_has_error() || label_size == ERROR){ /* found error in syntax of label */
@@ -48,7 +56,7 @@ int process_input(char *input_row, int iteration){
         }
         input_row = skip_word(input_row);/* skip the word in the line to have data */
         input_row = delete_spaces(input_row);
-        process_data(input_row,iteration);
+        process_data(input_row);
     }else{
         if(label_size != FALSE){ /* we have label of type code -> save */
             status = save_label(temp_label,CODE);
@@ -66,12 +74,27 @@ int process_input(char *input_row, int iteration){
             }
             input_row = skip_word(input_row);
             input_row = delete_spaces(input_row);
-            process_instruction(input_row,iteration);
+            process_instruction(input_row);
         }else{
             add_error(ERROR_INSTRUCTION_NOT_FOUND, *RowNumber);
             return ERROR;
         }
     }
+}
+
+/*
+ * checks if line is comment row
+ */
+int check_comment_line(char * input_row){
+    int i=0;
+    while(isspace(input_row[i]))
+    {
+        i++;
+    }
+    if(input_row[i] == NEW_LINE || input_row[i] == ';'){
+        return COMMENT_ROW;
+    }
+    return FALSE;
 }
 
 /*

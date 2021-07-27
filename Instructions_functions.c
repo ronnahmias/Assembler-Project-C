@@ -30,6 +30,24 @@ int init_instruction_vars(){
 }
 
 /*
+ * free instruction variables
+ */
+int free_instruction_vars(){
+    free(Inst_Type);
+    free(Inst_Action);
+}
+
+/*
+ * reset inst variables every row
+ */
+void reset_instruction_vars(){
+    memset(Inst_Type,0,sizeof(Inst_Type));
+    memset(Inst_Action,0,sizeof(Inst_Action));
+}
+
+
+
+/*
  * find instruction from 3 type and update type and action
  */
 int find_instruction(char *data, int size){
@@ -132,9 +150,8 @@ int Insert_R_Args(){
 /*
  * insert data to instruction node of j type instruction
  */
-int Insert_J_Args(char * label_address,int reg){
+int Insert_J_Args(unsigned int address,int reg){
     instructionNode * newNode;
-    unsigned int address;
     int i=0;
     newNode = init_instruction_node();
     if(newNode == NULL){
@@ -146,7 +163,6 @@ int Insert_J_Args(char * label_address,int reg){
             break;
         case LA:
         case CALL:
-            address = strtol(label_address,NULL,10); /* convert to num */
             break;
         case STOP:
             /* no arguments expected */

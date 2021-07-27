@@ -3,7 +3,7 @@
 
 int main(int argc, char** argv) {
 
-    int i;
+    int i,error_flag;
     FILE *file;
     /* error not enough files */
     if(argc<2){
@@ -19,16 +19,16 @@ int main(int argc, char** argv) {
         }
         /* checks if the file was open correctly */
         if((file = fopen(argv[i], "r")) != NULL){
-            first_run(file);
-            if(get_errors_count() == FALSE){
+            error_flag = first_run(file);
+            if(get_errors_count() == FALSE && !error_flag){
                 /*second_run(file);*/
                 /* TODO check file ok*/
                 /*export_files();*/
             }
-            else{
-
+            else{ /* error in the file was found dont continue */
+                /* print errors */
+                print_errors();
             }
-
             fclose(file); /* close current file */
         }
     }

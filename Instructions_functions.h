@@ -75,6 +75,16 @@ typedef enum{
 int init_instruction_vars();
 
 /*
+ * free instruction variables
+ */
+int free_instruction_vars();
+
+/*
+ * reset inst variables every row
+ */
+void reset_instruction_vars();
+
+/*
  * find instruction from 3 type and update type and action
  */
 int find_instruction(char *data, int size);
@@ -87,7 +97,7 @@ int Insert_R_Args();
 /*
  * insert data to instruction node of j type instruction
  */
-int Insert_J_Args(char * label_address,int reg);
+int Insert_J_Args(unsigned int address,int reg);
 
 /*
  * adds the new node to linked list at the end

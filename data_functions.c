@@ -19,23 +19,45 @@ int init_dc(){
 }
 
 /*
+ * free data counter
+ */
+void free_dc(){
+    free(DC);
+}
+
+/*
  * init required variables
  */
-void init_data(){
-    row_data_type = (int *)calloc(1,sizeof(int)); /* data type for each row */ /*TODO replace 1 with define*/
+int init_data(){
+    row_data_type = (int *)calloc(1,sizeof(int)); /* data type for each row */
     if(row_data_type == NULL) {
-        printf("null");
-        /*TODO error alocation*/
+        program_error(ERROR_ALLOCATING_MEMORY);
+        return ERROR;
     }
+}
+
+/*
+ * reset data variables
+ */
+void reset_data(){
+    memset(row_data_type,0,sizeof(row_data_type));
+}
+
+/*
+ * free data variables
+ */
+void free_data(){
+    free(row_data_type);
 }
 
 /*
  * init struct helper for string input row
  */
-void init_asciz_row(){
+int init_asciz_row(){
     AscizRow = (asciz_row *)calloc(sizeof(asciz_row),1);
     if(AscizRow == NULL){
-        /* TODO error allocation*/
+        program_error(ERROR_ALLOCATING_MEMORY);
+        return ERROR;
     }
     AscizRow->size = 0;
 }
@@ -50,22 +72,26 @@ void free_asciz_row(){
 /*
  * init char array in struct of string input row
  */
-void init_asciz_string(){
+int init_asciz_string(){
     AscizRow->string = (char*) calloc(sizeof(char),AscizRow->size);
     if(AscizRow->string == NULL){
-        /* tODO Error allocating*/
+        program_error(ERROR_ALLOCATING_MEMORY);
+        return ERROR;
     }
 }
 
 /*
  * add asciz array of chars to linked list data nodes
  */
-void insert_asciz_row(){
+int insert_asciz_row(){
     int i;
     dataNode * pt;
     for(i=0;AscizRow->string[i];i++){
         pt = init_data_node(AscizRow->string[i]);
-        /* TODO check pointer*/
+        if(pt == NULL_SIGN){
+            program_error(ERROR_ALLOCATING_MEMORY);
+            return ERROR;
+        }
         add_data_node(pt);
     }
 }
@@ -74,11 +100,14 @@ void insert_asciz_row(){
  * insert from long array of numbers to data nodes
  * after -> connect to linked data list
  */
-void insert_data_row(){
+int insert_data_row(){
     int i;
     dataNode *newNode;
     for (i = 0; DataRow->array[i] ; i++) {
         newNode = init_data_node(DataRow->array[i]);
+        if(newNode == NULL_SIGN){
+            return ERROR;
+        }
         add_data_node(newNode);
     }
     /* free data row */
@@ -89,25 +118,28 @@ void insert_data_row(){
 /*
  * init data row struct for data input row
 */
-void init_data_row(){
+int init_data_row(){
     DataRow = (data_row *)calloc(sizeof(data_row),1);
     if(DataRow == NULL){
-        /* TODO error allocation*/
+        program_error(ERROR_ALLOCATING_MEMORY);
+        return ERROR;
     }
     DataRow->array = (long *)calloc(sizeof(long),1);
     if(DataRow->array == NULL){
-        /* TODO error allocation*/
+        program_error(ERROR_ALLOCATING_MEMORY);
+        return ERROR;
     }
     DataRow->size = 1;
 }
 
  /*
-  * realloc array long of the row input data
+  * reallocate array long of the row input data
  */
-void realloc_data_row(){
+int realloc_data_row(){
     DataRow->array = (long *)realloc(DataRow->array,(DataRow->size +1));
     if(DataRow->array == NULL){
-        /* TODO error allocation*/
+        program_error(ERROR_ALLOCATING_MEMORY);
+        return ERROR;
     }
     DataRow->size ++;
 }
@@ -148,14 +180,17 @@ void search_data_type(char * input)
 /*
  * convert data row numbers (db,dw,dh) to long array before insert to linked list
  */
-void convert_data_to_array(char * data){
-    int i=0;
+int convert_data_to_array(char * data){
+    int i=0, status;
     char * ptr;
-    init_data_row();
-    while (data[i] != '\t' && data[i] != '\n' && data[i] != '\0' && data[i] != 13 && data[i] != '\r')
+    status = init_data_row();
+    if(status== ERROR){
+        return ERROR;
+    }
+    while (data[i] != '\n' && data[i] != '\0' && data[i] != 13 && data[i] != '\r')
     {
         /* backspace skip it*/
-        if(data[i] == ' '){
+        if(data[i] == ' ' || data[i] == '\t'){
             i++;
             continue;
         }
@@ -163,14 +198,18 @@ void convert_data_to_array(char * data){
         if(data[i] == ','){
             /* convert to long number before insert */
             DataRow->array[DataRow->size-1] = strtol(DataRow->input_num,&ptr,10);
-            realloc_data_row();
+            status = realloc_data_row();
+            if(status == ERROR){
+                return ERROR;
+            }
             zero_input_num();
         }else{ /* insert number to array */
             DataRow->input_num[DataRow->input_num_size] = data[i];
             DataRow->input_num_size ++;
             /* the number is bigger than 2^32 */
             if(DataRow->input_num_size > INPUT_NUM){
-                /* TODO error over size*/
+                add_error(ERROR_MAX_DATA,*RowNumber);
+                return ERROR;
             }
         }
         i++;
@@ -205,13 +244,15 @@ dataNode * init_data_node(long data)
     dataNode * pt;
     pt = (dataNode *)calloc(sizeof(dataNode),1);
     if(pt == NULL){
-        /* TODO error allocation*/
+        program_error(ERROR_ALLOCATING_MEMORY);
+        return NULL_SIGN;
     }
     switch (*row_data_type) {
         /* byte size */
         case DB:
         case ASCIZ: /* TODO check asciz again*/
             pt->data_u.db = (char)data;
+
             break;
         /* half word */
         case DH:
@@ -223,7 +264,7 @@ dataNode * init_data_node(long data)
             break;
 
     }
-    pt->address = 0; /* TODO address counter*/
+    pt->address = *DC++;
     return pt;
 }
 

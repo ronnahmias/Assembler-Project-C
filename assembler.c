@@ -4,16 +4,20 @@
 /*
  * logic function for the first run over the current file
  */
-void first_run(FILE *file)
+int first_run(FILE *file)
 {
-    init();
-    init_errors_data(); /* init errors variables */
-    init_data(); /* init data variables */
-    read_by_line(file,FIRST_ITER);
+    int status;
+    status = init_every_file();
+    if(status == ERROR){
+        return ERROR;
+    }
+    read_by_line(file);
+    free_every_file();
+    return OK;
 }
 
 void second_run(FILE *file)
 {
-    read_by_line(file,SECOND_ITER);
+    read_by_line(file);
 }
 

@@ -24,6 +24,11 @@ void reset_row_has_error();
 int init_row_has_error();
 
 /*
+ * free row has error
+ */
+int free_row_has_error();
+
+/*
  * determines if the current row has error
  */
 int row_has_error();
@@ -58,6 +63,11 @@ errorNode * add_error_node(errorNode *newNode);
  */
 void program_error(char * message);
 
+/*
+ * print errors from error linked list
+ */
+void print_errors();
+
 /* Error Messages */
 #define ERROR_ALLOCATING_MEMORY "Error allocating memory"
 #define ERROR_NO_DATA_TYPE "Error data type not found"
@@ -73,6 +83,9 @@ void program_error(char * message);
 #define ERROR_PARSING_NUMBER "Error parsing number"
 #define ERROR_REGISTER_RANGE "Error register not in range"
 #define ERROR_IMMED_RANGE "Error immed not in range"
+#define ERROR_MAX_DATA "Error max data long"
+
+#define ERROR_ASCIZ_SYNTAX "Error data row not in the correct syntax"
 
 
 

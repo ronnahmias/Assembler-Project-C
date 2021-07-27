@@ -4,9 +4,19 @@
 #include "parser.h"
 
 /*
- * init variables
+ * init variables for the whole file
  */
-int init();
+int init_every_file();
+
+/*
+ * free variables every file end
+ */
+void free_every_file();
+
+/*
+ * init variables that we need every row
+ */
+void init_every_row();
 
 /*
  * checks that labe is start with char and not a number

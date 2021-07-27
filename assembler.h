@@ -11,6 +11,6 @@
 /*
  * logic function for the first run over the current file
  */
-void first_run(FILE *file);
+int first_run(FILE *file);
 
 #endif

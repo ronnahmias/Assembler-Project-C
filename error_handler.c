@@ -29,6 +29,13 @@ int init_row_has_error(){
 }
 
 /*
+ * free row has error
+ */
+int free_row_has_error(){
+    free(RowHasError);
+}
+
+/*
  * reset row has error after end the current row
  */
 void reset_row_has_error(){
@@ -102,4 +109,20 @@ errorNode * add_error_node(errorNode *newNode)
  */
 void program_error(char * message){
     fprintf(stderr,"%s\n",message);
+}
+
+/*
+ * print errors from error linked list
+ */
+void print_errors(){
+    errorNode * cur_node;
+    if(ErrorNodes == NULL){ /* this is the first node in the data nodes */
+        return;
+    }else{
+        cur_node = ErrorNodes;
+        while(cur_node->next != NULL){
+            fprintf(stderr,"%s in line number %d\n",cur_node->error_message,cur_node->line_number);
+            cur_node = cur_node->next;
+        }
+    }
 }

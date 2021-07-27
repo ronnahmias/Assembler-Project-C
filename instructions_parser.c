@@ -425,7 +425,7 @@ int get_label(char * data, char *label_dest){
     /* skip white chars */
     data_index += skip_white_spaces(data,data_index);
 
-    /* expect now alphbetical for label */
+    /* expect now alphabetical for label */
     if (!isalpha(data[data_index])){
             add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
             return ERROR;
@@ -580,10 +580,11 @@ int extract_numbers_label(char * data, char *label_dest){
  * process the data of the instruction row and check how many arguments
  * that match to instruction Action with the type
  */
-int process_instruction(char * data,int iteration){
+int process_instruction(char * data){
     int error_flag, reg=0;
     signed int immed;
     char label[LABEL_MAX_SIZE] = {NULL_SIGN};
+    unsigned int address = 0;
     switch(*Inst_Type){
         case R:
             switch(*Inst_Action){
@@ -606,20 +607,23 @@ int process_instruction(char * data,int iteration){
                 return ERROR;
             }
             /* insert the number to node and add the node to linked list */
-            Insert_R_Args();
+            error_flag = Insert_R_Args();
+            if(error_flag == ERROR){
+                return ERROR;
+            }
             break;
         case J:
             switch(*Inst_Action){
                 case JMP:
                     /* 1 label or number as argument expect */
                     error_flag = extract_label_or_number(data, &reg, label);
-                    /* TODO find label exists + */
+                    address = (unsigned int)find_label(label); /* try to fine the label in labels list */
                     break;
                 case LA:
                 case CALL:
                     /* label as argument expect */
-                    /* TODO find label exists + */
                     error_flag = get_label(data,label);
+                    address = (unsigned int)find_label(label); /* try to fine the label in labels list */
                     break;
                 case STOP:
                     /* no arguments expected */
@@ -629,7 +633,7 @@ int process_instruction(char * data,int iteration){
             if(error_flag == ERROR){
                 return ERROR;
             }
-            Insert_J_Args(label,reg);
+            Insert_J_Args(address,reg);
             break;
         case I:
             switch(*Inst_Action){
