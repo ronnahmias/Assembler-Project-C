@@ -131,7 +131,7 @@ char * skip_label(char* input){
         i++;
     }
     i++; /* skip also : sign */
-    save_label(input, i);
+    /* TODO save_label(input, i);*/
     return input + i;
 }
 

@@ -45,7 +45,7 @@ symbolNode * init_symbol_node(char* label,int label_type)
         program_error(ERROR_ALLOCATING_MEMORY);
         return NULL_SIGN;
     }
-    pt->symbol = label;
+    strcpy(pt->symbol,label);
     pt->symbol_type = label_type;
     /* address is base on type */
     switch (label_type) {

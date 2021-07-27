@@ -22,7 +22,8 @@ int main(int argc, char** argv) {
             error_flag = first_run(file);
             if(get_errors_count() == FALSE && !error_flag){
                 /*second_run(file);*/
-                /* TODO check file ok*/
+                /* TODO second run*/
+                /* TODO export*/
                 /*export_files();*/
             }
             else{ /* error in the file was found dont continue */
@@ -30,6 +31,9 @@ int main(int argc, char** argv) {
                 print_errors();
             }
             fclose(file); /* close current file */
+        }else{ /* failed open file continue to next file */
+            program_error(ERROR_OPEN_FILE);
+            continue; /* continue to next index to check more files */
         }
     }
 

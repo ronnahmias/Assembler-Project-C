@@ -3,7 +3,7 @@
 /* errors variables */
 errorNode * ErrorNodes;
 /* flag for error in the current row */
-int * RowHasError; /* TODO Init and zero each row*/
+int * RowHasError;
 extern char * FileName;
 
 /* private error handler variables */
@@ -68,7 +68,6 @@ void add_error(char * error_message, int line_number){
         errors_count ++;
         return;
     }
-    /* TODO add error*/
 }
 
 /*
@@ -79,7 +78,8 @@ errorNode * init_error_node(char * error_message, int line_number)
     errorNode * node;
     node = (errorNode *)calloc(sizeof(errorNode), 1);
     if(node == NULL){
-        /* TODO error allocation*/
+        program_error(ERROR_ALLOCATING_MEMORY);
+        return NULL;
     }
     node->next = NULL;
     node->error_message = error_message;

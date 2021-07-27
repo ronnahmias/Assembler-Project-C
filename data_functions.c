@@ -218,8 +218,8 @@ int convert_data_to_array(char * data){
     if(DataRow->input_num[0] != '\0'){
         DataRow->array[DataRow->size-1] = strtol(DataRow->input_num,&ptr,10);
     }
-    /* free input num  char array helper  TODO*/
-    /*free(DataRow->input_num);*/
+    /* free input num  char array helper */
+    free(DataRow->input_num);
 }
 
 /*

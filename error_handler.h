@@ -72,6 +72,7 @@ void print_errors();
 #define ERROR_ALLOCATING_MEMORY "Error allocating memory"
 #define ERROR_NO_DATA_TYPE "Error data type not found"
 #define ERROR_MISSING_FILES "Error missing files"
+#define ERROR_OPEN_FILE "Error while open the file"
 #define ERROR_EXT_ERROR "Error input file extension not compatible"
 #define ERROR_LABEL_OVERSIZE "Error label more than 31 characters"
 #define ERROR_LABEL_SYNTAX "Error label syntax not correct"

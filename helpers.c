@@ -6,7 +6,7 @@ int init_every_file(){
     RowNumber = (int*) calloc(sizeof (int),1);
     init_errors_data();
     if(RowNumber != NULL && init_row_has_error() && init_dc()
-    && init_instruction_vars() && init_ic()){
+    && init_instruction_vars() && init_ic() && init_data()){
         return OK;
     }
     /* we have found error in init functions */
@@ -98,9 +98,7 @@ int check_file_extension(){
     ext = strstr(FileName,DOT);
     /* good file ext */
     if(ext == NULL || strcmp(ext,EXT_INPUT_FILES) != 0){
-        return 0;
+        return FALSE;
     }
-    return 1;
+    return TRUE;
 }
-
-/* TODO free vars */
