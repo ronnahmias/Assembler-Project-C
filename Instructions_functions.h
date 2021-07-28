@@ -24,6 +24,18 @@ typedef struct instructionNode{
             unsigned int reg:1;
             unsigned int opcode:6;
         }InstructionsTypeJ;
+        struct {
+            int immed:16;
+            unsigned int rt:5;
+            unsigned int rs:5;
+            unsigned int opcode:6;
+        }InstructionsTypeI;
+        struct { /* help for export the files */
+            unsigned int a:8;
+            unsigned int b:8;
+            unsigned int c:8;
+            unsigned int d:8;
+        }represent;
     }InstCode;
 }instructionNode;
 
