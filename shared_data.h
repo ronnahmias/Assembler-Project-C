@@ -5,7 +5,7 @@
 #include "error_handler.h"
 #include <limits.h>
 
-/* for long variable */
+/* for long variable TODO remove
 #define TARGET_MAX 2147483647L
 #if   SCHAR_MAX >= TARGET_MAX
 typedef signed char int32;
@@ -15,11 +15,11 @@ typedef short int32;
 typedef int int32;
 #else
 typedef long int32;
-#endif
+#endif*/
 
 #undef TARGET_MAX
-
-typedef struct dataNode{
+/* TODO remove */
+/*typedef struct dataNode{
     int address;
     struct dataNode *next;
     union {
@@ -31,7 +31,18 @@ typedef struct dataNode{
             int dh:16;
         }data_dh;
     }data_u;
+}dataNode;*/
+
+typedef struct dataNode{
+    int address;
+    struct dataNode *next;
+    int datatype;
+    char * db;
+    int * dh;
+    signed long *dw;
 }dataNode;
+
+
 
 typedef struct {
     int size;

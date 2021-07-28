@@ -184,42 +184,43 @@ int convert_data_to_array(char * data){
     int i=0, status;
     char * ptr;
     status = init_data_row();
-    if(status== ERROR){
+    if(status == ERROR){
         return ERROR;
-    }
-    while (data[i] != '\n' && data[i] != '\0' && data[i] != 13 && data[i] != '\r')
-    {
-        /* backspace skip it*/
-        if(data[i] == ' ' || data[i] == '\t'){
+    }else {
+        while (data[i] != '\n' && data[i] != '\0' && data[i] != 13 && data[i] != '\r') {
+            /* backspace skip it*/
+            if (data[i] == ' ' || data[i] == '\t') {
+                i++;
+                continue;
+            }
+            /* end of number -> insert to long array */
+            if (data[i] == ',') {
+                /* convert to long number before insert */
+                DataRow->array[DataRow->size - 1] = strtol(DataRow->input_num, &ptr, 10);
+                status = realloc_data_row();
+                if (status == ERROR) {
+                    return ERROR;
+                }
+                zero_input_num();
+            } else { /* insert number to array */
+                DataRow->input_num[DataRow->input_num_size] = data[i];
+                DataRow->input_num_size++;
+                /* the number is bigger than 2^32 */
+                if (DataRow->input_num_size > INPUT_NUM) {
+                    add_error(ERROR_MAX_DATA, *RowNumber);
+                    return ERROR;
+                }
+            }
             i++;
-            continue;
         }
-        /* end of number -> insert to long array */
-        if(data[i] == ','){
-            /* convert to long number before insert */
-            DataRow->array[DataRow->size-1] = strtol(DataRow->input_num,&ptr,10);
-            status = realloc_data_row();
-            if(status == ERROR){
-                return ERROR;
-            }
-            zero_input_num();
-        }else{ /* insert number to array */
-            DataRow->input_num[DataRow->input_num_size] = data[i];
-            DataRow->input_num_size ++;
-            /* the number is bigger than 2^32 */
-            if(DataRow->input_num_size > INPUT_NUM){
-                add_error(ERROR_MAX_DATA,*RowNumber);
-                return ERROR;
-            }
+        /* more number to insert to array */
+        if (DataRow->input_num[0] != '\0') {
+            DataRow->array[DataRow->size - 1] = strtol(DataRow->input_num, &ptr, 10);
         }
-        i++;
+        /* free input num  char array helper */
+        /*todo free(DataRow->input_num);*/
+        return OK;
     }
-    /* more number to insert to array */
-    if(DataRow->input_num[0] != '\0'){
-        DataRow->array[DataRow->size-1] = strtol(DataRow->input_num,&ptr,10);
-    }
-    /* free input num  char array helper */
-    free(DataRow->input_num);
 }
 
 /*
@@ -237,35 +238,58 @@ void update_asciz_row_size(int size){
 }
 
 /*
+ * init data for the data code
+ */
+dataNode * init_data_code(dataNode * newNode, long data){
+    switch (*row_data_type) {
+        case DB:
+        case ASCIZ:
+            newNode->db = (char *) calloc(sizeof(char),1);
+            if(newNode->db == NULL){
+                program_error(ERROR_ALLOCATING_MEMORY);
+                return NULL;
+            }
+            *(newNode->db) = (char)data;
+            *DC = *DC + 1; /* increase DC */
+            break;
+            /* half word */
+        case DH:
+            newNode->dh = (int *) calloc(sizeof(int),1);
+            if(newNode->dh == NULL){
+                program_error(ERROR_ALLOCATING_MEMORY);
+                return NULL;
+            }
+            *(newNode->dh) = (int)data;
+            *DC = *DC + 2; /* increase DC */
+            break;
+            /* whole word */
+        case DW:
+            newNode->dw = (signed long *) calloc(sizeof(signed long),1);
+            if(newNode->dw == NULL){
+                program_error(ERROR_ALLOCATING_MEMORY);
+                return NULL;
+            }
+            *(newNode->dw) = data;
+            *DC = *DC + 4; /* increase DC */
+            break;
+    }
+}
+
+/*
  * init data node for linked list for data input
  */
 dataNode * init_data_node(long data)
 {
-    dataNode * pt;
-    pt = (dataNode *)calloc(sizeof(dataNode),1);
-    if(pt == NULL){
+    dataNode * newNode = NULL;
+    newNode = (dataNode *)calloc(sizeof(dataNode),1);
+    if(newNode == NULL){
         program_error(ERROR_ALLOCATING_MEMORY);
         return NULL_SIGN;
     }
-    switch (*row_data_type) {
-        /* byte size */
-        case DB:
-        case ASCIZ: /* TODO check asciz again*/
-            pt->data_u.db = (char)data;
-
-            break;
-        /* half word */
-        case DH:
-            pt->data_u.data_dh.dh = (int)data;
-            break;
-        /* whole word */
-        case DW:
-            pt->data_u.data_dw.dw = data;
-            break;
-
-    }
-    pt->address = *DC++;
-    return pt;
+    newNode->datatype = *row_data_type; /* save the data type in the node */
+    newNode->address = *DC;
+    newNode = init_data_code(newNode,data); /* init the data size in the node */
+    return newNode;
 }
 
 /*
@@ -286,16 +310,17 @@ dataNode * add_data_node(dataNode *newNode)
 }
 
 /* TODO only test remove end*/
+/*
 void test_binary_dec(){
     unsigned i;
     dataNode * cur = DataNodes;
     while(cur != NULL) {
 /*                    for (i = 1 << 31; i > 0; i = i / 2)
-                        (DataNodes->db & i) ? printf("1") : printf("0");*/
+                        (DataNodes->db & i) ? printf("1") : printf("0");
         printf("%d", cur->data_u.db);
         cur = cur->next;
         putchar('\n');
     }
-}
+}*/
 
 
