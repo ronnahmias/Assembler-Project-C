@@ -30,8 +30,8 @@ void test_print(signed long num) {
  * init instruction variables
  */
 int init_instruction_vars(){
-    Inst_Type = (int*) calloc(sizeof (int),1);
-    Inst_Action = (int*) calloc(sizeof (int),1);
+    Inst_Type = (int*) calloc(1,sizeof(int));
+    Inst_Action = (int*) calloc(1,sizeof(int));
     if(Inst_Type == NULL || Inst_Action == NULL){
         program_error(ERROR_ALLOCATING_MEMORY);
         return ERROR;
@@ -221,7 +221,7 @@ int Insert_I_Args(signed int immed){
 instructionNode * init_instruction_node()
 {
     instructionNode * pt;
-    pt = (instructionNode *)calloc(sizeof(instructionNode),1);
+    pt = (instructionNode *)calloc(1,sizeof(instructionNode));
     if(pt == NULL){
         program_error(ERROR_ALLOCATING_MEMORY);
         return NULL;
@@ -235,7 +235,7 @@ instructionNode * init_instruction_node()
  * init instruction counter
  */
 int init_ic(){
-    IC = (int *) calloc(sizeof(int),1);
+    IC = (int *) calloc(1,sizeof(int));
     if(IC == NULL){
         program_error(ERROR_ALLOCATING_MEMORY);
         return NULL_SIGN;
@@ -249,7 +249,7 @@ int init_ic(){
  */
 int init_help_array(int size){
     int i=0;
-    help_argument_array = (unsigned int *) calloc(sizeof(unsigned int),size);
+    help_argument_array = (unsigned int *) calloc(size,sizeof(unsigned int));
     if(help_argument_array == NULL){
         program_error(ERROR_ALLOCATING_MEMORY);
         return ERROR;

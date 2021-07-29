@@ -20,7 +20,7 @@ int row_has_error(){
  * init row has error int number
  */
 int init_row_has_error(){
-    RowHasError = (int *)calloc(sizeof(int), 1);
+    RowHasError = (int *)calloc(1,sizeof(int));
     if (RowHasError == NULL){
         add_error(ERROR_ALLOCATING_MEMORY,NO_LINE_NUMBER);
         return ERROR;
@@ -76,7 +76,7 @@ void add_error(char * error_message, int line_number){
 errorNode * init_error_node(char * error_message, int line_number)
 {
     errorNode * node;
-    node = (errorNode *)calloc(sizeof(errorNode), 1);
+    node = (errorNode *)calloc(1,sizeof(errorNode));
     if(node == NULL){
         program_error(ERROR_ALLOCATING_MEMORY);
         return NULL;

@@ -3,7 +3,7 @@
  * init variables for the whole file
  */
 int init_every_file(){
-    RowNumber = (int*) calloc(sizeof (int),1);
+    RowNumber = (int*) calloc(1,sizeof(int));
     init_errors_data();
     if(RowNumber != NULL && init_row_has_error() && init_dc()
     && init_instruction_vars() && init_ic() && init_data()){

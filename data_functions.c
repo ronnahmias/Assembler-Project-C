@@ -10,7 +10,7 @@ data_row * DataRow;
  * init data counter
  */
 int init_dc(){
-    DC = (int *) calloc(sizeof(int),1);
+    DC = (int *) calloc(1,sizeof(int));
     if(DC == NULL){
         program_error(ERROR_ALLOCATING_MEMORY);
         return ERROR;
@@ -54,7 +54,7 @@ void free_data(){
  * init struct helper for string input row
  */
 int init_asciz_row(){
-    AscizRow = (asciz_row *)calloc(sizeof(asciz_row),1);
+    AscizRow = (asciz_row *)calloc(1,sizeof(asciz_row));
     if(AscizRow == NULL){
         program_error(ERROR_ALLOCATING_MEMORY);
         return ERROR;
@@ -73,7 +73,7 @@ void free_asciz_row(){
  * init char array in struct of string input row
  */
 int init_asciz_string(){
-    AscizRow->string = (char*) calloc(sizeof(char),AscizRow->size);
+    AscizRow->string = (char*) calloc(AscizRow->size,sizeof(char));
     if(AscizRow->string == NULL){
         program_error(ERROR_ALLOCATING_MEMORY);
         return ERROR;
@@ -119,12 +119,12 @@ int insert_data_row(){
  * init data row struct for data input row
 */
 int init_data_row(){
-    DataRow = (data_row *)calloc(sizeof(data_row),1);
+    DataRow = (data_row *)calloc(1,sizeof(data_row));
     if(DataRow == NULL){
         program_error(ERROR_ALLOCATING_MEMORY);
         return ERROR;
     }
-    DataRow->array = (long *)calloc(sizeof(long),1);
+    DataRow->array = (long *)calloc(1,sizeof(long));
     if(DataRow->array == NULL){
         program_error(ERROR_ALLOCATING_MEMORY);
         return ERROR;
@@ -244,7 +244,7 @@ dataNode * init_data_code(dataNode * newNode, long data){
     switch (*row_data_type) {
         case DB:
         case ASCIZ:
-            newNode->db = (char *) calloc(sizeof(char),1);
+            newNode->db = (char *) calloc(1,sizeof(char));
             if(newNode->db == NULL){
                 program_error(ERROR_ALLOCATING_MEMORY);
                 return NULL;
@@ -254,7 +254,7 @@ dataNode * init_data_code(dataNode * newNode, long data){
             break;
             /* half word */
         case DH:
-            newNode->dh = (int *) calloc(sizeof(int),1);
+            newNode->dh = (int *) calloc(1,sizeof(int));
             if(newNode->dh == NULL){
                 program_error(ERROR_ALLOCATING_MEMORY);
                 return NULL;
@@ -264,7 +264,7 @@ dataNode * init_data_code(dataNode * newNode, long data){
             break;
             /* whole word */
         case DW:
-            newNode->dw = (signed long *) calloc(sizeof(signed long),1);
+            newNode->dw = (signed long *) calloc(1,sizeof(signed long));
             if(newNode->dw == NULL){
                 program_error(ERROR_ALLOCATING_MEMORY);
                 return NULL;
@@ -281,7 +281,7 @@ dataNode * init_data_code(dataNode * newNode, long data){
 dataNode * init_data_node(long data)
 {
     dataNode * newNode = NULL;
-    newNode = (dataNode *)calloc(sizeof(dataNode),1);
+    newNode = (dataNode *)calloc(1,sizeof(dataNode));
     if(newNode == NULL){
         program_error(ERROR_ALLOCATING_MEMORY);
         return NULL_SIGN;
