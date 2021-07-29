@@ -3,21 +3,7 @@
 
 #include "constants.h"
 #include "error_handler.h"
-#include <limits.h>
 
-/* for long variable TODO remove
-#define TARGET_MAX 2147483647L
-#if   SCHAR_MAX >= TARGET_MAX
-typedef signed char int32;
-#elif SHORT_MAX >= TARGET_MAX
-typedef short int32;
-#elif INT_MAX   >= TARGET_MAX
-typedef int int32;
-#else
-typedef long int32;
-#endif*/
-
-#undef TARGET_MAX
 /* TODO remove */
 /*typedef struct dataNode{
     int address;
