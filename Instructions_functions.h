@@ -120,10 +120,6 @@ int Insert_J_Args(signed long address,unsigned int reg);
  */
 int Insert_I_Args(signed int immed);
 
-/*
- * adds the new node to linked list at the end
- */
-void add_inst_node(instructionNode *newNode);
 
 /*
  * init instruction node for linked list

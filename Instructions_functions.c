@@ -105,16 +105,16 @@ int find_instruction(char *data, int size){
 /*
  * adds the new node to linked list at the end
  */
-void add_inst_node(instructionNode *newNode){
+void add_inst_node(instructionNode **newNode){
     instructionNode * cur_node;
     if(InstructionNodes == NULL){ /* this is the first node in the int nodes */
-        InstructionNodes = newNode;
+        InstructionNodes = *newNode;
     }else{
         cur_node = InstructionNodes;
         while(cur_node->next != NULL){ /* insert to tail of the linked list of inst nodes */
             cur_node = cur_node->next;
         }
-        cur_node->next = newNode;
+        cur_node->next = *newNode;
     }
 }
 
@@ -155,7 +155,7 @@ int Insert_R_Args(){
                     (rd << RD_R) |
                     (funct_r[*Inst_Action] << FUNCT_R);
     test_print(newNode->code); /* TODO test print */
-    add_inst_node(newNode);
+    add_inst_node(&newNode);
     return OK;
 }
 
@@ -187,7 +187,7 @@ int Insert_J_Args(signed long address,unsigned int reg){
                     (((reg & 0x1) << 25)) |
                     (address & 0xFFFFFF);
     test_print(newNode->code); /* TODO test print */
-    add_inst_node(newNode);
+    add_inst_node(&newNode);
     return OK;
 }
 
@@ -211,7 +211,7 @@ int Insert_I_Args(signed int immed){
                     (rt << RT) |
                     ((immed & 0xFFFF));
     test_print(newNode->code); /* TODO test print */
-    add_inst_node(newNode);
+    add_inst_node(&newNode);
     return OK;
 }
 
@@ -230,6 +230,7 @@ instructionNode * init_instruction_node()
     *IC = *IC + 4; /* increment ic counter in 4 */
     return pt;
 }
+
 
 /*
  * init instruction counter

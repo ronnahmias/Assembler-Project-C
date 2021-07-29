@@ -29,7 +29,6 @@ typedef struct symbolNode{
     int symbol_type;
     int symbol_entry;
     struct symbolNode *next;
-
 }symbolNode;
 
 /*
@@ -40,12 +39,12 @@ int save_label(char * label, int label_type);
 /*
  * adds the new node to linked list at the end
  */
-symbolNode * add_symbol_node(symbolNode *newNode);
+symbolNode * add_symbol_node(symbolNode **newNode);
 
 /*
  * finds the label in the list and return the address
  */
-int find_label(char * label);
+signed long find_label(char *label);
 
 
 #endif

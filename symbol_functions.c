@@ -1,19 +1,20 @@
 #include "symbol_functions.h"
 
  /* symbol variables */
-symbolNode * SymbolNodes;
+symbolNode * SymbolNodes = NULL;
 
 /*
  * finds the label in the list and return the address TODO check strcmp
  */
-int find_label(char * label){
-    symbolNode * curNode;
-    curNode = SymbolNodes; /* init cur to linked list head */
-    while(curNode){
-        if(!strcmp(curNode->symbol, label)){ /* we have label same*/
-            return curNode->address;
+signed long find_label(char * label){
+    symbolNode * node;
+    node = SymbolNodes; /* init cur to linked list head */
+    while(node)
+    {
+        if(!strcmp(node->symbol, label)) {/* we have label same*/
+            return node->address;
         }
-        curNode = curNode->next;
+        node = node->next;
     }
     return FALSE;
 }
@@ -22,22 +23,23 @@ int find_label(char * label){
  * checks if label has already in the linked list TODO check dup check
  */
 int check_label_exists(char * label){
-    symbolNode * curNode;
-    curNode = SymbolNodes; /* init cur to linked list head */
-    while(curNode != NULL){
-        if(strcmp(curNode->symbol, label)){ /* we have label same -> error*/
-            add_error(ERROR_LABEL_EXISTS,*RowNumber);
+    symbolNode * node;
+    node = SymbolNodes; /* init cur to linked list head */
+    while (node) {
+        if (!strcmp(node->symbol, label)) { /*TODO change we have label same -> error*/
+            add_error(ERROR_LABEL_EXISTS, *RowNumber);
             return ERROR;
         }
-        curNode = curNode->next;
+        node = node->next;
     }
     return OK;
+
 }
 
 /*
  * init data node for linked list for symbol
  */
-symbolNode * init_symbol_node(char* label,int label_type)
+symbolNode * init_symbol_node(char *label,int label_type)
 {
     symbolNode * pt;
     pt = (symbolNode *)calloc(1,sizeof(symbolNode));
@@ -45,7 +47,7 @@ symbolNode * init_symbol_node(char* label,int label_type)
         program_error(ERROR_ALLOCATING_MEMORY);
         return NULL_SIGN;
     }
-    strcpy(pt->symbol,label);
+    strncpy(pt->symbol,label,sizeof(pt->symbol)-1);
     pt->symbol_type = label_type;
     /* address is base on type */
     switch (label_type) {
@@ -63,33 +65,32 @@ symbolNode * init_symbol_node(char* label,int label_type)
 /*
  * save label to struct labels
  */
-int save_label(char * label, int label_type){
+int save_label(char label[LABEL_MAX_SIZE], int label_type){
     int status;
     symbolNode * symbol_pt;
-    if(check_label_exists(label) == ERROR){ /* check duplicate label */
+    if(check_label_exists(label) == ERROR){ /* TODO check duplicate label*/
         return ERROR;
     }
     symbol_pt = init_symbol_node(label,label_type);
     if(symbol_pt == NULL_SIGN){ /* error allocating dont continue */
         return ERROR;
     }
-    add_symbol_node(symbol_pt);
+    add_symbol_node(&symbol_pt);
     return OK;
 }
 
 /*
  * adds the new node to linked list at the end
  */
-symbolNode * add_symbol_node(symbolNode *newNode)
-{
+symbolNode * add_symbol_node(symbolNode **newNode){
     symbolNode * cur_node;
     if(SymbolNodes == NULL){ /* this is the first node in the symbol nodes */
-        SymbolNodes = newNode;
+        SymbolNodes = *newNode;
     }else{
         cur_node = SymbolNodes;
         while(cur_node->next != NULL){ /* insert to tail of the linked list of symbol nodes */
             cur_node = cur_node->next;
         }
-        cur_node->next = newNode;
+        cur_node->next = *newNode;
     }
 }

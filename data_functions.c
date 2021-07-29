@@ -92,7 +92,7 @@ int insert_asciz_row(){
             program_error(ERROR_ALLOCATING_MEMORY);
             return ERROR;
         }
-        add_data_node(pt);
+        add_data_node(&pt);
     }
 }
 
@@ -108,7 +108,7 @@ int insert_data_row(){
         if(newNode == NULL_SIGN){
             return ERROR;
         }
-        add_data_node(newNode);
+        add_data_node(&newNode);
     }
     /* free data row */
     free(DataRow->array);
@@ -295,17 +295,17 @@ dataNode * init_data_node(long data)
 /*
  * adds the new node to linked list at the end
  */
-dataNode * add_data_node(dataNode *newNode)
+dataNode * add_data_node(dataNode **newNode)
 {
     dataNode * cur_node;
     if(DataNodes == NULL){ /* this is the first node in the data nodes */
-        DataNodes = newNode;
+        DataNodes = *newNode;
     }else{
         cur_node = DataNodes;
         while(cur_node->next != NULL){ /* insert to tail of the linked list of data nodes */
             cur_node = cur_node->next;
         }
-        cur_node->next = newNode;
+        cur_node->next = *newNode;
     }
 }
 

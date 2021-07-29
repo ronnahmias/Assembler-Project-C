@@ -60,7 +60,7 @@ dataNode * init_data_node(long data);
 /*
  * adds the new node to linked list at the end
  */
-dataNode * add_data_node(dataNode *newNode);
+dataNode * add_data_node(dataNode **newNode);
 
 /* asciz data functions */
 
