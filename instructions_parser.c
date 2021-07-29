@@ -176,7 +176,7 @@ int r_instruction_parse(char * data, int num_args){
 /*
  * parsing input label or number in the line
  */
-int extract_label_or_number(char *data, int * reg, char *label_dest){
+int extract_label_or_number(char *data,unsigned int * reg, char *label_dest){
     /* help variables */
     char temp_data[TRUE];
     int data_index = 0;
@@ -577,14 +577,22 @@ int extract_numbers_label(char * data, char *label_dest){
 }
 
 /*
+ * turn on bits according to range (index of start)
+ */
+signed long add_bits(signed long before, unsigned char num, unsigned char range){
+    return before | (num << range);/* TODO not nessecery*/
+}
+
+/*
  * process the data of the instruction row and check how many arguments
  * that match to instruction Action with the type
  */
 int process_instruction(char * data){
-    int error_flag, reg=0;
+    int error_flag;
+    unsigned int reg=0;
     signed int immed;
     char label[LABEL_MAX_SIZE] = {NULL_SIGN};
-    unsigned int address = 0;
+    signed long address = 0;
     switch(*Inst_Type){
         case R:
             switch(*Inst_Action){
@@ -617,13 +625,19 @@ int process_instruction(char * data){
                 case JMP:
                     /* 1 label or number as argument expect */
                     error_flag = extract_label_or_number(data, &reg, label);
-                    address = (unsigned int)find_label(label); /* try to fine the label in labels list */
+                    if(error_flag == ERROR){
+                        return ERROR;
+                    }
+                    address = find_label(label); /* try to fine the label in labels list */
                     break;
                 case LA:
                 case CALL:
                     /* label as argument expect */
                     error_flag = get_label(data,label);
-                    address = (unsigned int)find_label(label); /* try to fine the label in labels list */
+                    if(error_flag == ERROR){
+                        return ERROR;
+                    }
+                    address = find_label(label); /* try to fine the label in labels list */
                     break;
                 case STOP:
                     /* no arguments expected */
@@ -659,6 +673,7 @@ int process_instruction(char * data){
                     error_flag = extract_numbers_label(data,label);
                     break;
             }
+            Insert_I_Args(immed);
             break;
     }
     if(error_flag == ERROR){

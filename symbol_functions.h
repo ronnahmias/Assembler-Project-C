@@ -24,7 +24,7 @@ enum symbol_entry_enum
 };
 
 typedef struct symbolNode{
-    int address;
+    signed long address;
     char symbol[LABEL_MAX_SIZE];
     int symbol_type;
     int symbol_entry;

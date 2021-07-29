@@ -6,10 +6,14 @@
 #include "error_handler.h"
 #include "shared_data.h"
 
+/* TODO remove after fixes*/
 typedef struct instructionNode{
     int address;
     struct instructionNode *next;
-    union InstCode{
+    int instruction_type;
+    int instruction_action;
+    signed long code;
+    /*union InstCode{
         unsigned int bits32:32;
         struct{
             unsigned int unused:6;
@@ -30,13 +34,13 @@ typedef struct instructionNode{
             unsigned int rs:5;
             unsigned int opcode:6;
         }InstructionsTypeI;
-        struct { /* help for export the files */
+        struct {
             unsigned int a:8;
             unsigned int b:8;
             unsigned int c:8;
             unsigned int d:8;
         }represent;
-    }InstCode;
+    }InstCode;*/
 }instructionNode;
 
 typedef enum{
@@ -109,7 +113,12 @@ int Insert_R_Args();
 /*
  * insert data to instruction node of j type instruction
  */
-int Insert_J_Args(unsigned int address,int reg);
+int Insert_J_Args(signed long address,unsigned int reg);
+
+/*
+ * insert data to instruction node of i type instruction
+ */
+int Insert_I_Args(signed int immed);
 
 /*
  * adds the new node to linked list at the end

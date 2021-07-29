@@ -4,13 +4,13 @@
 symbolNode * SymbolNodes;
 
 /*
- * finds the label in the list and return the address
+ * finds the label in the list and return the address TODO check strcmp
  */
 int find_label(char * label){
     symbolNode * curNode;
     curNode = SymbolNodes; /* init cur to linked list head */
-    while(curNode != NULL){
-        if(strcmp(curNode->symbol, label)){ /* we have label same */
+    while(curNode){
+        if(!strcmp(curNode->symbol, label)){ /* we have label same*/
             return curNode->address;
         }
         curNode = curNode->next;
@@ -19,13 +19,13 @@ int find_label(char * label){
 }
 
 /*
- * checks if label has already in the linked list
+ * checks if label has already in the linked list TODO check dup check
  */
 int check_label_exists(char * label){
     symbolNode * curNode;
     curNode = SymbolNodes; /* init cur to linked list head */
     while(curNode != NULL){
-        if(!strcmp(curNode->symbol, label)){ /* we have label same -> error*/
+        if(strcmp(curNode->symbol, label)){ /* we have label same -> error*/
             add_error(ERROR_LABEL_EXISTS,*RowNumber);
             return ERROR;
         }
@@ -40,7 +40,7 @@ int check_label_exists(char * label){
 symbolNode * init_symbol_node(char* label,int label_type)
 {
     symbolNode * pt;
-    pt = (symbolNode *)calloc(sizeof(symbolNode),1);
+    pt = (symbolNode *)calloc(1,sizeof(symbolNode));
     if(pt == NULL){
         program_error(ERROR_ALLOCATING_MEMORY);
         return NULL_SIGN;

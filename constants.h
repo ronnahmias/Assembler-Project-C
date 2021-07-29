@@ -45,11 +45,19 @@
 #define NEW_LINE '\n'
 #define UNUSED 0
 
+ /* const sizes */
 #define MAX_REGISTER 31
 #define MIN_REGISTER 0
-
 #define MAX_IMMED 32767
 #define MIN_IMMED -32768
 #define IMMED_DIGITS 6
+
+ /* instructions bits range */
+#define OPCODE 26
+#define RS 21
+#define RT 16
+#define RD_R 11
+#define FUNCT_R 6
+
 
 #endif

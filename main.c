@@ -5,6 +5,7 @@ int main(int argc, char** argv) {
 
     int i,error_flag;
     FILE *file;
+
     /* error not enough files */
     if(argc<2){
         program_error(ERROR_MISSING_FILES);

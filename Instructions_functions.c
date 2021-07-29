@@ -16,6 +16,16 @@ extern int * Inst_Action;
 extern int * IC;
 extern unsigned int * help_argument_array;
 
+/* TODO remove end */
+void test_print(signed long num) {
+    int i;
+    printf("0x%lx\n", num);
+
+    for (i = sizeof(num) << 3; i; i--)
+        putchar('0' + ((num >> (i - 1)) & 1));
+
+}
+
 /*
  * init instruction variables
  */
@@ -113,7 +123,7 @@ void add_inst_node(instructionNode *newNode){
  */
 int Insert_R_Args(){
     instructionNode * newNode;
-    unsigned int rd,rs,rt;
+    unsigned char rd,rs,rt;
     int i=0;
     newNode = init_instruction_node();
     if(newNode == NULL){
@@ -137,12 +147,14 @@ int Insert_R_Args(){
             rt = UNUSED;
             break;
     }
-    newNode->InstCode.InstructionsTypeR.unused = UNUSED;
-    newNode->InstCode.InstructionsTypeR.funct = funct_r[*Inst_Action];
-    newNode->InstCode.InstructionsTypeR.rd = rd;
-    newNode->InstCode.InstructionsTypeR.rt = rt;
-    newNode->InstCode.InstructionsTypeR.rs = rs;
-    newNode->InstCode.InstructionsTypeR.opcode = op_code_r[*Inst_Action];
+    newNode->instruction_action = *Inst_Action;
+    newNode->instruction_type = *Inst_Type;
+    newNode->code = (op_code_r[*Inst_Action] << OPCODE) |
+                    (rs << RS) |
+                    (rt << RT) |
+                    (rd << RD_R) |
+                    (funct_r[*Inst_Action] << FUNCT_R);
+    test_print(newNode->code); /* TODO test print */
     add_inst_node(newNode);
     return OK;
 }
@@ -150,7 +162,7 @@ int Insert_R_Args(){
 /*
  * insert data to instruction node of j type instruction
  */
-int Insert_J_Args(unsigned int address,int reg){
+int Insert_J_Args(signed long address,unsigned int reg){
     instructionNode * newNode;
     int i=0;
     newNode = init_instruction_node();
@@ -159,18 +171,46 @@ int Insert_J_Args(unsigned int address,int reg){
     }
     switch(*Inst_Action){
         case JMP:
-            address = help_argument_array[i++];
+            if(reg == TRUE){ /* takes the register number to address */
+                address = help_argument_array[i++];
+            }
             break;
         case LA:
         case CALL:
             break;
         case STOP:
-            /* no arguments expected */
             break;
     }
-    newNode->InstCode.InstructionsTypeJ.address = address;
-    newNode->InstCode.InstructionsTypeJ.reg = reg;
-    newNode->InstCode.InstructionsTypeJ.opcode = op_code_j[*Inst_Action];
+    newNode->instruction_action = *Inst_Action;
+    newNode->instruction_type = *Inst_Type;
+    newNode->code = (op_code_j[*Inst_Action] << OPCODE) |
+                    (((reg & 0x1) << 25)) |
+                    (address & 0xFFFFFF);
+    test_print(newNode->code); /* TODO test print */
+    add_inst_node(newNode);
+    return OK;
+}
+
+/*
+ * insert data to instruction node of i type instruction
+ */
+int Insert_I_Args(signed int immed){
+    instructionNode * newNode;
+    int i=0;
+    unsigned char rs,rt;
+    newNode = init_instruction_node();
+    if(newNode == NULL){
+        return ERROR;
+    }
+    rs = help_argument_array[i++];
+    rt = help_argument_array[i];
+    newNode->instruction_action = *Inst_Action;
+    newNode->instruction_type = *Inst_Type;
+    newNode->code = (op_code_i[*Inst_Action] << OPCODE) |
+                    (rs << RS) |
+                    (rt << RT) |
+                    ((immed & 0xFFFF));
+    test_print(newNode->code); /* TODO test print */
     add_inst_node(newNode);
     return OK;
 }
