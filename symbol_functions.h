@@ -31,6 +31,16 @@ typedef struct symbolNode{
     struct symbolNode *next;
 }symbolNode;
 
+typedef struct entryNode{
+    char symbol[LABEL_MAX_SIZE];
+    struct entryNode *next;
+}entryNode;
+
+/*
+ * add entry label to entry list for future use
+ */
+int add_entry_node(char * label);
+
 /*
  * save label to struct labels
  */

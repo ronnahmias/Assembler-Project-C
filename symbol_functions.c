@@ -1,10 +1,34 @@
 #include "symbol_functions.h"
 
  /* symbol variables */
-symbolNode * SymbolNodes = NULL;
+symbolNode * SymbolNodes;
+entryNode * EntryNodes;
 
 /*
- * finds the label in the list and return the address TODO check strcmp
+ * add entry label to entry list for future use
+ */
+int add_entry_node(char * label){
+    entryNode * ent_pt,*temp_pt;
+    ent_pt = (entryNode *)calloc(1,sizeof(entryNode));
+    if(ent_pt == NULL){
+        program_error(ERROR_ALLOCATING_MEMORY);
+        return ERROR;
+    }
+    strncpy(ent_pt->symbol,label,sizeof(ent_pt->symbol)-1);
+    if(EntryNodes == NULL){ /* this is the first node in the entry nodes */
+        EntryNodes = ent_pt;
+    }else{
+        temp_pt = EntryNodes;
+        while(temp_pt->next){ /* insert to tail of the linked list of entry nodes */
+            temp_pt = temp_pt->next;
+        }
+        temp_pt->next = ent_pt;
+    }
+    return OK;
+}
+
+/*
+ * finds the label in the list and return the address
  */
 signed long find_label(char * label){
     symbolNode * node;
@@ -20,13 +44,13 @@ signed long find_label(char * label){
 }
 
 /*
- * checks if label has already in the linked list TODO check dup check
+ * checks if label has already in the linked list
  */
 int check_label_exists(char * label){
     symbolNode * node;
     node = SymbolNodes; /* init cur to linked list head */
     while (node) {
-        if (!strcmp(node->symbol, label)) { /*TODO change we have label same -> error*/
+        if (!strcmp(node->symbol, label)) { /* we have label same -> error*/
             add_error(ERROR_LABEL_EXISTS, *RowNumber);
             return ERROR;
         }
