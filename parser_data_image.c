@@ -5,7 +5,7 @@
  */
 int process_data(char * data){
     int status;
-    char label[LABEL_MAX_SIZE];
+    char label[LABEL_MAX_SIZE] = {NULL_SIGN};
     switch ((*row_data_type)) {
         case DB:
         case DH:

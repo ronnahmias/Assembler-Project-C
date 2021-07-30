@@ -16,5 +16,5 @@ unsigned int * help_argument_array;
 signed int * immed;
 
 /* instruction, data counters */
-int * IC;
-int * DC;
+signed long * IC;
+signed long * DC;

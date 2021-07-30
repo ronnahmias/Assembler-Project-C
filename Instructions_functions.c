@@ -13,7 +13,7 @@ instructionNode * InstructionNodes;
 
 extern int * Inst_Type;
 extern int * Inst_Action;
-extern int * IC;
+extern signed long * IC;
 extern unsigned int * help_argument_array;
 
 /* TODO remove end */
@@ -236,13 +236,29 @@ instructionNode * init_instruction_node()
  * init instruction counter
  */
 int init_ic(){
-    IC = (int *) calloc(1,sizeof(int));
+    IC = (signed long *) calloc(1,sizeof(signed long));
     if(IC == NULL){
         program_error(ERROR_ALLOCATING_MEMORY);
         return NULL_SIGN;
     }
     *IC = 100; /* init ic to address 100*/
     return TRUE;
+}
+
+/*
+ * return current ic
+ */
+signed long get_ic(){
+    return *IC;
+}
+
+
+
+/*
+ * free instruction counter
+ */
+void free_ic(){
+    free(IC);
 }
 
 /*

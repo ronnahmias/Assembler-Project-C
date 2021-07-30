@@ -10,7 +10,7 @@ data_row * DataRow;
  * init data counter
  */
 int init_dc(){
-    DC = (int *) calloc(1,sizeof(int));
+    DC = (signed long*) calloc(1,sizeof(signed long));
     if(DC == NULL){
         program_error(ERROR_ALLOCATING_MEMORY);
         return ERROR;
@@ -85,15 +85,17 @@ int init_asciz_string(){
  */
 int insert_asciz_row(){
     int i;
-    dataNode * pt;
+    dataNode * node;
     for(i=0;AscizRow->string[i];i++){
-        pt = init_data_node(AscizRow->string[i]);
-        if(pt == NULL_SIGN){
+        node = NULL;
+        node = init_data_node(AscizRow->string[i]);
+        if(node == NULL_SIGN){
             program_error(ERROR_ALLOCATING_MEMORY);
             return ERROR;
         }
-        add_data_node(&pt);
+        add_data_node(&node);
     }
+    return OK;
 }
 
 /*
@@ -179,6 +181,7 @@ void search_data_type(char * input)
 
 /*
  * convert data row numbers (db,dw,dh) to long array before insert to linked list
+ * TODO check
  */
 int convert_data_to_array(char * data){
     int i=0, status;
@@ -240,39 +243,40 @@ void update_asciz_row_size(int size){
 /*
  * init data for the data code
  */
-dataNode * init_data_code(dataNode * newNode, long data){
+dataNode * init_data_code(dataNode ** newNode, long data){
     switch (*row_data_type) {
         case DB:
         case ASCIZ:
-            newNode->db = (char *) calloc(1,sizeof(char));
-            if(newNode->db == NULL){
+            (*newNode)->db = (char *) calloc(1,sizeof(char));
+            if((*newNode)->db == NULL){
                 program_error(ERROR_ALLOCATING_MEMORY);
                 return NULL;
             }
-            *(newNode->db) = (char)data;
+            *((*newNode)->db) = (char)data;
             *DC = *DC + 1; /* increase DC */
             break;
             /* half word */
         case DH:
-            newNode->dh = (int *) calloc(1,sizeof(int));
-            if(newNode->dh == NULL){
+            (*newNode)->dh = (int *) calloc(1,sizeof(int));
+            if((*newNode)->dh == NULL){
                 program_error(ERROR_ALLOCATING_MEMORY);
                 return NULL;
             }
-            *(newNode->dh) = (int)data;
+            *((*newNode)->dh) = (int)data;
             *DC = *DC + 2; /* increase DC */
             break;
             /* whole word */
         case DW:
-            newNode->dw = (signed long *) calloc(1,sizeof(signed long));
-            if(newNode->dw == NULL){
+            (*newNode)->dw = (signed long *) calloc(1,sizeof(signed long));
+            if((*newNode)->dw == NULL){
                 program_error(ERROR_ALLOCATING_MEMORY);
                 return NULL;
             }
-            *(newNode->dw) = data;
+            *((*newNode)->dw) = data;
             *DC = *DC + 4; /* increase DC */
             break;
     }
+    return *newNode;
 }
 
 /*
@@ -288,7 +292,7 @@ dataNode * init_data_node(long data)
     }
     newNode->datatype = *row_data_type; /* save the data type in the node */
     newNode->address = *DC;
-    newNode = init_data_code(newNode,data); /* init the data size in the node */
+    newNode = init_data_code(&newNode,data); /* init the data size in the node */
     return newNode;
 }
 
@@ -309,18 +313,14 @@ dataNode * add_data_node(dataNode **newNode)
     }
 }
 
-/* TODO only test remove end*/
 /*
-void test_binary_dec(){
-    unsigned i;
-    dataNode * cur = DataNodes;
-    while(cur != NULL) {
-/*                    for (i = 1 << 31; i > 0; i = i / 2)
-                        (DataNodes->db & i) ? printf("1") : printf("0");
-        printf("%d", cur->data_u.db);
-        cur = cur->next;
-        putchar('\n');
+ * update addresses in data list add the current IC
+ */
+int update_data_list_addresses(){
+    dataNode *cur_node;
+    cur_node = DataNodes;
+    while(cur_node){
+        cur_node->address += get_ic();
+        cur_node = cur_node->next;
     }
-}*/
-
-
+}

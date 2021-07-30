@@ -6,11 +6,12 @@
 #include "constants.h"
 #include "string.h"
 #include "shared_data.h"
+#include "Instructions_functions.h"
 
 /* extern variables */
 extern int *RowNumber;
 extern int *row_data_type;
-extern int *DC;
+extern signed long *DC;
 
 enum data_enum
 {
@@ -119,6 +120,11 @@ void zero_input_num();
  * convert data row numbers (db,dw,dh) to long array before insert to linked list
  */
 int convert_data_to_array(char * data);
+
+/*
+ * update addresses in data list add the current IC
+ */
+int update_data_list_addresses();
 
 
 #endif

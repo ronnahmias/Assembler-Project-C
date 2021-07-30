@@ -104,12 +104,12 @@ int r_instruction_parse(char * data, int num_args){
     /* we have the num args -> check for new line */
     if(help_index == num_args){
         /* no end for line -> error */
-        if(data[data_index] != NEW_LINE || data[data_index] != '\r'){
-            add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
-            return ERROR;
-        }else{
+        if(data[data_index] == NEW_LINE || data[data_index] == '\r'){
             /* line correct parsing */
             return OK;
+        }else{
+            add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
+            return ERROR;
         }
     }
 
@@ -439,7 +439,7 @@ int get_label(char * data, char *label_dest){
         add_error(ERROR_LABEL_OVERSIZE,*RowNumber);
         return ERROR;
     }
-    strncpy(label_dest,data,data_index); /* copies label to label destination */
+    strncpy(label_dest,data,sizeof(label_dest)-1); /* copies label to label destination */
     /* skip white chars */
     data_index += skip_white_spaces(data,data_index);
     if(data[data_index] == NULL_SIGN || data[data_index] == '\r'){ /* the line doesnt end */

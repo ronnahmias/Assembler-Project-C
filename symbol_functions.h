@@ -7,8 +7,8 @@
 #include "error_handler.h"
 
 extern int * RowNumber;
-extern int * DC;
-extern int * IC;
+extern signed long * DC;
+extern signed long * IC;
 
 enum symbol_type_enum
 {
@@ -45,6 +45,12 @@ symbolNode * add_symbol_node(symbolNode **newNode);
  * finds the label in the list and return the address
  */
 signed long find_label(char *label);
+
+/*
+ * after first run over the rows file
+ * update the data address after the IC
+ */
+int update_symbol_data_addresses();
 
 
 #endif

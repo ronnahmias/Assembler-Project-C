@@ -1,5 +1,4 @@
 #include "assembler.h"
-#include "Instructions_functions.h"
 
 /*
  * logic function for the first run over the current file
@@ -11,13 +10,18 @@ int first_run(FILE *file)
     if(status == ERROR){
         return ERROR;
     }
-    read_by_line(file);
-    free_every_file();
+    status = read_by_line(file);
+    if(status == ERROR){
+        return ERROR;
+    }
+    update_symbol_data_addresses(); /* update symbol addresses */
+    update_data_list_addresses();/* update data addresses */
     return OK;
 }
 
 void second_run(FILE *file)
 {
-    read_by_line(file);
+    /*read_by_line(file);*/
+    free_every_file();
 }
 

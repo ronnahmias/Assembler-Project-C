@@ -132,6 +132,16 @@ instructionNode * init_instruction_node();
 int init_ic();
 
 /*
+ * return current ic
+ */
+signed long get_ic();
+
+/*
+ * free instruction counter
+ */
+void free_ic();
+
+/*
  * init help arguments array before insert to nodes
  */
 int init_help_array(int size);

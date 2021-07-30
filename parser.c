@@ -13,8 +13,12 @@ int read_by_line(FILE *cur_file){
         if(status == COMMENT_ROW){ /* comment line */
             continue; /* skip the row */
         }
-        process_input(data);
+        status = process_input(data);
+        if(status == ERROR){
+            return ERROR;
+        }
     }
+    return OK;
 }
 
 /*

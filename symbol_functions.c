@@ -94,3 +94,20 @@ symbolNode * add_symbol_node(symbolNode **newNode){
         cur_node->next = *newNode;
     }
 }
+
+/*
+ * after first run over the rows file
+ * update the data address after the IC
+ */
+int update_symbol_data_addresses(){
+    symbolNode * temp_node;
+    temp_node = SymbolNodes; /* init temp node to linked list head */
+    while (temp_node) {
+        if (temp_node->symbol_type == DATA) { /* symbol type data -> update the address */
+            temp_node->address += *IC; /* add the IC to address */
+        }
+        temp_node = temp_node->next;
+    }
+    return OK;
+
+}
