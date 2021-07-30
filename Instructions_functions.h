@@ -6,41 +6,13 @@
 #include "error_handler.h"
 #include "shared_data.h"
 
-/* TODO remove after fixes*/
 typedef struct instructionNode{
     int address;
     struct instructionNode *next;
+    int need_completion; /* for the second run */
     int instruction_type;
     int instruction_action;
     signed long code;
-    /*union InstCode{
-        unsigned int bits32:32;
-        struct{
-            unsigned int unused:6;
-            unsigned int funct:5;
-            unsigned int rd:5;
-            unsigned int rt:5;
-            unsigned int rs:5;
-            unsigned int opcode:6;
-        }InstructionsTypeR;
-        struct{
-            unsigned int address:25;
-            unsigned int reg:1;
-            unsigned int opcode:6;
-        }InstructionsTypeJ;
-        struct {
-            int immed:16;
-            unsigned int rt:5;
-            unsigned int rs:5;
-            unsigned int opcode:6;
-        }InstructionsTypeI;
-        struct {
-            unsigned int a:8;
-            unsigned int b:8;
-            unsigned int c:8;
-            unsigned int d:8;
-        }represent;
-    }InstCode;*/
 }instructionNode;
 
 typedef enum{
@@ -113,12 +85,12 @@ int Insert_R_Args();
 /*
  * insert data to instruction node of j type instruction
  */
-int Insert_J_Args(signed long address,unsigned int reg);
+int Insert_J_Args(signed long address,unsigned int reg,int need_completion);
 
 /*
  * insert data to instruction node of i type instruction
  */
-int Insert_I_Args(signed int immed);
+int Insert_I_Args(signed int immed,int need_completion);
 
 
 /*

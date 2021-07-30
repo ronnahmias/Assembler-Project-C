@@ -40,7 +40,7 @@ signed long find_label(char * label){
         }
         node = node->next;
     }
-    return FALSE;
+    return NOT_FOUND;
 }
 
 /*

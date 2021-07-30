@@ -31,6 +31,7 @@
 #define NO_DATA_TYPE -1
 #define NO_LINE_NUMBER -1
 #define COMMENT_ROW -5
+#define NOT_FOUND -2
 
 #define INPUT_NUM 10
 

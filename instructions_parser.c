@@ -577,18 +577,11 @@ int extract_numbers_label(char * data, char *label_dest){
 }
 
 /*
- * turn on bits according to range (index of start)
- */
-signed long add_bits(signed long before, unsigned char num, unsigned char range){
-    return before | (num << range);/* TODO not nessecery*/
-}
-
-/*
  * process the data of the instruction row and check how many arguments
  * that match to instruction Action with the type
  */
 int process_instruction(char * data){
-    int error_flag;
+    int error_flag,need_completion=0;
     unsigned int reg=0;
     signed int immed;
     char label[LABEL_MAX_SIZE] = {NULL_SIGN};
@@ -629,6 +622,9 @@ int process_instruction(char * data){
                         return ERROR;
                     }
                     address = find_label(label); /* try to fine the label in labels list */
+                    if(address == NOT_FOUND){ /* save in the node for completion in the second run*/
+                        need_completion = TRUE;
+                    }
                     break;
                 case LA:
                 case CALL:
@@ -637,7 +633,10 @@ int process_instruction(char * data){
                     if(error_flag == ERROR){
                         return ERROR;
                     }
-                    address = find_label(label); /* try to fine the label in labels list */
+                    address = find_label(label); /* try to find the label in labels list */
+                    if(address == NOT_FOUND){ /* save in the node for completion in the second run*/
+                        need_completion = TRUE;
+                    }
                     break;
                 case STOP:
                     /* no arguments expected */
@@ -647,7 +646,7 @@ int process_instruction(char * data){
             if(error_flag == ERROR){
                 return ERROR;
             }
-            Insert_J_Args(address,reg);
+            Insert_J_Args(address,reg,need_completion);
             break;
         case I:
             switch(*Inst_Action){
@@ -671,9 +670,15 @@ int process_instruction(char * data){
                 case BGT:
                     /* expect 2 argument with $ and label at end */
                     error_flag = extract_numbers_label(data,label);
+                    address = find_label(label); /* try to fine the label in labels list */
+                    if(address == NOT_FOUND){ /* save in the node for completion in the second run*/
+                        need_completion = TRUE;
+                    }else{ /* found -> calc the range from label address to inst address */
+                        immed = address - *IC;
+                    }
                     break;
             }
-            Insert_I_Args(immed);
+            Insert_I_Args(immed,need_completion);
             break;
     }
     if(error_flag == ERROR){

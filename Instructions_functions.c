@@ -162,7 +162,7 @@ int Insert_R_Args(){
 /*
  * insert data to instruction node of j type instruction
  */
-int Insert_J_Args(signed long address,unsigned int reg){
+int Insert_J_Args(signed long address,unsigned int reg,int need_completion){
     instructionNode * newNode;
     int i=0;
     newNode = init_instruction_node();
@@ -181,6 +181,7 @@ int Insert_J_Args(signed long address,unsigned int reg){
         case STOP:
             break;
     }
+    newNode->need_completion = need_completion; /* sign for second run */
     newNode->instruction_action = *Inst_Action;
     newNode->instruction_type = *Inst_Type;
     newNode->code = (op_code_j[*Inst_Action] << OPCODE) |
@@ -194,7 +195,7 @@ int Insert_J_Args(signed long address,unsigned int reg){
 /*
  * insert data to instruction node of i type instruction
  */
-int Insert_I_Args(signed int immed){
+int Insert_I_Args(signed int immed, int need_completion){
     instructionNode * newNode;
     int i=0;
     unsigned char rs,rt;
@@ -204,9 +205,10 @@ int Insert_I_Args(signed int immed){
     }
     rs = help_argument_array[i++];
     rt = help_argument_array[i];
+    newNode->need_completion = need_completion; /* sign for second run */
     newNode->instruction_action = *Inst_Action;
     newNode->instruction_type = *Inst_Type;
-    newNode->code = (op_code_i[*Inst_Action] << OPCODE) |
+    newNode->code = (op_code_i[*Inst_Action] << OPCODE) | /* TODO opcode problem */
                     (rs << RS) |
                     (rt << RT) |
                     ((immed & 0xFFFF));
