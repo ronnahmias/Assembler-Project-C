@@ -55,8 +55,10 @@ symbolNode * init_symbol_node(char *label,int label_type)
             pt->address = *IC;
             break;
         case DATA:
-        case EXTERNAL:
             pt->address = *DC;
+            break;
+        case EXTERNAL:
+            pt->address = FALSE;
             break;
     }
     return pt;
