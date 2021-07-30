@@ -44,13 +44,28 @@ int process_data(char * data){
 
         case EXTERN:
             status = get_label(data,label); /* extract the label */
+            if(status == ERROR){
+                return ERROR;
+            }
             status = save_label(label,EXTERNAL); /* save into label list with external */
+            if(status == ERROR){
+                return ERROR;
+            }
             break;
 
             /* entry will be process in the second iteration */
         case ENTRY:
+            status = get_label(data,label); /* extract the label */
+            if(status == ERROR){
+                return ERROR;
+            }
+            status = add_entry_node(label); /* save into entry list */
+            if(status == ERROR){
+                return ERROR;
+            }
             break;
     }
+    return OK;
 }
 
 /*
