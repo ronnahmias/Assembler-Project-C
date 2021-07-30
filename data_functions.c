@@ -59,7 +59,7 @@ int init_asciz_row(){
         program_error(ERROR_ALLOCATING_MEMORY);
         return ERROR;
     }
-    AscizRow->size = 0;
+    return OK;
 }
 
 /*
@@ -86,7 +86,7 @@ int init_asciz_string(){
 int insert_asciz_row(){
     int i;
     dataNode * node;
-    for(i=0;AscizRow->string[i];i++){
+    for(i=0;i<AscizRow->size;i++){ /* also takes 1 null at the end */
         node = NULL;
         node = init_data_node(AscizRow->string[i]);
         if(node == NULL_SIGN){
@@ -230,7 +230,8 @@ int convert_data_to_array(char * data){
  * copy the input data of string to AscizRow structure
  */
 void copy_asciz_string(char * data){
-    strncpy(AscizRow->string,data,AscizRow->size);
+    strncpy(AscizRow->string,data,AscizRow->size-1);
+    AscizRow->string[AscizRow->size-1] = NULL_SIGN; /*TODO remove uness add \0 at the end */
 }
 
 /*

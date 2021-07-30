@@ -84,6 +84,6 @@ int asciz_input_check(char * data){
         add_error(ERROR_ASCIZ_SYNTAX,*RowNumber);
         return ERROR;
     }
-    update_asciz_row_size(i-1); /* without end bracket */
+    update_asciz_row_size(i); /* with \0 */
     return OK;
 }
