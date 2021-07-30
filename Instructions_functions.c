@@ -2,7 +2,7 @@
 
 char * inst_r[8] = { "add", "sub", "and", "or", "nor", "move","mvhi","mvlo" };
 char * inst_j[4] = { "jmp", "la", "call", "stop" };
-char * inst_i[15] = { "addi", "subi", "andi", "ori", "nori", "beq","bne","blt","bgt","lb","sb","lw","sw","lh","sh" };
+char * inst_i[15] = { "addi", "subi", "andi", "ori", "nori", "bne","beq","blt","bgt","lb","sb","lw","sw","lh","sh" };
 int op_code_r[8] = { 0,0,0,0,0,1,1,1 };
 int op_code_j[4] = { 30,31,32,63 };
 int op_code_i[15] = { 10,11,12,13,14,15,16,17,18,19,20,21,22,23,24 };
