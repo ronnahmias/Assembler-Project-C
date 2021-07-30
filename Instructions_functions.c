@@ -239,7 +239,7 @@ int init_ic(){
     IC = (signed long *) calloc(1,sizeof(signed long));
     if(IC == NULL){
         program_error(ERROR_ALLOCATING_MEMORY);
-        return NULL_SIGN;
+        return ERROR;
     }
     *IC = 100; /* init ic to address 100*/
     return TRUE;
