@@ -16,16 +16,6 @@ extern int * Inst_Action;
 extern signed long * IC;
 extern unsigned int * help_argument_array;
 
-/* TODO remove end */
-void test_print(signed long num) {
-    int i;
-    printf("0x%lx\n", num);
-
-    for (i = sizeof(num) << 3; i; i--)
-        putchar('0' + ((num >> (i - 1)) & 1));
-
-}
-
 /*
  * init instruction variables
  */
@@ -154,7 +144,6 @@ int Insert_R_Args(){
                     (rt << RT) |
                     (rd << RD_R) |
                     (funct_r[*Inst_Action] << FUNCT_R);
-    test_print(newNode->code); /* TODO test print */
     add_inst_node(&newNode);
     return OK;
 }
@@ -196,7 +185,6 @@ int Insert_J_Args(signed long address,unsigned int reg,int need_completion,char 
     newNode->code = (op_code_j[*Inst_Action] << OPCODE) |
                     (((reg & 0x1) << 25)) |
                     (address & 0xFFFFFF);
-    test_print(newNode->code); /* TODO test print */
     add_inst_node(&newNode);
     return OK;
 }
@@ -230,7 +218,6 @@ int Insert_I_Args(signed int immed, int need_completion, char *label){
                     (rs << RS) |
                     (rt << RT) |
                     ((immed & 0xFFFF));
-    test_print(newNode->code); /* TODO test print */
     add_inst_node(&newNode);
     return OK;
 }
@@ -301,6 +288,7 @@ int update_instructions_with_label(){
     instructionNode *cur_inst;
     signed long address;
     cur_inst = InstructionNodes;
+    char outdata[18];
     while(cur_inst){
         /* work only on instructions that need second code changes */
         if(cur_inst->need_completion){
@@ -327,6 +315,14 @@ int update_instructions_with_label(){
                     break;
             }
         }
+       /* setbuf(stdout, 0);
+        printf("%lx\n",cur_inst->code);*/
+        sprintf(outdata, "%04d %02X %02X %02X %02X\n", cur_inst->address,
+                (unsigned int)(cur_inst->code & 0xFF), (unsigned int)((cur_inst->code >> 8) & 0xFF),
+                (unsigned int)((cur_inst->code >> 16) & 0xFF), (unsigned int)((cur_inst->code >> 24) & 0xFF));
+        setbuf(stdout, 0);
+        printf( "%s", outdata);
         cur_inst = cur_inst->next;
+
     }
 }
