@@ -22,7 +22,10 @@ int main(int argc, char** argv) {
         if((file = fopen(argv[i], "r")) != NULL){
             error_flag = first_run(file);
             if(get_errors_count() == FALSE && error_flag){
-                second_run();
+                error_flag = second_run();
+                if(error_flag){ /* found error in second run-> continue to next file*/
+                    continue;
+                }
                 /* TODO export*/
                 /*export_files();*/
             }

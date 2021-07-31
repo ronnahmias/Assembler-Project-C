@@ -23,9 +23,12 @@ int first_run(FILE *file)
  * second run
  * do update of entry, and labels as args to complete the code
  */
-void second_run(){
+int second_run(){
     int status;
     status = check_entry_labels();
+    if(status == ERROR){
+        return ERROR;
+    }
     free_every_file();
 }
 
