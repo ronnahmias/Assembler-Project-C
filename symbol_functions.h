@@ -19,8 +19,8 @@ enum symbol_type_enum
 
 enum symbol_entry_enum
 {
-    YES = 0,
-    NO
+    NO = 0,
+    YES
 };
 
 typedef struct symbolNode{
@@ -32,6 +32,7 @@ typedef struct symbolNode{
 }symbolNode;
 
 typedef struct entryNode{
+    signed long address;
     char symbol[LABEL_MAX_SIZE];
     struct entryNode *next;
 }entryNode;
@@ -40,6 +41,11 @@ typedef struct entryNode{
  * add entry label to entry list for future use
  */
 int add_entry_node(char * label);
+
+/*
+ * update entry labels addresses for ent export files
+ */
+int check_entry_labels();
 
 /*
  * save label to struct labels

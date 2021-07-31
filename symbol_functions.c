@@ -28,6 +28,35 @@ int add_entry_node(char * label){
 }
 
 /*
+ * update entry labels addresses for ent export files
+ */
+int check_entry_labels(){
+    entryNode * cur_entry;
+    symbolNode * cur_symbol;
+    int flag = 0;
+    cur_entry = EntryNodes;
+    while(cur_entry){ /* loop on entry list */
+        cur_symbol = SymbolNodes;
+        while(cur_symbol){ /* loop on symbol list */
+            if(!strcmp(cur_entry->symbol,cur_symbol->symbol)){ /* found symbol in the symbol list */
+                cur_entry->address = cur_symbol->address; /* update address of entry symbol */
+                cur_symbol->symbol_entry = YES; /* update in symbol list that is entry also */
+                flag = 1;
+                break;
+            }
+            cur_symbol = cur_symbol->next;
+        }
+        if(!flag){
+            program_error(ERROR_ENTRY_ERROR);
+            return ERROR;
+        }
+        flag = 0;
+        cur_entry = cur_entry->next;
+    }
+    return OK;
+}
+
+/*
  * finds the label in the list and return the address
  */
 signed long find_label(char * label){

@@ -87,6 +87,7 @@ void print_errors();
 #define ERROR_MAX_DATA "Error max data long"
 
 #define ERROR_ASCIZ_SYNTAX "Error data row not in the correct syntax"
+#define ERROR_ENTRY_ERROR "Error entry label not found in label list"
 
 
 
