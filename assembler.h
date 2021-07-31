@@ -13,4 +13,10 @@
  */
 int first_run(FILE *file);
 
+/*
+ * second run
+ * do update of entry, and labels as args to complete the code
+ */
+void second_run();
+
 #endif

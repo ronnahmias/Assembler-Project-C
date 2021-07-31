@@ -19,9 +19,13 @@ int first_run(FILE *file)
     return OK;
 }
 
-void second_run(FILE *file)
-{
-    /*read_by_line(file);*/
+/*
+ * second run
+ * do update of entry, and labels as args to complete the code
+ */
+void second_run(){
+    int status;
+    status = check_entry_labels();
     free_every_file();
 }
 

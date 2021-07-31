@@ -21,9 +21,8 @@ int main(int argc, char** argv) {
         /* checks if the file was open correctly */
         if((file = fopen(argv[i], "r")) != NULL){
             error_flag = first_run(file);
-            if(get_errors_count() == FALSE && !error_flag){
-                /*second_run(file);*/
-                /* TODO second run*/
+            if(get_errors_count() == FALSE && error_flag){
+                second_run();
                 /* TODO export*/
                 /*export_files();*/
             }
