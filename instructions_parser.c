@@ -617,7 +617,10 @@ int process_instruction(char * data){
                     if(error_flag == ERROR){
                         return ERROR;
                     }
-                    need_completion = TRUE;
+                    /* only if we have label as argument */
+                    if(label[FIRST_INDEX] != NULL_SIGN){
+                        need_completion = TRUE;
+                    }
                     break;
                 case LA:
                 case CALL:

@@ -120,4 +120,9 @@ void free_ic();
  */
 int init_help_array(int size);
 
+/*
+ * update the code in instructions with label as arguments
+ */
+int update_instructions_with_label();
+
 #endif

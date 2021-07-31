@@ -294,6 +294,9 @@ int init_help_array(int size){
     return TRUE;
 }
 
+/*
+ * update the code in instructions with label as arguments
+ */
 int update_instructions_with_label(){
     instructionNode *cur_inst;
     signed long address;
@@ -301,19 +304,26 @@ int update_instructions_with_label(){
     while(cur_inst){
         /* work only on instructions that need second code changes */
         if(cur_inst->need_completion){
+            address = find_label(cur_inst->label); /* find the label in symbol list */
             switch (cur_inst->instruction_type) {
                 case J:
                     /* update the address to label address. if not found add zero */
-                     address = find_label(cur_inst->label);
                      if(address == NOT_FOUND){ /* label not found */
                          program_error(ERROR_ARGUMENTS_ERROR);
                          return ERROR;
                      }else{
-                         address = cur_inst->address;
+                         cur_inst->code |= (address & 0xFFFFFF);
                      }
                     break;
                 case I:
-                    /* TODO continue */
+                    if(address == NOT_FOUND){ /* label not found */
+                        program_error(ERROR_ARGUMENTS_ERROR);
+                        return ERROR;
+                    }else{
+                        /* update address to range from label address to instruction address */
+                        address -= cur_inst->address;
+                        cur_inst->code |= (address & 0xFFFF);
+                    }
                     break;
             }
         }

@@ -30,6 +30,9 @@ int second_run(){
         return ERROR;
     }
     status = update_instructions_with_label();
+    if(status == ERROR){
+        return ERROR;
+    }
     free_every_file();
 }
 
