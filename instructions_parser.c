@@ -663,6 +663,7 @@ int process_instruction(char * data){
                 case BGT:
                     /* expect 2 argument with $ and label at end */
                     error_flag = extract_numbers_label(data,label);
+                    immed = 0;
                     need_completion = TRUE;
                     break;
             }
