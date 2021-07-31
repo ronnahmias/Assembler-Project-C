@@ -418,10 +418,6 @@ int get_label(char * data, char *label_dest){
     /* help variables */
     int data_index = 0;
 
-    if(init_help_array(TRUE) == NULL_SIGN){
-        /* error allocate*/
-        return ERROR;
-    }
     /* skip white chars */
     data_index += skip_white_spaces(data,data_index);
 
@@ -439,7 +435,7 @@ int get_label(char * data, char *label_dest){
         add_error(ERROR_LABEL_OVERSIZE,*RowNumber);
         return ERROR;
     }
-    strncpy(label_dest,data,sizeof(label_dest)-1); /* copies label to label destination */
+    strncpy(label_dest,data,data_index); /* copies label to label destination */
     /* skip white chars */
     data_index += skip_white_spaces(data,data_index);
     if(data[data_index] == NULL_SIGN || data[data_index] == '\r'){ /* the line doesnt end */
@@ -621,10 +617,7 @@ int process_instruction(char * data){
                     if(error_flag == ERROR){
                         return ERROR;
                     }
-                    address = find_label(label); /* try to fine the label in labels list */
-                    if(address == NOT_FOUND){ /* save in the node for completion in the second run*/
-                        need_completion = TRUE;
-                    }
+                    need_completion = TRUE;
                     break;
                 case LA:
                 case CALL:
@@ -633,10 +626,7 @@ int process_instruction(char * data){
                     if(error_flag == ERROR){
                         return ERROR;
                     }
-                    address = find_label(label); /* try to find the label in labels list */
-                    if(address == NOT_FOUND){ /* save in the node for completion in the second run*/
-                        need_completion = TRUE;
-                    }
+                    need_completion = TRUE;
                     break;
                 case STOP:
                     /* no arguments expected */
@@ -646,7 +636,7 @@ int process_instruction(char * data){
             if(error_flag == ERROR){
                 return ERROR;
             }
-            Insert_J_Args(address,reg,need_completion);
+            Insert_J_Args(address,reg,need_completion,label);
             break;
         case I:
             switch(*Inst_Action){
@@ -670,15 +660,10 @@ int process_instruction(char * data){
                 case BGT:
                     /* expect 2 argument with $ and label at end */
                     error_flag = extract_numbers_label(data,label);
-                    address = find_label(label); /* try to fine the label in labels list */
-                    if(address == NOT_FOUND){ /* save in the node for completion in the second run*/
-                        need_completion = TRUE;
-                    }else{ /* found -> calc the range from label address to inst address */
-                        immed = address - *IC;
-                    }
+                    need_completion = TRUE;
                     break;
             }
-            Insert_I_Args(immed,need_completion);
+            Insert_I_Args(immed,need_completion,label);
             break;
     }
     if(error_flag == ERROR){

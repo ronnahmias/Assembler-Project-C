@@ -10,6 +10,7 @@ typedef struct instructionNode{
     int address;
     struct instructionNode *next;
     int need_completion; /* for the second run */
+    char * label; /* save the label for instruction for second run*/
     int instruction_type;
     int instruction_action;
     signed long code;
@@ -85,12 +86,12 @@ int Insert_R_Args();
 /*
  * insert data to instruction node of j type instruction
  */
-int Insert_J_Args(signed long address,unsigned int reg,int need_completion);
+int Insert_J_Args(signed long address,unsigned int reg,int need_completion, char * label);
 
 /*
  * insert data to instruction node of i type instruction
  */
-int Insert_I_Args(signed int immed,int need_completion);
+int Insert_I_Args(signed int immed,int need_completion, char *label);
 
 
 /*

@@ -162,7 +162,7 @@ int Insert_R_Args(){
 /*
  * insert data to instruction node of j type instruction
  */
-int Insert_J_Args(signed long address,unsigned int reg,int need_completion){
+int Insert_J_Args(signed long address,unsigned int reg,int need_completion,char *label){
     instructionNode * newNode;
     int i=0;
     newNode = init_instruction_node();
@@ -181,6 +181,15 @@ int Insert_J_Args(signed long address,unsigned int reg,int need_completion){
         case STOP:
             break;
     }
+    if(*label != NULL_SIGN){ /* save label for second run process */
+        newNode->label = (char *) calloc(LABEL_MAX_SIZE,sizeof(char));
+        if(newNode->label != NULL){
+            strncpy(newNode->label,label, sizeof(newNode->label)-1);
+        }else{
+            program_error(ERROR_ALLOCATING_MEMORY);
+            return ERROR;
+        }
+    }
     newNode->need_completion = need_completion; /* sign for second run */
     newNode->instruction_action = *Inst_Action;
     newNode->instruction_type = *Inst_Type;
@@ -195,7 +204,7 @@ int Insert_J_Args(signed long address,unsigned int reg,int need_completion){
 /*
  * insert data to instruction node of i type instruction
  */
-int Insert_I_Args(signed int immed, int need_completion){
+int Insert_I_Args(signed int immed, int need_completion, char *label){
     instructionNode * newNode;
     int i=0;
     unsigned char rs,rt;
@@ -206,9 +215,18 @@ int Insert_I_Args(signed int immed, int need_completion){
     rs = help_argument_array[i++];
     rt = help_argument_array[i];
     newNode->need_completion = need_completion; /* sign for second run */
+    if(*label != NULL_SIGN){ /* save label for second run process */
+        newNode->label = (char *) calloc(LABEL_MAX_SIZE,sizeof(char));
+        if(newNode->label != NULL){
+            strncpy(newNode->label,label, sizeof(newNode->label)-1);
+        }else{
+            program_error(ERROR_ALLOCATING_MEMORY);
+            return ERROR;
+        }
+    }
     newNode->instruction_action = *Inst_Action;
     newNode->instruction_type = *Inst_Type;
-    newNode->code = (op_code_i[*Inst_Action] << OPCODE) | /* TODO opcode problem */
+    newNode->code = (op_code_i[*Inst_Action] << OPCODE) |
                     (rs << RS) |
                     (rt << RT) |
                     ((immed & 0xFFFF));
