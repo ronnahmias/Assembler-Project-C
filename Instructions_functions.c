@@ -293,3 +293,30 @@ int init_help_array(int size){
     }
     return TRUE;
 }
+
+int update_instructions_with_label(){
+    instructionNode *cur_inst;
+    signed long address;
+    cur_inst = InstructionNodes;
+    while(cur_inst){
+        /* work only on instructions that need second code changes */
+        if(cur_inst->need_completion){
+            switch (cur_inst->instruction_type) {
+                case J:
+                    /* update the address to label address. if not found add zero */
+                     address = find_label(cur_inst->label);
+                     if(address == NOT_FOUND){ /* label not found */
+                         program_error(ERROR_ARGUMENTS_ERROR);
+                         return ERROR;
+                     }else{
+                         address = cur_inst->address;
+                     }
+                    break;
+                case I:
+                    /* TODO continue */
+                    break;
+            }
+        }
+        cur_inst = cur_inst->next;
+    }
+}

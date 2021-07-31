@@ -5,6 +5,7 @@
 #include <string.h>
 #include "error_handler.h"
 #include "shared_data.h"
+#include "symbol_functions.h"
 
 typedef struct instructionNode{
     int address;
