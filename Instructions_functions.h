@@ -125,4 +125,11 @@ int init_help_array(int size);
  */
 int update_instructions_with_label();
 
+/*
+ * get the code of next node from head in linked list
+ * and also free the node
+ */
+instructionNode * get_next_node_code();
+
+
 #endif

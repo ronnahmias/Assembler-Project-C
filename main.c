@@ -23,13 +23,12 @@ int main(int argc, char** argv) {
             error_flag = first_run(file);
             if(get_errors_count() == FALSE && error_flag){
                 error_flag = second_run();
-                if(error_flag){ /* found error in second run-> continue to next file*/
+                if(error_flag == ERROR){ /* found error in second run-> continue to next file*/
                     continue;
                 }
-                /* TODO export*/
-                /*export_files();*/
+                export_free();
             }
-            else{ /* error in the file was found dont continue */
+            else{ /* error in the file was found don't continue */
                 /* print errors */
                 print_errors();
             }

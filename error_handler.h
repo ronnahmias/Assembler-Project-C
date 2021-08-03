@@ -89,6 +89,8 @@ void print_errors();
 #define ERROR_ASCIZ_SYNTAX "Error data row not in the correct syntax"
 #define ERROR_ENTRY_ERROR "Error entry label not found in label list"
 
+#define ERROR_OPEN_FILE_EXPORT "Error while open the file for export"
+
 
 
 #endif

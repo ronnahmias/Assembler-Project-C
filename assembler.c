@@ -33,6 +33,19 @@ int second_run(){
     if(status == ERROR){
         return ERROR;
     }
+    return OK;
+}
+
+/*
+ * export file and free variables
+ */
+int export_free(){
+    int status;
+    status = export_files();
+    if(status == ERROR){
+        return ERROR;
+    }
     free_every_file();
+    return OK;
 }
 

@@ -16,6 +16,8 @@ extern int * Inst_Action;
 extern signed long * IC;
 extern unsigned int * help_argument_array;
 
+
+
 /*
  * init instruction variables
  */
@@ -248,7 +250,7 @@ int init_ic(){
         program_error(ERROR_ALLOCATING_MEMORY);
         return ERROR;
     }
-    *IC = 100; /* init ic to address 100*/
+    *IC = ADDRESS_INIT; /* init ic to address 100*/
     return TRUE;
 }
 
@@ -288,7 +290,6 @@ int update_instructions_with_label(){
     instructionNode *cur_inst;
     signed long address;
     cur_inst = InstructionNodes;
-    char outdata[18];
     while(cur_inst){
         /* work only on instructions that need second code changes */
         if(cur_inst->need_completion){
@@ -315,14 +316,21 @@ int update_instructions_with_label(){
                     break;
             }
         }
-       /* setbuf(stdout, 0);
-        printf("%lx\n",cur_inst->code);*/
-        sprintf(outdata, "%04d %02X %02X %02X %02X\n", cur_inst->address,
-                (unsigned int)(cur_inst->code & 0xFF), (unsigned int)((cur_inst->code >> 8) & 0xFF),
-                (unsigned int)((cur_inst->code >> 16) & 0xFF), (unsigned int)((cur_inst->code >> 24) & 0xFF));
-        setbuf(stdout, 0);
-        printf( "%s", outdata);
         cur_inst = cur_inst->next;
-
     }
 }
+
+/*
+ * get the code of next node from head in linked list
+ * and also free the node
+ */
+instructionNode * get_next_node_code(){
+    instructionNode * node;
+    if(InstructionNodes == NULL){
+        return NULL;
+    }
+    node = InstructionNodes;
+    InstructionNodes = InstructionNodes->next;
+    return node;
+}
+

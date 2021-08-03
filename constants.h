@@ -26,6 +26,9 @@
 #define INST_J_NUMBER 4
 #define INST_I_NUMBER 15
 
+#define BYTE_SIZE 4
+#define ADDRESS_INIT 100
+
 #define NO_INSTRUCTION_FOUND -1
 #define ERROR -1
 #define NO_DATA_TYPE -1
@@ -59,6 +62,12 @@
 #define RT 16
 #define RD_R 11
 #define FUNCT_R 6
+
+ /* exporting consts*/
+#define TWO_BYTES 0xFF
+#define SHIFT_ONE 8
+#define SHIFT_TWO 16
+#define SHIFT_THREE 24
 
 
 #endif
