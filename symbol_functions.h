@@ -37,6 +37,17 @@ typedef struct entryNode{
     struct entryNode *next;
 }entryNode;
 
+typedef struct externNode{
+    signed long address;
+    char symbol[LABEL_MAX_SIZE];
+    struct externNode *next;
+}externNode;
+
+/*
+ * add extern label to extern list for future use
+ */
+int add_extern_node(char * label, signed long address);
+
 /*
  * add entry label to entry list for future use
  */
@@ -60,13 +71,22 @@ symbolNode * add_symbol_node(symbolNode **newNode);
 /*
  * finds the label in the list and return the address
  */
-signed long find_label(char *label);
-
+signed long find_label(char * label, int* external);
 /*
  * after first run over the rows file
  * update the data address after the IC
  */
 int update_symbol_data_addresses();
+
+/*
+ * return the next head node for export file entry
+ */
+entryNode * get_next_entry_node();
+
+/*
+ * return the next head node for export file extern
+ */
+externNode * get_next_extern_node();
 
 
 #endif

@@ -3,9 +3,11 @@
 
 #include "shared_data.h"
 #include "Instructions_functions.h"
+#include "data_functions.h"
 
 extern char * FileName;
 extern signed long * IC;
+extern data_enum dataEnum;
 
 /*
  * function that handler all export files

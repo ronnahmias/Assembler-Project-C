@@ -3,6 +3,31 @@
  /* symbol variables */
 symbolNode * SymbolNodes;
 entryNode * EntryNodes;
+externNode * ExternNodes;
+
+/*
+ * add extern label to extern list for future use
+ */
+int add_extern_node(char * label, signed long address){
+    externNode * ext_pt,*temp_pt;
+    ext_pt = (externNode *)calloc(1, sizeof(externNode));
+    if(ext_pt == NULL){
+        program_error(ERROR_ALLOCATING_MEMORY);
+        return ERROR;
+    }
+    strncpy(ext_pt->symbol, label, sizeof(ext_pt->symbol) - 1);
+    ext_pt->address = address;
+    if(ExternNodes == NULL){ /* this is the first node in the extern nodes */
+        ExternNodes = ext_pt;
+    }else{
+        temp_pt = ExternNodes;
+        while(temp_pt->next){ /* insert to tail of the linked list of extern nodes */
+            temp_pt = temp_pt->next;
+        }
+        temp_pt->next = ext_pt;
+    }
+    return OK;
+}
 
 /*
  * add entry label to entry list for future use
@@ -59,12 +84,15 @@ int check_entry_labels(){
 /*
  * finds the label in the list and return the address
  */
-signed long find_label(char * label){
+signed long find_label(char * label, int* external){
     symbolNode * node;
     node = SymbolNodes; /* init cur to linked list head */
     while(node)
     {
         if(!strcmp(node->symbol, label)) {/* we have label same*/
+            if(node->symbol_type == EXTERNAL){
+                *external = TRUE;
+            }
             return node->address;
         }
         node = node->next;
@@ -164,5 +192,30 @@ int update_symbol_data_addresses(){
         temp_node = temp_node->next;
     }
     return OK;
+}
 
+/*
+ * return the next head node for export file entry
+ */
+entryNode * get_next_entry_node(){
+    entryNode * node;
+    if(EntryNodes == NULL){
+        return NULL;
+    }
+    node = EntryNodes;
+    EntryNodes = EntryNodes->next;
+    return node;
+}
+
+/*
+ * return the next head node for export file extern
+ */
+externNode * get_next_extern_node(){
+    externNode * node;
+    if(ExternNodes == NULL){
+        return NULL;
+    }
+    node = ExternNodes;
+    ExternNodes = ExternNodes->next;
+    return node;
 }

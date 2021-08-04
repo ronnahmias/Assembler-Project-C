@@ -289,11 +289,13 @@ int init_help_array(int size){
 int update_instructions_with_label(){
     instructionNode *cur_inst;
     signed long address;
+    int external;
     cur_inst = InstructionNodes;
     while(cur_inst){
+        external = 0;
         /* work only on instructions that need second code changes */
         if(cur_inst->need_completion){
-            address = find_label(cur_inst->label); /* find the label in symbol list */
+            address = find_label(cur_inst->label,&external); /* find the label in symbol list */
             switch (cur_inst->instruction_type) {
                 case J:
                     /* update the address to label address. if not found add zero */
@@ -302,6 +304,10 @@ int update_instructions_with_label(){
                          return ERROR;
                      }else{
                          cur_inst->code |= (address & 0xFFFFFF);
+                         /* add external node for future use */
+                         if(external){
+                             add_extern_node(cur_inst->label,cur_inst->address);
+                         }
                      }
                     break;
                 case I:
@@ -332,4 +338,3 @@ instructionNode * get_next_node_code(){
     InstructionNodes = InstructionNodes->next;
     return node;
 }
-

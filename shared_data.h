@@ -4,21 +4,6 @@
 #include "constants.h"
 #include "error_handler.h"
 
-/* TODO remove */
-/*typedef struct dataNode{
-    int address;
-    struct dataNode *next;
-    union {
-        char db;
-        struct {
-            int32 dw:32;
-        }data_dw;
-        struct {
-            int dh:16;
-        }data_dh;
-    }data_u;
-}dataNode;*/
-
 typedef struct dataNode{
     int address;
     struct dataNode *next;

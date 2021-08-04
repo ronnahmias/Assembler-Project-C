@@ -325,3 +325,16 @@ int update_data_list_addresses(){
         cur_node = cur_node->next;
     }
 }
+
+/*
+ * get the data node of next node from head in linked list
+ */
+dataNode * get_next_node_data(){
+    dataNode * node;
+    if(DataNodes == NULL){
+        return NULL;
+    }
+    node = DataNodes;
+    DataNodes = DataNodes->next;
+    return node;
+}

@@ -4,6 +4,7 @@
 /* max extension len */
 #define EXT_LEN 4
 #define EXT_INPUT_FILES ".as"
+#define FILE_NAME_LEN 20
 
 #define TRUE 1
 #define FALSE 0
@@ -12,9 +13,6 @@
 /* max row input row */
 #define ROW_LINE 81
 
-/* iteration defines */
-#define FIRST_ITER 1
-#define SECOND_ITER 2
 
 /*
  * data image constants
@@ -68,6 +66,8 @@
 #define SHIFT_ONE 8
 #define SHIFT_TWO 16
 #define SHIFT_THREE 24
+#define CODE_PRINT_LEN 18
+
 
 
 #endif

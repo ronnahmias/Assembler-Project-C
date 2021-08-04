@@ -13,15 +13,14 @@ extern int *RowNumber;
 extern int *row_data_type;
 extern signed long *DC;
 
-enum data_enum
-{
+typedef enum{
     DB = 0,
     DH,
     DW,
     ASCIZ,
     ENTRY,
     EXTERN
-};
+}data_enum;
 
 /*
  * init data counter
@@ -125,6 +124,11 @@ int convert_data_to_array(char * data);
  * update addresses in data list add the current IC
  */
 int update_data_list_addresses();
+
+/*
+ * get the data node of next node from head in linked list
+ */
+dataNode * get_next_node_data();
 
 
 #endif
