@@ -134,8 +134,8 @@ int Insert_R_Args(){
         case MOVE:
         case MVHI:
         case MVLO:
-            rd = help_argument_array[i++];
             rs = help_argument_array[i++];
+            rd = help_argument_array[i++];
             rt = UNUSED;
             break;
     }
