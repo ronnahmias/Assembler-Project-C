@@ -321,8 +321,7 @@ int update_instructions_with_label(){
 }
 
 /*
- * get the code of next node from head in linked list
- * and also free the node
+ * get the node of next node from head in linked list
  */
 instructionNode * get_next_node_code(){
     instructionNode * node;
