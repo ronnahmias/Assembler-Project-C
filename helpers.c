@@ -19,13 +19,12 @@ int init_every_file(){
  * free variables every file end
  */
 void free_every_file(){
-    /*free(RowNumber);*/
     free_ic();
     free_dc();
     free_row_has_error();
     free_instruction_vars();
     free_data();
-
+    free_symbol_node();
 }
 
 /*

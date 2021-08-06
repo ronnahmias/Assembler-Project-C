@@ -219,3 +219,19 @@ externNode * get_next_extern_node(){
     ExternNodes = ExternNodes->next;
     return node;
 }
+
+/*
+ * free symbol linked list
+ */
+void free_symbol_node(){
+    symbolNode * node;
+    if(SymbolNodes == NULL){
+        return;
+    }
+
+    while(SymbolNodes){
+        node = SymbolNodes;
+        SymbolNodes = SymbolNodes->next;
+        free(node);
+    }
+}
