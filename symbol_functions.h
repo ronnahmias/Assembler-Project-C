@@ -84,9 +84,19 @@ int update_symbol_data_addresses();
 entryNode * get_next_entry_node();
 
 /*
+ * checks if there is entry nodes for export ent file
+ */
+int entry_nodes_exists();
+
+/*
  * return the next head node for export file extern
  */
 externNode * get_next_extern_node();
+
+/*
+ * checks if there is extern node for export ext file
+ */
+int extern_nodes_exists();
 
 /*
  * free symbol linked list

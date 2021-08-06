@@ -208,6 +208,16 @@ entryNode * get_next_entry_node(){
 }
 
 /*
+ * checks if there is entry nodes for export ent file
+ */
+int entry_nodes_exists(){
+    if(EntryNodes == NULL){
+        return FALSE;
+    }
+    return TRUE;
+}
+
+/*
  * return the next head node for export file extern
  */
 externNode * get_next_extern_node(){
@@ -218,6 +228,16 @@ externNode * get_next_extern_node(){
     node = ExternNodes;
     ExternNodes = ExternNodes->next;
     return node;
+}
+
+/*
+ * checks if there is extern node for export ext file
+ */
+int extern_nodes_exists(){
+    if(ExternNodes == NULL){
+        return FALSE;
+    }
+    return TRUE;
 }
 
 /*

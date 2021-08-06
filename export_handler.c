@@ -54,6 +54,11 @@ int export_ext_file(){
     FILE * File_Handler;
     externNode * node;
 
+    /* no extern values for export -> no file generate */
+    if(!extern_nodes_exists()){
+        return OK;
+    }
+
     /* generate .ent file name */
     sprintf(file_name, "%s.ext", strtok(FileName,DOT));
     File_Handler = fopen(file_name, "w");
@@ -79,6 +84,11 @@ int export_ent_file(){
     char formatted_data[ROW_LINE] ={FALSE};
     FILE * File_Handler;
     entryNode * node;
+
+    /* no entry values for export -> no file generate */
+    if(!entry_nodes_exists()){
+        return OK;
+    }
 
     /* generate .ent file name */
     sprintf(file_name, "%s.ent", strtok(FileName,DOT));
