@@ -5,6 +5,13 @@ symbolNode * SymbolNodes;
 entryNode * EntryNodes;
 externNode * ExternNodes;
 
+/* private functions */
+/*
+ * adds the new node to linked list at the end
+ */
+symbolNode * add_symbol_node(symbolNode **newNode);
+/* end - private functions */
+
 /*
  * add extern label to extern list for future use
  */

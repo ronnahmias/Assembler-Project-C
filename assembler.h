@@ -2,12 +2,13 @@
 #define MAMAN14_ASSEMBLER_H
 
 #include <stdio.h>
+#include "helpers.h"
 #include "parser.h"
 #include "data_functions.h"
-#include "shared_data.h"
-#include "error_handler.h"
-#include "helpers.h"
+#include "symbol_functions.h"
+#include "instructions_parser.h"
 #include "export_handler.h"
+#include "constants.h"
 
 /*
  * logic function for the first run over the current file

@@ -6,6 +6,34 @@ dataNode * DataNodes;
 asciz_row * AscizRow;
 data_row * DataRow;
 
+/* private data functions */
+/*
+ * init data node for linked list for data input
+ */
+dataNode * init_data_node(long data);
+
+/*
+ * adds the new node to linked list at the end
+ */
+dataNode * add_data_node(dataNode **newNode);
+
+/*
+ * realloc array long of the row input data
+*/
+int realloc_data_row();
+
+/*
+ * init data row struct for data input row
+*/
+int init_data_row();
+
+/*
+ * zero all input num for the next number in the input
+ */
+void zero_input_num();
+
+/* end - private data functions */
+
 /*
  * init data counter
  */

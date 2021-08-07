@@ -1,8 +1,6 @@
-#include <stdio.h>
 #include "assembler.h"
 
 int main(int argc, char** argv) {
-
     int i,error_flag;
     FILE *file;
 
@@ -26,7 +24,10 @@ int main(int argc, char** argv) {
                 if(error_flag == ERROR){ /* found error in second run-> continue to next file*/
                     continue;
                 }
-                export_free();
+                error_flag = export_free();
+                if(error_flag == ERROR){ /* for error allocating*/
+                    continue;
+                }
             }
             else{ /* error in the file was found don't continue */
                 /* print errors */

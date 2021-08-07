@@ -12,7 +12,7 @@ int * RowNumber;
 /* instruction variables */
 int * Inst_Type;
 int * Inst_Action;
-unsigned int * help_argument_array;
+unsigned long * help_argument_array;
 signed int * immed;
 
 /* instruction, data counters */

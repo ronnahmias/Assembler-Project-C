@@ -94,12 +94,6 @@ int Insert_J_Args(signed long address,unsigned int reg,int need_completion, char
  */
 int Insert_I_Args(signed int immed,int need_completion, char *label);
 
-
-/*
- * init instruction node for linked list
- */
-instructionNode * init_instruction_node();
-
 /*
  * init instruction counter
  */

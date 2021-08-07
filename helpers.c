@@ -74,16 +74,6 @@ int immed_range(signed int num){
 }
 
 /*
- * checks that label is start with char and not a number
- */
-int label_start_char(char * data){
-    if(isalpha(data[FIRST_INDEX])){
-        return TRUE;
-    }
-    return FALSE;
-}
-
-/*
  *  update file name for the current file open
  */
 void update_current_file_name(char * name){

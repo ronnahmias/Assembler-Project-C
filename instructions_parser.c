@@ -3,12 +3,6 @@
 extern int * Inst_Type;
 extern int * Inst_Action;
 extern unsigned int * help_argument_array;
-extern int *RowNumber;
-
-extern inst_type_enum instruction_type;
-extern instruction_r_enum instruction_r;
-extern instruction_j_enum instruction_j;
-extern instruction_i_enum instruction_i;
 
 /*
  * extract from string numbers that near the dollar sign
@@ -182,7 +176,7 @@ int extract_label_or_number(char *data,unsigned int * reg, char *label_dest){
     int data_index = 0;
     int temp_index = 0;
     int help_index = 0;
-    int temp_num;
+    signed long temp_num;
 
     if(init_help_array(TRUE) == NULL_SIGN){
         /* error allocate*/

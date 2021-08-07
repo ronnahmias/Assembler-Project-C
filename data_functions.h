@@ -13,6 +13,28 @@ extern int *RowNumber;
 extern int *row_data_type;
 extern signed long *DC;
 
+typedef struct dataNode{
+    int address;
+    struct dataNode *next;
+    int datatype;
+    char * db;
+    int * dh;
+    signed long *dw;
+}dataNode;
+
+
+typedef struct {
+    int size;
+    char * string;
+}asciz_row;
+
+typedef struct {
+    int size;
+    long * array;
+    int input_num_size;
+    char input_num[INPUT_NUM];
+}data_row;
+
 typedef enum{
     DB = 0,
     DH,
@@ -51,16 +73,6 @@ void free_data();
  * find the data type of the input row from array
  */
 void search_data_type(char * input);
-
-/*
- * init data node for linked list for data input
- */
-dataNode * init_data_node(long data);
-
-/*
- * adds the new node to linked list at the end
- */
-dataNode * add_data_node(dataNode **newNode);
 
 /* asciz data functions */
 
@@ -101,21 +113,6 @@ void update_asciz_row_size(int size);
 int insert_data_row();
 
 /*
- * realloc array long of the row input data
-*/
-int realloc_data_row();
-
-/*
- * init data row struct for data input row
-*/
-int init_data_row();
-
-/*
- * zero all input num for the next number in the input
- */
-void zero_input_num();
-
-/*
  * convert data row numbers (db,dw,dh) to long array before insert to linked list
  */
 int convert_data_to_array(char * data);
@@ -129,6 +126,5 @@ int update_data_list_addresses();
  * get the data node of next node from head in linked list
  */
 dataNode * get_next_node_data();
-
 
 #endif

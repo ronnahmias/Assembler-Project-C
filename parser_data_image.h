@@ -9,14 +9,4 @@
  */
 int process_data(char * data);
 
-/*
- * check if asciz row is in the correct syntax
- */
-int asciz_input_check(char * data);
-
-/*
- * copy the string from data input to array of chars in AscizRow struct
- */
-int extract_asciz_string(char * data);
-
 #endif

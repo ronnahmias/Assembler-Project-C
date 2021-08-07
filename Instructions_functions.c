@@ -10,12 +10,21 @@ int funct_r[8] = { 1,2,3,4,5,1,2,3 };
 
 /* instruction variables */
 instructionNode * InstructionNodes;
-
 extern int * Inst_Type;
 extern int * Inst_Action;
 extern signed long * IC;
-extern unsigned int * help_argument_array;
+extern unsigned long * help_argument_array;
 
+/* instruction private functions */
+
+/*
+ * init instruction node for linked list
+ */
+instructionNode * init_instruction_node();
+
+
+
+/* end - instruction private functions */
 
 
 /*
@@ -275,7 +284,7 @@ void free_ic(){
  */
 int init_help_array(int size){
     int i=0;
-    help_argument_array = (unsigned int *) calloc(size,sizeof(unsigned int));
+    help_argument_array = (unsigned long *) calloc(size,sizeof(unsigned long));
     if(help_argument_array == NULL){
         program_error(ERROR_ALLOCATING_MEMORY);
         return ERROR;

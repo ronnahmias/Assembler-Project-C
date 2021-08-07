@@ -19,11 +19,6 @@ void free_every_file();
 void init_every_row();
 
 /*
- * checks that labe is start with char and not a number
- */
-int label_start_char(char * data);
-
-/*
  * checks range of register between 0-31
  */
 int register_range(unsigned int num);

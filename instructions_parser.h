@@ -19,11 +19,4 @@ int process_instruction(char * data);
  */
 int get_label(char * data, char *label_dest);
 
-/*
- * turn on bits according to range (index of start)
- */
-signed long add_bits(signed long before, unsigned char num, unsigned char range);
-
-
-
 #endif

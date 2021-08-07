@@ -64,11 +64,6 @@ int check_entry_labels();
 int save_label(char * label, int label_type);
 
 /*
- * adds the new node to linked list at the end
- */
-symbolNode * add_symbol_node(symbolNode **newNode);
-
-/*
  * finds the label in the list and return the address
  */
 signed long find_label(char * label, int* external);
