@@ -5,9 +5,21 @@ errorNode * ErrorNodes;
 /* flag for error in the current row */
 int * RowHasError;
 extern char * FileName;
-
 /* private error handler variables */
 int errors_count;
+
+/* private functions */
+/*
+ * init error node for linked list for error
+ */
+errorNode * init_error_node(char * error_message, int line_number);
+
+/*
+ * adds the new node to linked list at the end
+ */
+errorNode * add_error_node(errorNode *newNode);
+
+/* end - private functions */
 
 /*
  * determines if the current row has error

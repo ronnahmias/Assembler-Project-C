@@ -49,16 +49,6 @@ int get_errors_count();
 void add_error(char * error_message, int line_number);
 
 /*
- * init error node for linked list for error
- */
-errorNode * init_error_node(char * error_message, int line_number);
-
-/*
- * adds the new node to linked list at the end
- */
-errorNode * add_error_node(errorNode *newNode);
-
-/*
  * program error -> prints immediately
  */
 void program_error(char * message);
@@ -77,20 +67,12 @@ void print_errors();
 #define ERROR_LABEL_OVERSIZE "Error label more than 31 characters"
 #define ERROR_LABEL_SYNTAX "Error label syntax not correct"
 #define ERROR_LABEL_EXISTS "Error label already exists"
-
 #define ERROR_INSTRUCTION_NOT_FOUND "Error Instruction Not found"
 #define ERROR_ARGUMENTS_ERROR "Error parsing argument in line"
-#define ERROR_STOP_ARGUMENT "Error stop command have arguments"
-#define ERROR_PARSING_NUMBER "Error parsing number"
 #define ERROR_REGISTER_RANGE "Error register not in range"
 #define ERROR_IMMED_RANGE "Error immed not in range"
 #define ERROR_MAX_DATA "Error max data long"
-
 #define ERROR_ASCIZ_SYNTAX "Error data row not in the correct syntax"
 #define ERROR_ENTRY_ERROR "Error entry label not found in label list"
-
 #define ERROR_OPEN_FILE_EXPORT "Error while open the file for export"
-
-
-
 #endif
