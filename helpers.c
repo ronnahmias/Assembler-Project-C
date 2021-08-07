@@ -1,5 +1,7 @@
 #include "helpers.h"
 
+extern int * RowNumber;
+
 /*
  * init variables for the whole file
  */

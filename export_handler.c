@@ -185,18 +185,21 @@ unsigned char* prepare_data_export(){
             case ASCIZ:
                 memcpy((data_code + data_index),(unsigned char *)node->db,1);
                 data_index++;
+                free(node->db);
                 break;
             case DH:
                 while(i !=2){
                     data_code[data_index++] = ((*(node->dh) >> (i * SHIFT_ONE)) & TWO_BYTES);
                     i++;
                 }
+                free(node->dh);
                 break;
             case DW:
                 while(i !=4){
                     data_code[data_index++] = ((*(node->dw) >> (i * SHIFT_ONE)) & TWO_BYTES);
                     i++;
                 }
+                free(node->dw);
                 break;
         }
         free(node);
