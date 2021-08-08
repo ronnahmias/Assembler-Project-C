@@ -3,9 +3,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "ctype.h"
+#include <string.h>
+#include <ctype.h>
 #include "constants.h"
-#include "string.h"
 #include "shared_data.h"
 #include "Instructions_functions.h"
 

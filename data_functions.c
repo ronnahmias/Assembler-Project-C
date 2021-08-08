@@ -215,7 +215,6 @@ void search_data_type(char * input)
 
 /*
  * convert data row numbers (db,dw,dh) to long array before insert to linked list
- * TODO check
  */
 int convert_data_to_array(char * data){
     int i=0, status;
