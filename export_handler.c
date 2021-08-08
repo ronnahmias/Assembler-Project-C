@@ -159,6 +159,7 @@ int print_code(FILE ** File){
                 (unsigned char)(node->code & TWO_BYTES), (unsigned char)((node->code >> SHIFT_ONE) & TWO_BYTES),
                 (unsigned char)((node->code >> SHIFT_TWO) & TWO_BYTES), (unsigned char)((node->code >> SHIFT_THREE) & TWO_BYTES));
         fprintf(*File, "%s", formatted_data);
+        free(node->label);
         free(node);
     }
     return OK;

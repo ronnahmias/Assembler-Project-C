@@ -156,6 +156,7 @@ int Insert_R_Args(){
                     (rd << RD_R) |
                     (funct_r[*Inst_Action] << FUNCT_R);
     add_inst_node(&newNode);
+    free(help_argument_array);
     return OK;
 }
 
@@ -174,6 +175,7 @@ int Insert_J_Args(signed long address,unsigned int reg,int need_completion,char 
             if(reg == TRUE){ /* takes the register number to address */
                 address = help_argument_array[i++];
             }
+            free(help_argument_array);
             break;
         case LA:
         case CALL:
@@ -230,6 +232,7 @@ int Insert_I_Args(signed int immed, int need_completion, char *label){
                     (rt << RT) |
                     ((immed & 0xFFFF));
     add_inst_node(&newNode);
+    free(help_argument_array);
     return OK;
 }
 

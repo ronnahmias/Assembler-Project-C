@@ -123,6 +123,7 @@ int insert_asciz_row(){
         }
         add_data_node(&node);
     }
+    free(AscizRow->string);
     return OK;
 }
 
@@ -259,7 +260,7 @@ int convert_data_to_array(char * data){
  */
 void copy_asciz_string(char * data){
     strncpy(AscizRow->string,data,AscizRow->size-1);
-    AscizRow->string[AscizRow->size-1] = NULL_SIGN; /*TODO remove uness add \0 at the end */
+    AscizRow->string[AscizRow->size-1] = NULL_SIGN;
 }
 
 /*

@@ -27,6 +27,8 @@ void free_every_file(){
     free_instruction_vars();
     free_data();
     free_symbol_node();
+    free(RowNumber);
+    free(FileName);
 }
 
 /*
@@ -37,7 +39,7 @@ void init_every_row(){
     reset_data();
     reset_row_has_error();
     *row_data_type = NO_DATA_TYPE;
-    *RowNumber++;
+    (*RowNumber)++;
 }
 
 /*
@@ -80,7 +82,7 @@ int immed_range(signed int num){
  */
 void update_current_file_name(char * name){
     FileName = malloc(strlen(name) + EXT_LEN + 1);
-    FileName = name;
+    strcpy(FileName, name);
 }
 
 /*
