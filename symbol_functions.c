@@ -158,7 +158,7 @@ symbolNode * init_symbol_node(char *label,int label_type)
 int save_label(char label[LABEL_MAX_SIZE], int label_type){
     int status;
     symbolNode * symbol_pt;
-    if(check_label_exists(label) == ERROR){ /* TODO check duplicate label*/
+    if(check_label_exists(label) == ERROR){
         return ERROR;
     }
     symbol_pt = init_symbol_node(label,label_type);

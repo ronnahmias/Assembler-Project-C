@@ -68,6 +68,9 @@
 #define SHIFT_THREE 24
 #define CODE_PRINT_LEN 18
 
-
+ /* bits data size */
+#define ONE_BYTE_SIZE 8
+#define HALF_WORD_SIZE 16
+#define WHOLE_WORD_SIZE 32
 
 #endif

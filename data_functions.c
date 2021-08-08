@@ -32,6 +32,11 @@ int init_data_row();
  */
 void zero_input_num();
 
+/*
+ * checks size limit of data
+ */
+int check_data_size(long num);
+
 /* end - private data functions */
 
 /*
@@ -215,44 +220,72 @@ void search_data_type(char * input)
 int convert_data_to_array(char * data){
     int i=0, status;
     char * ptr;
-    status = init_data_row();
-    if(status == ERROR){
+    long num;
+    if(init_data_row() == ERROR){
         return ERROR;
-    }else {
-        while (data[i] != '\n' && data[i] != '\0' && data[i] != 13 && data[i] != '\r') {
-            /* backspace skip it*/
-            if (data[i] == ' ' || data[i] == '\t') {
-                i++;
-                continue;
-            }
-            /* end of number -> insert to long array */
-            if (data[i] == ',') {
-                /* convert to long number before insert */
-                DataRow->array[DataRow->size - 1] = strtol(DataRow->input_num, &ptr, 10);
-                status = realloc_data_row();
-                if (status == ERROR) {
-                    return ERROR;
-                }
-                zero_input_num();
-            } else { /* insert number to array */
-                DataRow->input_num[DataRow->input_num_size] = data[i];
-                DataRow->input_num_size++;
-                /* the number is bigger than 2^32 */
-                if (DataRow->input_num_size > INPUT_NUM) {
-                    add_error(ERROR_MAX_DATA, *RowNumber);
-                    return ERROR;
-                }
-            }
+    }
+    while (data[i] != '\n' && data[i] != '\0' && data[i] != 13 && data[i] != '\r') {
+        /* backspace skip it*/
+        if (data[i] == ' ' || data[i] == '\t') {
             i++;
+            continue;
         }
-        /* more number to insert to array */
-        if (DataRow->input_num[0] != '\0') {
-            DataRow->array[DataRow->size - 1] = strtol(DataRow->input_num, &ptr, 10);
+        /* end of number -> insert to long array */
+        if (data[i] == ',') {
+            /* convert to long number before insert */
+            num = strtol(DataRow->input_num, &ptr, 10);
+            if(check_data_size(num)== ERROR){
+                add_error(ERROR_MAX_DATA,*RowNumber);
+                return ERROR;
+            }
+            DataRow->array[DataRow->size - 1] = num;
+            status = realloc_data_row();
+            if (status == ERROR) {
+                return ERROR;
+            }
+            zero_input_num();
+        } else { /* insert number to array */
+            DataRow->input_num[DataRow->input_num_size] = data[i];
+            DataRow->input_num_size++;
+            /* the number is bigger with number of digits */
+            if (DataRow->input_num_size > INPUT_NUM) {
+                add_error(ERROR_MAX_DATA, *RowNumber);
+                return ERROR;
+            }
         }
-        /* free input num  char array helper */
-        /*todo free(DataRow->input_num);*/
+        i++;
+    }
+    /* there is number to insert to array */
+    if (DataRow->input_num[0] != '\0') {
+        DataRow->array[DataRow->size - 1] = strtol(DataRow->input_num, &ptr, 10);
+    }
+    /* free input num  char array helper */
+    return OK;
+}
+
+/*
+ * checks size limit of data
+ */
+int check_data_size(long num){
+    double n;
+    double  BLimit,TLimit;
+    switch (*row_data_type) {
+        case DB:
+            n= ONE_BYTE_SIZE;
+            break;
+        case DH:
+            n= HALF_WORD_SIZE;
+            break;
+        case DW:
+            n=WHOLE_WORD_SIZE;
+            break;
+    }
+    BLimit = -(pow((double)2,n) / 2);
+    TLimit = (pow((double)2,n) / 2) - 1;
+    if(num >= BLimit && num <= TLimit){
         return OK;
     }
+    return ERROR;
 }
 
 /*

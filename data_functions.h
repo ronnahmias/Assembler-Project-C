@@ -1,7 +1,8 @@
 #ifndef MAMAN14_DATA_FUNCTIONS_H
 #define MAMAN14_DATA_FUNCTIONS_H
-#include "stdio.h"
-#include "stdlib.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 #include "ctype.h"
 #include "constants.h"
 #include "string.h"
