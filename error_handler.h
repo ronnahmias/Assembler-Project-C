@@ -14,26 +14,6 @@ typedef struct errorNode{
 }errorNode;
 
 /*
- * reset row has error after end the current row
- */
-void reset_row_has_error();
-
-/*
- * init row has error int number
- */
-int init_row_has_error();
-
-/*
- * free row has error
- */
-int free_row_has_error();
-
-/*
- * determines if the current row has error
- */
-int row_has_error();
-
-/*
  * init error counter to zero
  */
 void init_errors_data();

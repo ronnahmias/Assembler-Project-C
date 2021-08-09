@@ -2,8 +2,6 @@
 
 /* errors variables */
 errorNode * ErrorNodes;
-/* flag for error in the current row */
-int * RowHasError;
 extern char * FileName;
 /* private error handler variables */
 int errors_count;
@@ -20,39 +18,6 @@ errorNode * init_error_node(char * error_message, int line_number);
 errorNode * add_error_node(errorNode *newNode);
 
 /* end - private functions */
-
-/*
- * determines if the current row has error
- */
-int row_has_error(){
-    return *RowHasError;
-}
-
-/*
- * init row has error int number
- */
-int init_row_has_error(){
-    RowHasError = (int *)calloc(1,sizeof(int));
-    if (RowHasError == NULL){
-        add_error(ERROR_ALLOCATING_MEMORY,NO_LINE_NUMBER);
-        return ERROR;
-    }
-    return OK;
-}
-
-/*
- * free row has error
- */
-int free_row_has_error(){
-    free(RowHasError);
-}
-
-/*
- * reset row has error after end the current row
- */
-void reset_row_has_error(){
-    *RowHasError = 0;
-}
 
 /*
  * init error counter to zero
@@ -128,14 +93,19 @@ void program_error(char * message){
  * print errors from error linked list
  */
 void print_errors(){
-    errorNode * cur_node;
+    errorNode * node;
     if(ErrorNodes == NULL){ /* this is the first node in the data nodes */
         return;
     }else{
-        cur_node = ErrorNodes;
-        while(cur_node != NULL){
-            fprintf(stderr,"%s in line number %d\n",cur_node->error_message,cur_node->line_number);
-            cur_node = cur_node->next;
+        fprintf(stderr,"Errors found in file %s \n",FileName);
+        while(ErrorNodes){
+            node = ErrorNodes;
+            fprintf(stderr,"%s in line number %d\n",node->error_message,node->line_number);
+            ErrorNodes = ErrorNodes->next;
+            free(node);
         }
+
+
+
     }
 }

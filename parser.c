@@ -84,7 +84,7 @@ int process_input(char *input_row){
 
     input_row = delete_spaces(input_row); /* delete white spaces if have */
     label_size = has_label(input_row); /* check if it has label first */
-    if(row_has_error() || label_size == ERROR){ /* found error in syntax of label */
+    if(label_size == ERROR){ /* found error in syntax of label */
         return ERROR;
     }
     if(label_size != FALSE){ /* we have found label -> extract and continue  */

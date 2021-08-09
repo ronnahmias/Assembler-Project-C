@@ -98,4 +98,14 @@ int extern_nodes_exists();
  */
 void free_symbol_node();
 
+/*
+ * free entry linked list
+ */
+void free_ent_nodes();
+
+/*
+ * free extern linked list
+ */
+void free_ext_nodes();
+
 #endif

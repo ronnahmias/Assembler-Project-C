@@ -409,3 +409,19 @@ int data_exists(){
     }
     return TRUE;
 }
+
+/*
+ * free data linked list
+ */
+void free_data_nodes(){
+    dataNode * node;
+    if(DataNodes == NULL){
+        return;
+    }
+
+    while(DataNodes){
+        node = DataNodes;
+        DataNodes = DataNodes->next;
+        free(node);
+    }
+}

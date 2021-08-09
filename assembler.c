@@ -45,7 +45,7 @@ int export_free(){
     if(status == ERROR){
         return ERROR;
     }
-    free_every_file();
+
     return OK;
 }
 

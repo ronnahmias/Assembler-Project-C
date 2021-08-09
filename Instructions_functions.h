@@ -130,5 +130,10 @@ instructionNode * get_next_node_code();
  */
 int code_exists();
 
+/*
+ * free instructions linked list
+ */
+void free_inst_nodes();
+
 
 #endif

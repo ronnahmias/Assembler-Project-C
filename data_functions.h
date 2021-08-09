@@ -133,4 +133,9 @@ dataNode * get_next_node_data();
  */
 int data_exists();
 
+/*
+ * free data linked list
+ */
+void free_data_nodes();
+
 #endif

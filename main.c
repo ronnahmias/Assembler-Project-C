@@ -34,6 +34,7 @@ int main(int argc, char** argv) {
                 print_errors();
             }
             fclose(file); /* close current file */
+            free_every_file();
         }else{ /* failed open file continue to next file */
             program_error(ERROR_OPEN_FILE);
             continue; /* continue to next index to check more files */

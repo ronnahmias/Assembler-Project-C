@@ -8,7 +8,7 @@ extern int * RowNumber;
 int init_every_file(){
     RowNumber = (int*) calloc(1,sizeof(int));
     init_errors_data();
-    if(RowNumber != NULL && init_row_has_error() && init_dc()
+    if(RowNumber != NULL && init_dc()
     && init_instruction_vars() && init_ic() && init_data()){
         return OK;
     }
@@ -23,10 +23,13 @@ int init_every_file(){
 void free_every_file(){
     free_ic();
     free_dc();
-    free_row_has_error();
     free_instruction_vars();
+    free_inst_nodes();
     free_data();
+    free_data_nodes();
     free_symbol_node();
+    free_ext_nodes();
+    free_ent_nodes();
     free(RowNumber);
     free(FileName);
 }
@@ -37,7 +40,6 @@ void free_every_file(){
 void init_every_row(){
     reset_instruction_vars();
     reset_data();
-    reset_row_has_error();
     *row_data_type = NO_DATA_TYPE;
     (*RowNumber)++;
 }

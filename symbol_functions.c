@@ -96,7 +96,7 @@ signed long find_label(char * label, int* external){
     node = SymbolNodes; /* init cur to linked list head */
     while(node)
     {
-        if(!strcmp(node->symbol, label)) {/* we have label same*/
+        if(!strcmp(node->symbol, label)) {/* we have same label */
             if(node->symbol_type == EXTERNAL){
                 *external = TRUE;
             }
@@ -259,6 +259,36 @@ void free_symbol_node(){
     while(SymbolNodes){
         node = SymbolNodes;
         SymbolNodes = SymbolNodes->next;
+        free(node);
+    }
+}
+
+/*
+ * free extern linked list
+ */
+void free_ext_nodes(){
+    externNode * node;
+    if(ExternNodes == NULL){
+        return;
+    }
+    while(ExternNodes){
+        node = ExternNodes;
+        ExternNodes = ExternNodes->next;
+        free(node);
+    }
+}
+
+/*
+ * free entry linked list
+ */
+void free_ent_nodes(){
+    entryNode * node;
+    if(EntryNodes == NULL){
+        return;
+    }
+    while(EntryNodes){
+        node = EntryNodes;
+        EntryNodes = EntryNodes->next;
         free(node);
     }
 }

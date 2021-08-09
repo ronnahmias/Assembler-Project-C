@@ -360,3 +360,19 @@ int code_exists(){
     }
     return TRUE;
 }
+
+/*
+ * free instructions linked list
+ */
+void free_inst_nodes(){
+    instructionNode * node;
+    if(InstructionNodes == NULL){
+        return;
+    }
+
+    while(InstructionNodes){
+        node = InstructionNodes;
+        InstructionNodes = InstructionNodes->next;
+        free(node);
+    }
+}
