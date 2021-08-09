@@ -1,12 +1,6 @@
 #ifndef MAMAN14_DATA_FUNCTIONS_H
 #define MAMAN14_DATA_FUNCTIONS_H
-#include <stdio.h>
-#include <stdlib.h>
 #include <math.h>
-#include <string.h>
-#include <ctype.h>
-#include "constants.h"
-#include "shared_data.h"
 #include "Instructions_functions.h"
 
 /* extern variables */

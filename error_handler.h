@@ -1,9 +1,8 @@
 #ifndef MAMAN14_ERROR_HANDLER_H
 #define MAMAN14_ERROR_HANDLER_H
 
-#include "stdio.h"
-#include "stdlib.h"
-#include "shared_data.h"
+#include <stdio.h>
+#include <stdlib.h>
 #include "constants.h"
 
 typedef struct errorNode{

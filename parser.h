@@ -2,15 +2,8 @@
 #ifndef MAMAN14_PARSER_H
 #define MAMAN14_PARSER_H
 
-#include <stdio.h>
-#include <ctype.h>
-#include "constants.h"
 #include "data_functions.h"
-#include "shared_data.h"
-#include "parser_data_image.h"
-#include "symbol_functions.h"
-#include "Instructions_functions.h"
-#include "instructions_parser.h"
+
 
 extern int * RowNumber;
 extern char * FileName;

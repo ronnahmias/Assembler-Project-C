@@ -1,10 +1,6 @@
 #ifndef MAMAN14_INSTRUCTIONS_FUNCTIONS_H
 #define MAMAN14_INSTRUCTIONS_FUNCTIONS_H
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "error_handler.h"
-#include "shared_data.h"
+
 #include "symbol_functions.h"
 
 typedef struct instructionNode{

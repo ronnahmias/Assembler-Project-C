@@ -1,7 +1,6 @@
 #ifndef MAMAN14_PARSER_DATA_IMAGE_H
 #define MAMAN14_PARSER_DATA_IMAGE_H
 
-#include "data_functions.h"
 #include "instructions_parser.h"
 
 /*
