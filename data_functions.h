@@ -128,4 +128,9 @@ int update_data_list_addresses();
  */
 dataNode * get_next_node_data();
 
+/*
+ * checks if there is data nodes for export
+ */
+int data_exists();
+
 #endif

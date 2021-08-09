@@ -125,5 +125,10 @@ int update_instructions_with_label();
  */
 instructionNode * get_next_node_code();
 
+/*
+ * checks if there is instruction nodes list
+ */
+int code_exists();
+
 
 #endif

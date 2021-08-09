@@ -399,3 +399,13 @@ dataNode * get_next_node_data(){
     DataNodes = DataNodes->next;
     return node;
 }
+
+/*
+ * checks if there is data nodes for export
+ */
+int data_exists(){
+    if(DataNodes == NULL){
+        return FALSE;
+    }
+    return TRUE;
+}

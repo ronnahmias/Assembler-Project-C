@@ -117,6 +117,11 @@ int export_ob_file(){
     char file_name[FILE_NAME_LEN] = {FALSE};
     FILE * File_Handler;
 
+    /* no data to export */
+    if(!data_exists() && !code_exists()){
+        return OK;
+    }
+
     /* generate ob file name */
     sprintf(file_name, "%s.ob", strtok(FileName,DOT));
     File_Handler = fopen(file_name, "w");

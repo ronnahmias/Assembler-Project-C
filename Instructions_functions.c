@@ -350,3 +350,13 @@ instructionNode * get_next_node_code(){
     InstructionNodes = InstructionNodes->next;
     return node;
 }
+
+/*
+ * checks if there is instruction nodes list
+ */
+int code_exists(){
+    if(InstructionNodes == NULL){
+        return FALSE;
+    }
+    return TRUE;
+}
