@@ -96,6 +96,7 @@ errorNode * init_error_node(char * error_message, int line_number)
     node->next = NULL;
     node->error_message = error_message;
     node->file_name = FileName;
+    node->line_number = line_number;
     return node;
 }
 
@@ -132,7 +133,7 @@ void print_errors(){
         return;
     }else{
         cur_node = ErrorNodes;
-        while(cur_node->next != NULL){
+        while(cur_node != NULL){
             fprintf(stderr,"%s in line number %d\n",cur_node->error_message,cur_node->line_number);
             cur_node = cur_node->next;
         }

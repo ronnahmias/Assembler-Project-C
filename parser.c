@@ -58,8 +58,15 @@ int read_by_line(FILE *cur_file){
         }
         status = process_input(data);
         if(status == ERROR){
-            return ERROR;
+            if(get_errors_count()){
+                continue;
+            }else{
+                return ERROR;
+            }
         }
+    }
+    if(status == ERROR){
+        return ERROR;
     }
     return OK;
 }
@@ -138,7 +145,7 @@ int check_comment_line(char * input_row){
     {
         i++;
     }
-    if(input_row[i] == NEW_LINE || input_row[i] == ';'){
+    if(input_row[i] == NEW_LINE || input_row[i] == ';' || input_row[i] == '\r' || input_row[i] == '\0'){
         return COMMENT_ROW;
     }
     return FALSE;
