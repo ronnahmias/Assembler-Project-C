@@ -48,7 +48,7 @@ void print_errors();
 #define ERROR_LABEL_SYNTAX "Error label syntax not correct"
 #define ERROR_LABEL_EXISTS "Error label already exists"
 #define ERROR_INSTRUCTION_NOT_FOUND "Error Instruction Not found"
-#define ERROR_ARGUMENTS_ERROR "Error parsing argument in line"
+#define ERROR_ARGUMENTS_ERROR "Error passing arguments in line"
 #define ERROR_REGISTER_RANGE "Error register not in range"
 #define ERROR_IMMED_RANGE "Error immed not in range"
 #define ERROR_MAX_DATA "Error max data long"
