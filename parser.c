@@ -119,7 +119,7 @@ int process_input(char *input_row){
             }
         }
         /* check the size of instruction */
-        if(instruction_size = count_instruction_long(input_row)){
+        if((instruction_size = count_instruction_long(input_row)) != FALSE){
             /* find the instruction from 3 arrays */
             has_error = find_instruction(input_row, instruction_size);
             if(has_error == NO_INSTRUCTION_FOUND){
@@ -134,6 +134,7 @@ int process_input(char *input_row){
             return ERROR;
         }
     }
+    return OK;
 }
 
 /*
@@ -220,7 +221,6 @@ int has_label(char * data){
  * checks if the char is dot or not
  */
 int is_dot(char ch){
-    int res;
     return (ch==46) ?  1 : 0;
 }
 

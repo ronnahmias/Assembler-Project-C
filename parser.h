@@ -5,6 +5,7 @@
 #include "data_functions.h"
 #include "helpers.h"
 #include "parser_data_image.h"
+#include <ctype.h>
 
 
 extern int * RowNumber;
