@@ -1,5 +1,6 @@
 #ifndef MAMAN14_DATA_FUNCTIONS_H
 #define MAMAN14_DATA_FUNCTIONS_H
+#include <stdlib.h>
 #include <math.h>
 #include "Instructions_functions.h"
 #include <ctype.h>
