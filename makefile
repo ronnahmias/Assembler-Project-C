@@ -25,7 +25,7 @@ instructions_parser.o: instructions_parser.c instructions_parser.h helpers.h
 main.o: main.c assembler.h
 	gcc -c -Wall -ansi -pedantic main.c -o main.o
 
-parser.o: parser.c parser.h data_functions.h
+parser.o: parser.c parser.h data_functions.h helpers.h parser_data_image.h
 	gcc -c -Wall -ansi -pedantic parser.c -o parser.o
 
 parser_data_image.o: parser_data_image.c parser_data_image.h instructions_parser.h

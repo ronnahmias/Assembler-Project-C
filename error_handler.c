@@ -80,6 +80,7 @@ errorNode * add_error_node(errorNode *newNode)
         }
         cur_node->next = newNode;
     }
+    return NULL;
 }
 
 /*

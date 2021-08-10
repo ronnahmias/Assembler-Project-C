@@ -46,14 +46,15 @@ int init_instruction_vars(){
 int free_instruction_vars(){
     free(Inst_Type);
     free(Inst_Action);
+    return OK;
 }
 
 /*
  * reset inst variables every row
  */
 void reset_instruction_vars(){
-    memset(Inst_Type,0,sizeof(Inst_Type));
-    memset(Inst_Action,0,sizeof(Inst_Action));
+    memset(Inst_Type,0,1*sizeof(Inst_Type));
+    memset(Inst_Action,0,1*sizeof(Inst_Action));
 }
 
 
@@ -286,7 +287,6 @@ void free_ic(){
  * init help arguments array before insert to nodes
  */
 int init_help_array(int size){
-    int i=0;
     help_argument_array = (unsigned long *) calloc(size,sizeof(unsigned long));
     if(help_argument_array == NULL){
         program_error(ERROR_ALLOCATING_MEMORY);
@@ -336,6 +336,7 @@ int update_instructions_with_label(){
         }
         cur_inst = cur_inst->next;
     }
+    return OK;
 }
 
 /*

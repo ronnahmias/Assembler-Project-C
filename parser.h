@@ -3,6 +3,8 @@
 #define MAMAN14_PARSER_H
 
 #include "data_functions.h"
+#include "helpers.h"
+#include "parser_data_image.h"
 
 
 extern int * RowNumber;
