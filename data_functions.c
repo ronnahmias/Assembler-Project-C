@@ -67,13 +67,14 @@ int init_data(){
         program_error(ERROR_ALLOCATING_MEMORY);
         return ERROR;
     }
+    return OK;
 }
 
 /*
  * reset data variables
  */
 void reset_data(){
-    memset(row_data_type,0,sizeof(row_data_type));
+    memset(row_data_type,0,1*sizeof(row_data_type));
 }
 
 /*
@@ -111,6 +112,7 @@ int init_asciz_string(){
         program_error(ERROR_ALLOCATING_MEMORY);
         return ERROR;
     }
+    return OK;
 }
 
 /*
@@ -149,6 +151,7 @@ int insert_data_row(){
     /* free data row */
     free(DataRow->array);
     free(DataRow);
+    return OK;
 }
 
 /*
@@ -166,6 +169,7 @@ int init_data_row(){
         return ERROR;
     }
     DataRow->size = 1;
+    return OK;
 }
 
  /*
@@ -178,6 +182,7 @@ int realloc_data_row(){
         return ERROR;
     }
     DataRow->size ++;
+    return OK;
 }
 
 /*
@@ -373,6 +378,7 @@ dataNode * add_data_node(dataNode **newNode)
         }
         cur_node->next = *newNode;
     }
+    return NULL;
 }
 
 /*
@@ -385,6 +391,7 @@ int update_data_list_addresses(){
         cur_node->address += get_ic();
         cur_node = cur_node->next;
     }
+    return OK;
 }
 
 /*

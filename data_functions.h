@@ -2,6 +2,7 @@
 #define MAMAN14_DATA_FUNCTIONS_H
 #include <math.h>
 #include "Instructions_functions.h"
+#include <ctype.h>
 
 /* extern variables */
 extern int *RowNumber;
