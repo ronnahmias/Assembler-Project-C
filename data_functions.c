@@ -1,4 +1,5 @@
 #include "data_functions.h"
+#include <math.h>
 char * data_type[6] = { "db", "dh", "dw", "asciz", "entry", "extern" };
 
 /* data_image variables */
