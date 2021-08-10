@@ -3,6 +3,7 @@
 
 #include "export_handler.h"
 #include "constants.h"
+#include "helpers.h"
 
 /*
  * logic function for the first run over the current file
