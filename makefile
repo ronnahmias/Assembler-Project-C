@@ -1,5 +1,5 @@
-assembler: assembler.o error_handler.o export_handler.o helpers.o Instructions_functions.o main.o parser.o parser_data_image.o shared_data.o symbol_functions.o data_functions.o
-	gcc -g -Wall -ansi -pedantic assembler.o data_functions.o error_handler.o export_handler.o helpers.o Instructions_functions.o main.o parser.o parser_data_image.o shared_data.o symbol_functions.o -o assembler
+assembler: assembler.o error_handler.o export_handler.o helpers.o Instructions_functions.o main.o parser.o instructions_parser.o parser_data_image.o shared_data.o symbol_functions.o data_functions.o
+	gcc -g -Wall -ansi -pedantic assembler.o data_functions.o error_handler.o export_handler.o helpers.o Instructions_functions.o main.o parser.o instructions_parser.o parser_data_image.o shared_data.o symbol_functions.o -o assembler
 
 assembler.o: assembler.c assembler.h export_handler.h constants.h helpers.h
 	gcc -c -Wall -ansi -pedantic assembler.c -o assembler.o
