@@ -4,11 +4,11 @@ assembler: assembler.o error_handler.o export_handler.o helpers.o Instructions_f
 assembler.o: assembler.c assembler.h export_handler.h constants.h helpers.h
 	gcc -c -Wall -ansi -pedantic assembler.c -o assembler.o
 
-data_functions.o: data_functions.c data_functions.h Instructions_functions.h
-	gcc -c -Wall -ansi -pedantic data_functions.c -o data_functions.o -lm
-
 error_handler.o: error_handler.c error_handler.h constants.h
 	gcc -c -Wall -ansi -pedantic error_handler.c -o error_handler.o
+
+data_functions.o: data_functions.c data_functions.h Instructions_functions.h
+	gcc -c -Wall -ansi -pedantic data_functions.c -o data_functions.o -lm
 
 export_handler.o: export_handler.c export_handler.h data_functions.h
 	gcc -c -Wall -ansi -pedantic export_handler.c -o export_handler.o
