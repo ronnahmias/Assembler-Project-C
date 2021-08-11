@@ -38,7 +38,7 @@ int r_instruction_parse(char * data, int num_args){
     /* no number insert or over 2 digits -> error */
     if (temp_index == 0 || temp_index > 2)
     {
-        add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
+        add_error(ERROR_REGISTER_RANGE, *RowNumber);
         return ERROR;
     }
     temp_num = strtol(temp_data,NULL,10); /* convert to num */
@@ -81,7 +81,7 @@ int r_instruction_parse(char * data, int num_args){
     /* no number insert or over 2 digits -> error */
     if (temp_index == 0 || temp_index > 2)
     {
-        add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
+        add_error(ERROR_REGISTER_RANGE, *RowNumber);
         return ERROR;
     }
     temp_num = strtol(temp_data,NULL,10); /* convert to num */
@@ -135,7 +135,7 @@ int r_instruction_parse(char * data, int num_args){
     /* no number insert or over 2 digits -> error */
     if (temp_index == 0 || temp_index > 2)
     {
-        add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
+        add_error(ERROR_REGISTER_RANGE, *RowNumber);
         return ERROR;
     }
     temp_num = strtol(temp_data,NULL,10); /* convert to num */
@@ -205,7 +205,7 @@ int extract_label_or_number(char *data,unsigned int * reg, char *label_dest){
         /* no number insert or over 2 digits -> error */
         if (temp_index == 0 || temp_index > 2)
         {
-            add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
+            add_error(ERROR_REGISTER_RANGE, *RowNumber);
             return ERROR;
         }
         temp_num = strtol(temp_data,NULL,10); /* convert to num */
@@ -286,7 +286,7 @@ int extract_immed_row(char * data, signed int *immed){
     /* no number insert or over 2 digits -> error */
     if (temp_index == 0 || temp_index > 2)
     {
-        add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
+        add_error(ERROR_REGISTER_RANGE, *RowNumber);
         return ERROR;
     }
     temp_num = strtol(temp_data,NULL,10); /* convert to num */
@@ -332,7 +332,7 @@ int extract_immed_row(char * data, signed int *immed){
     /* no number insert -> error */
     if (temp_index == 0)
     {
-        add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
+        add_error(ERROR_IMMED_SYNTAX, *RowNumber);
         return ERROR;
     }
     temp_immed = strtol(temp_data,NULL,10); /* convert to num */
@@ -377,7 +377,7 @@ int extract_immed_row(char * data, signed int *immed){
     /* no number insert or over 2 digits -> error */
     if (temp_index == 0 || temp_index > 2)
     {
-        add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
+        add_error(ERROR_REGISTER_RANGE, *RowNumber);
         return ERROR;
     }
     temp_num = strtol(temp_data,NULL,10); /* convert to num */
@@ -472,7 +472,7 @@ int extract_numbers_label(char * data, char *label_dest){
     /* no number insert or over 2 digits -> error */
     if (temp_index == 0 || temp_index > 2)
     {
-        add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
+        add_error(ERROR_REGISTER_RANGE, *RowNumber);
         return ERROR;
     }
     temp_num = strtol(temp_data,NULL,10); /* convert to num */
@@ -515,7 +515,7 @@ int extract_numbers_label(char * data, char *label_dest){
     /* no number insert or over 2 digits -> error */
     if (temp_index == 0 || temp_index > 2)
     {
-        add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
+        add_error(ERROR_REGISTER_RANGE, *RowNumber);
         return ERROR;
     }
     temp_num = strtol(temp_data,NULL,10); /* convert to num */

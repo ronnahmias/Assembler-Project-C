@@ -95,7 +95,7 @@ int insert_asciz_row();
 /*
  * copy the input data of string to AscizRow structure
  */
-void copy_asciz_string(char * data);
+int copy_asciz_string(char * data);
 
 /*
  * update string input size to struct

@@ -110,7 +110,10 @@ int process_input(char *input_row){
         }
         input_row = skip_word(input_row);/* skip the word in the line to have data */
         input_row = delete_spaces(input_row);
-        process_data(input_row);
+        status = process_data(input_row);
+        if(status == ERROR){
+            return ERROR;
+        }
     }else{
         if(label_size != FALSE){ /* we have label of type code -> save */
             status = save_label(temp_label,CODE);
@@ -128,7 +131,10 @@ int process_input(char *input_row){
             }
             input_row = skip_word(input_row);
             input_row = delete_spaces(input_row);
-            process_instruction(input_row);
+            status = process_instruction(input_row);
+            if(status == ERROR){
+                return ERROR;
+            }
         }else{
             add_error(ERROR_INSTRUCTION_NOT_FOUND, *RowNumber);
             return ERROR;

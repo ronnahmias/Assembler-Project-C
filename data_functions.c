@@ -308,9 +308,14 @@ int check_data_size(long num){
 /*
  * copy the input data of string to AscizRow structure
  */
-void copy_asciz_string(char * data){
+int copy_asciz_string(char * data){
     strncpy(AscizRow->string,data,AscizRow->size-1);
     AscizRow->string[AscizRow->size-1] = NULL_SIGN;
+    data = data + AscizRow->size;
+    if(*data != '\r' && *data != '\n'){
+        add_error(ERROR_ASCIZ_SYNTAX, *RowNumber);
+        return ERROR;
+    }
 }
 
 /*

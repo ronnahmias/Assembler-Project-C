@@ -89,7 +89,10 @@ int extract_asciz_string(char * data){
     if(status == ERROR){
         return ERROR;
     }
-    copy_asciz_string(data);
+    status = copy_asciz_string(data);
+    if(status == ERROR){
+        return ERROR;
+    }
 }
 
 /*
