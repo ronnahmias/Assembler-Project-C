@@ -191,7 +191,7 @@ int realloc_data_row(){
 void zero_input_num(){
     int i;
     for(i=0;i<INPUT_NUM;i++){
-        DataRow->input_num[i] = '\0';
+        DataRow->input_num[i] = NULL_SIGN;
     }
     DataRow->input_num_size = 0;
 }
@@ -228,7 +228,7 @@ int convert_data_to_array(char * data){
     if(init_data_row() == ERROR){
         return ERROR;
     }
-    while (data[i] != '\n' && data[i] != '\0' && data[i] != 13 && data[i] != '\r') {
+    while (data[i] != '\n' && data[i] != NULL_SIGN && data[i] != 13 && data[i] != BACK_R) {
         /* backspace skip it*/
         if (data[i] == ' ' || data[i] == '\t') {
             i++;
@@ -260,7 +260,7 @@ int convert_data_to_array(char * data){
         i++;
     }
     /* there is number to insert to array */
-    if (DataRow->input_num[0] != '\0') {
+    if (DataRow->input_num[0] != NULL_SIGN) {
         DataRow->array[DataRow->size - 1] = strtol(DataRow->input_num, &ptr, 10);
     }
     /* free input num  char array helper */
@@ -312,7 +312,7 @@ int copy_asciz_string(char * data){
     strncpy(AscizRow->string,data,AscizRow->size-1);
     AscizRow->string[AscizRow->size-1] = NULL_SIGN;
     data = data + AscizRow->size;
-    if(*data != '\r' && *data != '\n'){
+    if(*data != BACK_R && *data != NEW_LINE){
         add_error(ERROR_ASCIZ_SYNTAX, *RowNumber);
         return ERROR;
     }

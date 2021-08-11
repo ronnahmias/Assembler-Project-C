@@ -30,7 +30,6 @@
 #define NO_INSTRUCTION_FOUND -1
 #define ERROR -1
 #define NO_DATA_TYPE -1
-#define NO_LINE_NUMBER -1
 #define COMMENT_ROW -5
 #define NOT_FOUND -2
 
@@ -45,6 +44,7 @@
 #define TWO_ARGS 2
 #define NULL_SIGN '\0'
 #define NEW_LINE '\n'
+#define BACK_R '\r'
 #define UNUSED 0
 
  /* const sizes */

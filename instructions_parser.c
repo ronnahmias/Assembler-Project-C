@@ -98,7 +98,7 @@ int r_instruction_parse(char * data, int num_args){
     /* we have the num args -> check for new line */
     if(help_index == num_args){
         /* no end for line -> error */
-        if(data[data_index] == NEW_LINE || data[data_index] == '\r'){
+        if(data[data_index] == NEW_LINE || data[data_index] == BACK_R){
             /* line correct parsing */
             return OK;
         }else{
@@ -151,7 +151,7 @@ int r_instruction_parse(char * data, int num_args){
     data_index += skip_white_spaces(data,data_index);
     if(help_index == num_args){
         /* no end for line -> error */
-        if(data[data_index] == NEW_LINE || data[data_index] == '\r'){
+        if(data[data_index] == NEW_LINE || data[data_index] == BACK_R){
             /* line correct parsing */
             return OK;
         }else{
@@ -243,7 +243,7 @@ int no_args(char *data){
     /* skip white chars */
     data_index += skip_white_spaces(data,data_index);
     /* no end for line -> error */
-    if(data[data_index] == NEW_LINE || data[data_index] == '\r'|| data[data_index] == NULL_SIGN){
+    if(data[data_index] == NEW_LINE || data[data_index] == BACK_R|| data[data_index] == NULL_SIGN){
         /* line correct parsing */
         return OK;
     }else{
@@ -391,7 +391,7 @@ int extract_immed_row(char * data, signed int *immed){
     }
     if(help_index == TWO_ARGS){
         /* no end for line -> error */
-        if(data[data_index] == NEW_LINE || data[data_index] == '\r'){
+        if(data[data_index] == NEW_LINE || data[data_index] == BACK_R){
             /* line correct parsing */
             return OK;
         }else{
@@ -432,7 +432,7 @@ int get_label(char * data, char *label_dest){
     strncpy(label_dest,data,data_index); /* copies label to label destination */
     /* skip white chars */
     data_index += skip_white_spaces(data,data_index);
-    if(data[data_index] == NULL_SIGN || data[data_index] == '\r'){ /* the line doesnt end */
+    if(data[data_index] == NULL_SIGN || data[data_index] == BACK_R){ /* the line doesnt end */
         return OK;
     }
     add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
@@ -559,7 +559,7 @@ int extract_numbers_label(char * data, char *label_dest){
 
     /* skip white chars */
     data_index += skip_white_spaces(data,data_index);
-    if(data[data_index] == NULL_SIGN || data[data_index] == '\r'){ /* the line doesnt end */
+    if(data[data_index] == NULL_SIGN || data[data_index] == BACK_R){ /* the line doesnt end */
         return OK;
     }
     add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);

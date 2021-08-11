@@ -152,7 +152,7 @@ int check_comment_line(char * input_row){
     {
         i++;
     }
-    if(input_row[i] == NEW_LINE || input_row[i] == ';' || input_row[i] == '\r' || input_row[i] == '\0'){
+    if(input_row[i] == NEW_LINE || input_row[i] == ';' || input_row[i] == BACK_R || input_row[i] == NULL_SIGN){
         return COMMENT_ROW;
     }
     return FALSE;
@@ -200,7 +200,7 @@ char * skip_label(char* input){
  */
 int has_label(char * data){
     int i=0;
-    while (data[i] != ' ' && data[i] != '\t' && data[i] != '\n' && data[i] != '\0' && data[i] != 13 && data[i] != ':')
+    while (data[i] != ' ' && data[i] != '\t' && data[i] != '\n' && data[i] != NULL_SIGN && data[i] != 13 && data[i] != ':')
     {
         i++;
     }
