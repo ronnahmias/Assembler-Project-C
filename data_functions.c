@@ -1,5 +1,4 @@
 #include "data_functions.h"
-#include <math.h>
 char * data_type[6] = { "db", "dh", "dw", "asciz", "entry", "extern" };
 
 /* data_image variables */
@@ -269,6 +268,19 @@ int convert_data_to_array(char * data){
 }
 
 /*
+ * make pow of 2 base for calc size of db dh dw
+ */
+long make_pow(int size){
+    long res=1;
+    int base = 2;
+    while(size){
+        res *= base;
+        size--;
+    }
+    return res;
+}
+
+/*
  * checks size limit of data
  */
 int check_data_size(long num){
@@ -285,8 +297,8 @@ int check_data_size(long num){
             n=WHOLE_WORD_SIZE;
             break;
     }
-    BLimit = -(pow((double)2,n) / 2);
-    TLimit = (pow((double)2,n) / 2) - 1;
+    BLimit = -(make_pow(n) / 2);
+    TLimit = (make_pow(n) / 2) - 1;
     if(num >= BLimit && num <= TLimit){
         return OK;
     }

@@ -8,7 +8,7 @@ error_handler.o: error_handler.c error_handler.h constants.h
 	gcc -ansi -pedantic -Wall -c error_handler.c -o error_handler.o
 
 data_functions.o: data_functions.c data_functions.h Instructions_functions.h
-	gcc -ansi -pedantic -Wall -c data_functions.c -o data_functions.o -lm
+	gcc -ansi -pedantic -Wall -c data_functions.c -o data_functions.o
 
 export_handler.o: export_handler.c export_handler.h data_functions.h
 	gcc -ansi -pedantic -Wall -c export_handler.c -o export_handler.o
