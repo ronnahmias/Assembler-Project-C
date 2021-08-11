@@ -105,7 +105,7 @@ int asciz_input_check(char * data){
         return ERROR;
     }
     /* start after the first bracket -> counts the length of the string */
-    while (data[i] != ' ' && data[i] != '\t' && data[i] != NEW_LINE && data[i] != NULL_SIGN && data[i] != 13 && data[i] != '\"')
+    while (data[i] != '\t' && data[i] != NEW_LINE && data[i] != NULL_SIGN && data[i] != 13 && data[i] != '\"')
     {
         i++;
     }

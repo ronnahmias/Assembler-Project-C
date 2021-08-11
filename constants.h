@@ -20,7 +20,7 @@
 
  /* number of data types option (db,dw,dw,asciz,entry,extern)*/
 #define DATA_TYPE_NUMBER 6
-#define INST_R_NUMBER 6
+#define INST_R_NUMBER 8
 #define INST_J_NUMBER 4
 #define INST_I_NUMBER 15
 

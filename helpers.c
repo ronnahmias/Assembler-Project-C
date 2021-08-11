@@ -32,6 +32,7 @@ void free_every_file(){
     free_ent_nodes();
     free(RowNumber);
     free(FileName);
+    free_help_array();
 }
 
 /*

@@ -296,6 +296,15 @@ int init_help_array(int size){
 }
 
 /*
+ * free array
+ */
+void free_help_array(){
+    if(help_argument_array != NULL){
+        free(help_argument_array);
+    }
+}
+
+/*
  * update the code in instructions with label as arguments
  */
 int update_instructions_with_label(){
@@ -374,6 +383,7 @@ void free_inst_nodes(){
     while(InstructionNodes){
         node = InstructionNodes;
         InstructionNodes = InstructionNodes->next;
+        free(node->label);
         free(node);
     }
 }

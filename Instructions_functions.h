@@ -131,5 +131,10 @@ int code_exists();
  */
 void free_inst_nodes();
 
+/*
+ * free array
+ */
+void free_help_array();
+
 
 #endif

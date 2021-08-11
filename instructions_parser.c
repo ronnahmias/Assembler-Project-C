@@ -14,7 +14,7 @@ int r_instruction_parse(char * data, int num_args){
     int data_index = 0;
     int temp_index = 0;
     int help_index = 0;
-    unsigned int temp_num;
+    unsigned int temp_num = 0;
 
     if(init_help_array(num_args) == NULL_SIGN){
         /* error allocate*/
@@ -172,7 +172,7 @@ int r_instruction_parse(char * data, int num_args){
  */
 int extract_label_or_number(char *data,unsigned int * reg, char *label_dest){
     /* help variables */
-    char temp_data[TRUE];
+    char temp_data[TRUE] = {0};
     int data_index = 0;
     int temp_index = 0;
     int help_index = 0;
@@ -257,12 +257,12 @@ int no_args(char *data){
 */
 int extract_immed_row(char * data, signed int *immed){
     /* help variables */
-    char temp_data[IMMED_DIGITS];
+    char temp_data[IMMED_DIGITS] = {0};
     int data_index = 0;
     int temp_index = 0;
     int help_index = 0;
-    unsigned int temp_num;
-    signed int temp_immed;
+    unsigned int temp_num=0;
+    signed int temp_immed=0;
 
     if(init_help_array(TWO_ARGS) == NULL_SIGN){
         /* error allocate*/
@@ -432,7 +432,7 @@ int get_label(char * data, char *label_dest){
     strncpy(label_dest,data,data_index); /* copies label to label destination */
     /* skip white chars */
     data_index += skip_white_spaces(data,data_index);
-    if(data[data_index] == NULL_SIGN || data[data_index] == BACK_R){ /* the line doesnt end */
+    if(data[data_index] == NULL_SIGN || data[data_index] == BACK_R || data[data_index] == NEW_LINE){ /* the line doesnt end */
         return OK;
     }
     add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
@@ -444,11 +444,11 @@ int get_label(char * data, char *label_dest){
  */
 int extract_numbers_label(char * data, char *label_dest){
     /* help variables */
-    char temp_data[TWO_ARGS];
+    char temp_data[TWO_ARGS] = {0};
     int data_index = 0;
     int temp_index = 0;
     int help_index = 0;
-    unsigned int temp_num;
+    unsigned int temp_num = 0;
 
     if(init_help_array(TWO_ARGS) == NULL_SIGN){
         /* error allocate*/
@@ -559,7 +559,7 @@ int extract_numbers_label(char * data, char *label_dest){
 
     /* skip white chars */
     data_index += skip_white_spaces(data,data_index);
-    if(data[data_index] == NULL_SIGN || data[data_index] == BACK_R){ /* the line doesnt end */
+    if(data[data_index] == NULL_SIGN || data[data_index] == BACK_R || data[data_index] == NEW_LINE){ /* the line doesnt end */
         return OK;
     }
     add_error(ERROR_ARGUMENTS_ERROR, *RowNumber);
