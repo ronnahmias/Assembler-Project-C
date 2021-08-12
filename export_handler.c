@@ -175,10 +175,10 @@ int print_code(FILE ** File){
             node->label = NULL;
         }
         node->next = NULL;
-        /*if(node != NULL){
+        if(node != NULL){
             free(node);
             node = NULL;
-        }*/
+        }
     }
     return OK;
 }

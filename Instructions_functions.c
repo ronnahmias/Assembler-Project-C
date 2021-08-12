@@ -259,6 +259,7 @@ instructionNode * init_instruction_node()
 {
     instructionNode * pt;
     pt = (instructionNode *)calloc(1,sizeof(instructionNode));
+    pt->next = NULL;
     if(pt == NULL){
         program_error(ERROR_ALLOCATING_MEMORY);
         return NULL;
@@ -377,6 +378,7 @@ instructionNode * get_next_node_code(){
     }
     node = InstructionNodes;
     InstructionNodes = InstructionNodes->next;
+    /*node->next = NULL;*/
     return node;
 }
 
