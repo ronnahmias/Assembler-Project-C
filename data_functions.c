@@ -194,7 +194,7 @@ int init_data_row(){
   * reallocate array long of the row input data
  */
 int realloc_data_row(){
-    DataRow->array = (long *)realloc(DataRow->array,(DataRow->size +1));
+     DataRow->array = (long *)realloc(DataRow->array,(DataRow->size +1)*sizeof(long));
     if(DataRow->array == NULL){
         program_error(ERROR_ALLOCATING_MEMORY);
         return ERROR;
