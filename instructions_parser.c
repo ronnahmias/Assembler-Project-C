@@ -2,7 +2,7 @@
 
 extern int * Inst_Type;
 extern int * Inst_Action;
-extern unsigned int * help_argument_array;
+extern unsigned long * help_argument_array;
 
 /*
  * extract from string numbers that near the dollar sign
