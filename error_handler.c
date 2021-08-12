@@ -103,7 +103,11 @@ void print_errors(){
             node = ErrorNodes;
             fprintf(stderr,"%s in line number %d\n",node->error_message,node->line_number);
             ErrorNodes = ErrorNodes->next;
-            free(node);
+            if(node != NULL){
+                free(node);
+                node = NULL;
+            }
+
         }
 
 

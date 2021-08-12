@@ -55,7 +55,10 @@ int init_dc(){
  * free data counter
  */
 void free_dc(){
-    free(DC);
+    if(DC != NULL){
+        free(DC);
+        DC = NULL;
+    }
 }
 
 /*
@@ -81,7 +84,10 @@ void reset_data(){
  * free data variables
  */
 void free_data(){
-    free(row_data_type);
+    if(row_data_type != NULL){
+        free(row_data_type);
+        row_data_type = NULL;
+    }
 }
 
 /*
@@ -100,7 +106,10 @@ int init_asciz_row(){
  * free struct helper for string input
  */
 void free_asciz_row(){
-    free(AscizRow);
+    if(AscizRow != NULL){
+        free(AscizRow);
+        AscizRow = NULL;
+    }
 }
 
 /*
@@ -130,7 +139,10 @@ int insert_asciz_row(){
         }
         add_data_node(&node);
     }
-    free(AscizRow->string);
+    if(AscizRow->string != NULL){
+        free(AscizRow->string);
+        AscizRow->string = NULL;
+    }
     return OK;
 }
 
@@ -149,8 +161,14 @@ int insert_data_row(){
         add_data_node(&newNode);
     }
     /* free data row */
-    free(DataRow->array);
-    free(DataRow);
+    if(DataRow->array != NULL){
+        free(DataRow->array);
+        DataRow->array = NULL;
+    }
+    if(DataRow != NULL){
+        free(DataRow);
+        DataRow = NULL;
+    }
     return OK;
 }
 
@@ -447,6 +465,9 @@ void free_data_nodes(){
     while(DataNodes){
         node = DataNodes;
         DataNodes = DataNodes->next;
-        free(node);
+        if(node != NULL){
+            free(node);
+            node = NULL;
+        }
     }
 }

@@ -30,8 +30,14 @@ void free_every_file(){
     free_symbol_node();
     free_ext_nodes();
     free_ent_nodes();
-    free(RowNumber);
-    free(FileName);
+    if(RowNumber != NULL){
+        free(RowNumber);
+        RowNumber = NULL;
+    }
+    if(FileName != NULL){
+        free(FileName);
+        FileName = NULL;
+    }
     free_help_array();
 }
 

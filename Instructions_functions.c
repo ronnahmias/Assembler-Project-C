@@ -44,8 +44,14 @@ int init_instruction_vars(){
  * free instruction variables
  */
 int free_instruction_vars(){
-    free(Inst_Type);
-    free(Inst_Action);
+    if(Inst_Type != NULL){
+        free(Inst_Type);
+        Inst_Type = NULL;
+    }
+    if(Inst_Action != NULL){
+        free(Inst_Action);
+        Inst_Action = NULL;
+    }
     return OK;
 }
 
@@ -157,7 +163,10 @@ int Insert_R_Args(){
                     (rd << RD_R) |
                     (funct_r[*Inst_Action] << FUNCT_R);
     add_inst_node(&newNode);
-    free(help_argument_array);
+    if(help_argument_array != NULL){
+        free(help_argument_array);
+        help_argument_array = NULL;
+    }
     return OK;
 }
 
@@ -176,7 +185,10 @@ int Insert_J_Args(signed long address,unsigned int reg,int need_completion,char 
             if(reg == TRUE){ /* takes the register number to address */
                 address = help_argument_array[i++];
             }
-            free(help_argument_array);
+            if(help_argument_array != NULL){
+                free(help_argument_array);
+                help_argument_array = NULL;
+            }
             break;
         case LA:
         case CALL:
@@ -233,7 +245,10 @@ int Insert_I_Args(signed int immed, int need_completion, char *label){
                     (rt << RT) |
                     ((immed & 0xFFFF));
     add_inst_node(&newNode);
-    free(help_argument_array);
+    if(help_argument_array != NULL){
+        free(help_argument_array);
+        help_argument_array = NULL;
+    }
     return OK;
 }
 
@@ -280,7 +295,10 @@ signed long get_ic(){
  * free instruction counter
  */
 void free_ic(){
-    free(IC);
+    if(IC != NULL){
+        free(IC);
+        IC = NULL;
+    }
 }
 
 /*
@@ -301,6 +319,7 @@ int init_help_array(int size){
 void free_help_array(){
     if(help_argument_array != NULL){
         free(help_argument_array);
+        help_argument_array = NULL;
     }
 }
 
@@ -383,7 +402,13 @@ void free_inst_nodes(){
     while(InstructionNodes){
         node = InstructionNodes;
         InstructionNodes = InstructionNodes->next;
-        free(node->label);
-        free(node);
+        if(node->label != NULL){
+            free(node->label);
+            node->label = NULL;
+        }
+        if(node != NULL){
+            free(node);
+            node = NULL;
+        }
     }
 }

@@ -70,7 +70,10 @@ int export_ext_file(){
     while((node = get_next_extern_node()) != NULL){
         sprintf(formatted_data, "%s %04ld\n", node->symbol,node->address);
         fprintf(File_Handler, "%s", formatted_data);
-        free(node);
+        if(node != NULL){
+            free(node);
+            node = NULL;
+        }
     }
     fclose(File_Handler);
     return OK;
@@ -101,7 +104,10 @@ int export_ent_file(){
     while((node = get_next_entry_node()) != NULL){
         sprintf(formatted_data, "%s %04ld\n", node->symbol,node->address);
         fprintf(File_Handler, "%s", formatted_data);
-        free(node);
+        if(node != NULL){
+            free(node);
+            node = NULL;
+        }
     }
 
     fclose(File_Handler);
@@ -166,11 +172,13 @@ int print_code(FILE ** File){
         fprintf(*File, "%s", formatted_data);
         if(node->label != NULL){
             free(node->label);
+            node->label = NULL;
         }
         node->next = NULL;
-        if(node != NULL){
+        /*if(node != NULL){
             free(node);
-        }
+            node = NULL;
+        }*/
     }
     return OK;
 }
@@ -196,24 +204,36 @@ unsigned char* prepare_data_export(){
             case ASCIZ:
                 memcpy((data_code + data_index),(unsigned char *)node->db,1);
                 data_index++;
-                free(node->db);
+                if(node->db != NULL){
+                    free(node->db);
+                    node->db = NULL;
+                }
                 break;
             case DH:
                 while(i !=2){
                     data_code[data_index++] = ((*(node->dh) >> (i * SHIFT_ONE)) & TWO_BYTES);
                     i++;
                 }
-                free(node->dh);
+                if(node->dh != NULL){
+                    free(node->dh);
+                    node->dh = NULL;
+                }
                 break;
             case DW:
                 while(i !=4){
                     data_code[data_index++] = ((*(node->dw) >> (i * SHIFT_ONE)) & TWO_BYTES);
                     i++;
                 }
-                free(node->dw);
+                if(node->dw != NULL){
+                    free(node->dw);
+                    node->dw = NULL;
+                }
                 break;
         }
-        free(node);
+        if(node != NULL){
+            free(node);
+            node = NULL;
+        }
     }
     return data_code;
 }
@@ -250,6 +270,9 @@ int print_data_image(FILE ** File){
         }
         fprintf(*File, "%s", formatted_date);
     }
-    free(data_code);
+    if(data_code != NULL){
+        free(data_code);
+        data_code = NULL;
+    }
     return OK;
 }

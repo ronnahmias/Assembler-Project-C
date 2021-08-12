@@ -259,7 +259,10 @@ void free_symbol_node(){
     while(SymbolNodes){
         node = SymbolNodes;
         SymbolNodes = SymbolNodes->next;
-        free(node);
+        if(node != NULL){
+            free(node);
+            node = NULL;
+        }
     }
 }
 
@@ -274,7 +277,10 @@ void free_ext_nodes(){
     while(ExternNodes){
         node = ExternNodes;
         ExternNodes = ExternNodes->next;
-        free(node);
+        if(node != NULL){
+            free(node);
+            node = NULL;
+        }
     }
 }
 
@@ -289,6 +295,9 @@ void free_ent_nodes(){
     while(EntryNodes){
         node = EntryNodes;
         EntryNodes = EntryNodes->next;
-        free(node);
+        if(node != NULL){
+            free(node);
+            node = NULL;
+        }
     }
 }
