@@ -183,6 +183,7 @@ symbolNode * add_symbol_node(symbolNode **newNode){
         }
         cur_node->next = *newNode;
     }
+    return NULL;
 }
 
 /*

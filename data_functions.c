@@ -334,6 +334,7 @@ int copy_asciz_string(char * data){
         add_error(ERROR_ASCIZ_SYNTAX, *RowNumber);
         return ERROR;
     }
+    return OK;
 }
 
 /*

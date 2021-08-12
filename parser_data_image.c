@@ -93,6 +93,7 @@ int extract_asciz_string(char * data){
     if(status == ERROR){
         return ERROR;
     }
+    return OK;
 }
 
 /*
