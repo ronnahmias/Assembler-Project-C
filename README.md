@@ -9,4 +9,4 @@
 ### Installation
 - Fork the repo and clone to your machine.
 - Run Terminal and write command `make`.
-- The Run Main.c file by commant `.\main.c`.
+- Then Run Main.c file by command `.\main.c`.
